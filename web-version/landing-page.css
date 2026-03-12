@@ -231,7 +231,7 @@ html{
 
     margin-top: -5%;
 
-    z-index: 3;
+    z-index: 2;
 }
 
 .title-features{
@@ -250,4 +250,5 @@ html{
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 3;
 }

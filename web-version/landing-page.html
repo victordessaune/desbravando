@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desbravando</title>
-    <link rel ="stylesheet" href="style.css">
+    <link rel ="stylesheet" href="landing-page.css">
     <link rel="icon" type="image/x-icon" href="./images/desbravando-logo.svg">
 </head>
-<body>
+<body class="background-landing-page">
     <section class="navbar">
-        
+        <img src="./images/purple-desbravando-logo.svg" class="logo-navbar" alt="Purple Desbravando Logo">
+        <p class="text-navbar">DESBRAVANDO</p>
+        <div class="navbar-right">
+            <a href="#" class="text-login-navbar">LOGIN</a>
+            <a href="#" class="button-navbar">CADASTRE SEU LOCAL</a>
+        </div>
     </section>
     <section class="hero">
         <div class="hero-cta-box">
@@ -19,13 +24,9 @@
             </p>
             <div class="hero-buttons">
 
-                <a href="#" class="button-primary">
-                  Cadastrar meu local
-                </a>
+                <a href="#" class="button-primary">Cadastrar meu local</a>
 
-                <a href="#" class="button-secondary">
-                  Ver como funciona
-                </a>
+                <a href="#diferencial-desbravando" class="button-secondary">Ver como funciona</a>
               
             </div>
         </div>
@@ -34,8 +35,14 @@
         <img src="./images/hero-woman.png" class="woman" alt="Travelling woman">
         
     </section>
-
-    <section class="section-features">
+    <section class="section-features" id="diferencial-desbravando">
+        <div class="box-title-features">
+            <h2 class="title-features">O Diferencial Desbravando</h2>
+        </div>
+        <div class="box-main-features">
+            
+        </div>
     </section>
+    <script src="landing_page.js"></script>
 </body>
 </html>

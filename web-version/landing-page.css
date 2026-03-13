@@ -10,9 +10,11 @@ html{
     scroll-behavior: smooth;
 }
 
-.background-landing-page{
-    margin:0;
+body{
+    margin: 0;
+}
 
+.background-landing-page{
     background:
     linear-gradient(
         120deg,
@@ -33,7 +35,7 @@ html{
 
 .navbar{
     width: 100%;
-    height: 10%;
+    min-height: 72px;
     position: fixed;
     z-index: 4;
     display: flex;
@@ -114,6 +116,85 @@ html{
     width: 100%;
     overflow: hidden;
     position: relative;   
+}
+
+@media (max-width: 1100px) {
+    .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 90px;
+    }
+
+    .hero-cta-box,
+    .hero-title,
+    .hero-description {
+        width: 100%;
+    }
+
+    .hero-cta-box {
+        margin: 0;
+        padding: 8% 8% 0;
+    }
+
+    .hero-buttons {
+        width: min(100%, 420px);
+    }
+
+    .shape,
+    .woman {
+        grid-column: 1;
+        width: 80%;
+        justify-self: center;
+    }
+
+    .woman {
+        max-height: 60vh;
+        width: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        padding: 10px 4%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .logo-navbar {
+        height: 38px;
+        margin-left: 0;
+    }
+
+    .text-navbar {
+        font-size: 1.4em;
+    }
+
+    .navbar-right {
+        width: 100%;
+        margin: 0;
+        justify-content: flex-end;
+    }
+
+    .hero-title {
+        font-size: 3.4em;
+    }
+
+    .hero-description {
+        font-size: 2em;
+    }
+
+    .button-primary,
+    .button-secondary,
+    .button-navbar,
+    .text-login-navbar {
+        font-size: 1.3em;
+    }
+
+    .title-features {
+        font-size: 2.8em;
+        text-align: center;
+    }
 }
 
 .hero-cta-box{

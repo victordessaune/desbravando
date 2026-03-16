@@ -233,6 +233,7 @@ html{
     clip-path: ellipse(80% 80% at 50% 100%);
 
     margin-top: -7%;
+
     z-index: 2;
 }
 
@@ -251,6 +252,8 @@ html{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin-top: -7%;
+    z-index: 3;
 }
 
 .box-individual-feature{

@@ -79,7 +79,7 @@ html{
     background-color: white;
     padding: 10px 40px;
     border-radius: 30px;
-    font-size: 1.5rem;
+    font-size: clamp(0.5rem, 2.5vw, 1.5rem);
     font-weight: 600;
     transition: transform 0.3s ease-in-out;
 }
@@ -250,7 +250,13 @@ html{
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.box-individual-feature{
+    background-color: black;
+    height: 80%;
+    width: 25%;
 }
 
 

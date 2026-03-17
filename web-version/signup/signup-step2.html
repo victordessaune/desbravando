@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style-signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../images/desbravando-logo.svg">
+
+
+</head>
+<body class="body-login-cadastro">
+    <form id="form-step1" class="card" action="signup-step3.html" method="GET">
+        <input type="hidden" name="type" id="type">
+
+        <h2 class="card-h2">Dados da Organização</h2>
+        <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Nome da Organização">
+        <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="CNPJ" maxlength="14">
+        <input type="text" name="website" id="website" class="input-login" placeholder="Website">
+        <input type="email" name="org-email" id="org-email" class="input-login" placeholder="Email institucional">
+
+        <div class="line">
+            <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="8">
+            <select name="uf" id="uf" class="select-login">
+                <option value="">UF</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+            </select>
+        </div>
+
+        <div class="line">
+            <input type="text" name="city" id="city" class="input-login" placeholder="Cidade">
+            <input type="text" name="number" id="number" class="input-login" placeholder="Número">
+        </div>
+
+        <input type="text" name="street" id="org-street" class="input-login" placeholder="Rua">
+        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha">
+        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha">
+            
+        <button class="btn-template" type="submit">
+            Próximo
+        </button> 
+            
+    </form>
+
+    <footer class="footer-login">
+        <b>Desbravando</b>
+    </footer>
+    <script src="script-login-cadastro.js"></script>
+</body>
+</html>

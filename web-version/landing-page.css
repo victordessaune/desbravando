@@ -10,6 +10,7 @@
 html{
     scroll-behavior: smooth;
     font-size: 12px;
+    overflow-x: hidden;
 }
 
 .background-landing-page{
@@ -56,7 +57,7 @@ html{
 }
 
 .text-navbar{
-    font-size: 2rem;
+    font-size: clamp(1rem, 2vw, 2.5rem);
     color: #4B3CC3;
     margin-left: 0.5%;
     font-weight: 700;
@@ -79,7 +80,7 @@ html{
     background-color: white;
     padding: 10px 40px;
     border-radius: 30px;
-    font-size: clamp(0.5rem, 2.5vw, 1.5rem);
+    font-size: clamp(0.2rem, 2.5vw, 1.5rem);
     font-weight: 600;
     transition: transform 0.3s ease-in-out;
 }
@@ -126,7 +127,7 @@ html{
 }
 
 .hero-title{
-    font-size: clamp(2rem, 4.8vw, 4rem);
+    font-size: clamp(2rem, 5vw, 4rem);
     color: #4B3CC3;
     margin: 0 0 0.5rem 0;
     font-weight: 400;
@@ -169,7 +170,7 @@ html{
 .button-primary{
     background: linear-gradient(90deg, #6A59F6, #6089F3);
     color: white;
-    font-size: 2em;
+    font-size: clamp(1rem, 2vw, 2.5rem);
     font-weight: 600;
 }
 
@@ -177,7 +178,7 @@ html{
     background: white;
     color: #4B3CC3;
     border: 1px solid #e3e6ff;
-    font-size: 1.8em;
+    font-size: clamp(1rem, 1.8vw, 2.5rem);
     font-weight: 500;
 }
 
@@ -259,14 +260,30 @@ html{
 .box-individual-feature{
     background-color: black;
     height: 80%;
-    width: 25%;
+    width: 20%;
 }
 
+@media (max-width: 1300px) {
+
+    .navbar{
+        height: 60px;
+    }
+
+    .hero-cta-box {
+        width: 100%;
+        margin-left: 15%;
+    }
+    
+
+    .woman{
+        max-width: 500px;
+    }
+}
 
 @media (max-width: 1000px) {
     .hero {
         padding-top: 72px;
-        grid-template-columns: 1fr; /* empilha */
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
         min-height: auto;
         padding-bottom: 2rem;
@@ -275,10 +292,11 @@ html{
     .hero-cta-box {
         grid-column: 1;
         grid-row: 1;
-        margin: 3% auto;
         padding: 5%;
         width: 92%;
         text-align: left;
+        align-self: center;
+        justify-self: center;
     }
 
     .shape, .woman {
@@ -291,12 +309,17 @@ html{
     }
 
     .hero-buttons {
-        width: 100%;
+        width: 50%;
     }
 
     .box-title-features {
         margin-top: 0;
         padding: 1.5rem 0;
+        clip-path: none;
+        height: 50%;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        align-self: end;
     }
 
     .section-features {

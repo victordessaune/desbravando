@@ -42,17 +42,6 @@ body{
     border-radius: 35px;
     
 }
-div.links a{
-    display: flex;
-    justify-self: center;
-    color:#5170FF;
-    text-decoration: none;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 15px;
-}
 div.re-code a{
     display: flex;
     justify-self: center;
@@ -63,20 +52,6 @@ div.re-code a{
     font-weight: 400;
     font-style: normal;
     font-size: 17px;
-}
-.terms{
-    margin-top: 1%;
-    color: #AFAFAF;
-    display: flex;
-    justify-content: center;
-}
-.terms a{
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 14px;
-    color: #AFAFAF;
-    
 }
 .squa-login h2{
     font-family: "Poppins", sans-serif;
@@ -129,61 +104,11 @@ div.re-code a{
     width: auto;
     padding: 0;
 }
-.card p{
+.card-p{
     font-size: 18px;
     margin-bottom: 35px;
     color: #5170FF;
-}
-.remember-section{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
 
-button.enter-login{
-    width: 100%;
-    padding: 10px;
-    margin-top: 1px;
-    border-radius: 30px;
-    border: none;
-    background-color: #5170FF;
-    color: white;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-size: 15px;
-     font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-button:hover{
-    background-color: #8fa3ff;
-}
-
-.EmailandPass {
-    border-radius: 20px;
-    padding: 10px;
-    width: 95%;
-    margin-bottom: 18px;
-    border: #ccc solid 2px;
-    outline: none;
-    font-size: 14px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-button.enter-login {
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    border-radius: 20px;
-    padding: 10px;
-    width: 105%;
-    margin-bottom: 18px;
-    border: 0px;
-    outline: none;
-    background-color: #5170FF;
-    font-size: 17px;
-    color: aliceblue;
 }
 .repass-login {
     font-family: "Poppins", sans-serif;
@@ -229,12 +154,6 @@ button.enter-login {
     background-color: #b7c2f1;
     border: #b7c2f1 solid 1px;
 }
-p.verification-two{
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    text-align: center;
-    font-size: 17px;
-}
 
 .code-two{
     display: flex;
@@ -242,7 +161,6 @@ p.verification-two{
     gap: 10px;
     margin-top: 2px;
     margin-bottom: 2px;
-    
 }
 
 .code-two input{

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="style-signup.css">
+    <link rel="stylesheet" href="signup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
 
@@ -16,9 +16,18 @@
 
         <h2 class="card-h2">Dados da Organização</h2>
         <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Nome da Organização">
+        <p class="message-error-register">Mensagem de erro</p>
+
         <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="CNPJ" maxlength="14">
+        <p class="message-error-register">Mensagem de erro</p>
+
+
         <input type="text" name="website" id="website" class="input-login" placeholder="Website">
+        <p class="message-error-register">Mensagem de erro</p>
+
+
         <input type="email" name="org-email" id="org-email" class="input-login" placeholder="Email institucional">
+        <p class="message-error-register">Mensagem de erro</p>
 
         <div class="line">
             <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="8">
@@ -61,8 +70,11 @@
 
         <input type="text" name="street" id="org-street" class="input-login" placeholder="Rua">
         <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha">
+        <p class="message-error-register">Mensagem de erro</p>
+
         <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha">
-            
+        <p class="message-error-register">Mensagem de erro</p>
+
         <button class="btn-template" type="submit">
             Próximo
         </button> 
@@ -70,6 +82,7 @@
     </form>
 
     <footer class="footer-login">
+        <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         <b>Desbravando</b>
     </footer>
     <script src="script-login-cadastro.js"></script>

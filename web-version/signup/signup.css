@@ -14,8 +14,7 @@
     max-width: 500px;
     padding: 40px;
     text-align: center;
-    border-radius: 20px;
-    
+    border-radius: 20px; 
 }
 .card-h2{
     font-size: 35px;
@@ -48,7 +47,6 @@
     bottom: 20px;
     color: white;
     font-size: 20px;
-    
 }
 .input-login,select{
     border-radius: 20px;
@@ -89,7 +87,7 @@
     color: #e12a2a;
     margin-top: 4px;
     margin-left: 10px;
-    display: non;
+    display: none;
 }
 .logo-footer{
     width: 32px;

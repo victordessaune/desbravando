@@ -84,6 +84,7 @@
 .message-error-register{
     font-size: 12px;
     display: flex;
+    text-align: left;
     color: #e12a2a;
     margin-top: 4px;
     margin-left: 10px;

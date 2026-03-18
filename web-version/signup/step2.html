@@ -24,11 +24,11 @@
 
 
         <input type="text" name="website" id="website" class="input-login" placeholder="Website">
-        <p class="message-error-register">Mensagem de erro</p>
+        <p class="message-error-register" id="error-website"></p>
 
 
         <input type="email" name="org-email" id="org-email" class="input-login" placeholder="Email institucional">
-        <p class="message-error-register">Mensagem de erro</p>
+        <p class="message-error-register" id="error-email">Mensagem de erro</p>
 
         <div class="line">
             <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="8">
@@ -69,16 +69,19 @@
             <input type="text" name="number" id="number" class="input-login" placeholder="Número">
         </div>
 
-        <input type="text" name="street" id="org-street" class="input-login" placeholder="Rua">
-        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha">
-        <p class="message-error-register">Mensagem de erro</p>
+        <input type="text" name="street" id="street" class="input-login" placeholder="Rua">
+        <p class="message-error-register" id="error-address">Mensagem de erro</p>
 
-        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha">
-        <p class="message-error-register">Mensagem de erro</p>
+        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha" maxlength="8">
+        <p class="message-error-register" id="error-password">Mensagem de erro</p>
 
-        <button class="btn-template" type="submit">
-            Próximo
-        </button> 
+        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha" maxlength="8">
+        <p class="message-error-register" id="error-confirm-password">Mensagem de erro</p>
+
+        <div class="line">
+            <button class="btn-template" type="button" onclick="window.location.href='step1.html'">Voltar</button>
+            <button class="btn-template" type="submit">Próximo</button> 
+        </div>
             
     </form>
 

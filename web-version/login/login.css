@@ -1,14 +1,15 @@
 body{
     margin: 0;
     height: 100vh;
-    font-family:Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: url(11787776-fundo-abstrato-onda-fluida-verde-e-azul-gratis-vetor.jpg);
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(
+        to bottom,
+        var(--color-blue) 0%,
+        var(--color-light-blue) 100%    
+    );
 }
 .squa-login{
     background-color: rgb(255, 255, 255);

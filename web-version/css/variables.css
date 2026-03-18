@@ -3,6 +3,9 @@
 
   --color-purple: #4B3CC3; /* Cor roxa principal */
   --color-blue: #5170ff; /* Cor azul principal */
+  --color-blue-secondary: #7aa8ff; /* Cor azul secundária (usada no degradê da landing page) */
   --color-light-blue: #A3FFE1; /* Cor azul clara (usada no degradê da landing page) */
+  --color-dark-blue: #080630; /* Cor azul escura (usada para textos e elementos de destaque) */
   --color-white: #ffffff; /* Cor branca */
+  --color-white-rgb: 255, 255, 255; /* Cor branca em formato RGB (usada para transparências) */
 }

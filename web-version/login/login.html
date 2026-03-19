@@ -13,18 +13,24 @@
 </head>
 
 <body>
+
 <div class="card">
         <h2 class="card-h2">Login Administrador</h2>
-        <div class="form">
-                <input class="input-login" type="text" placeholder="Email">
-                <input class="input-login" type="password" placeholder="Senha">
+
+        <div class="form" id="form-login">
+                <input id="email-login" class="input-login" type="text" placeholder="Email">
+                    <span id="error-email-login" class="message-error-register"></span>
+                <input id="password-login" class="input-login" type="password" placeholder="Senha">
+                        <span id="error-password-login" class="message-error-register"></span>
+
             <div class="remember-section">
-                    <input  type="checkbox">
-                    <label>Lembrar-me</label>
+                    <input id="remember-login" type="checkbox">
+                    <label for="remember-login">Lembrar-me</label>
             </div>
             <div>
-                <button class="btn-template">Entrar</button>
+                <button type="submit" class="btn-template">Entrar</button>
             </div>
+
             <div class="links">
                 <a href="forgot-password.html">Esqueci a senha</a>
                 <a href="../signup/step1.html">Criar Conta</a>
@@ -39,5 +45,6 @@
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
+<script src="login.js"></script>
 </body>
 </html>

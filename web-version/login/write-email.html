@@ -14,32 +14,24 @@
 
 <body>
     <div class="card">
-        <h2 class="card-h2">Esqueci a Senha</h2>
-        <p class="card-p" id="text-email"></p>        
+        <h2 class="card-h2">Esqueci a senha</h2>
+
         <div class="form">
-                <div class="input-code">
-                    <input type="text" maxlength="1">
-                    <input type="text" maxlength="1">
-                    <input type="text" maxlength="1">
-                    <input type="text" maxlength="1">
-                </div>
-            
-            <div>
-                <button class="btn-template-verification">Verificar</button>
-            </div>
-            <div class="send-code">
-                <a>Reenviar código</a>
+             <p class="card-p">Digite seu email cadastrado para receber o código de verificação</p>
+
+                <input id="email-login" class="input-login" type="text" placeholder="email@exemplo.com">
+            <div class="btn-padding">
+                <button class="btn-template">Enviar código</button>
             </div>
             <div class="terms">
-                <a href="#">Termos de uso </a>  |  <a href="#"> Políticas de privacidade</a>
+                <a href="#">Termos de uso</a> | <a href="#">Políticas de privacidade</a>
             </div>
         </div>
     </div>
-
     <footer class="footer-login">
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
-<script src="verify-email.js"></script>
+    
 </body>
 </html>

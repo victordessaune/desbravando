@@ -1,14 +1,18 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-    let form = document.getElementById("form-login");
     let btn = document.querySelector(".btn-template");
+
+    if(!btn) return;
 
     btn.addEventListener("click", function(e){
 
         e.preventDefault();
 
-        let email = document.getElementById("email-login").value;
-        let password = document.getElementById("password-login").value;
+        let emailInput = document.getElementById("email-login");
+        let passwordInput = document.getElementById("password-login");
+
+        let email = emailInput ? emailInput.value : "";
+        let password = passwordInput ? passwordInput.value : "";
 
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -17,29 +21,47 @@ document.addEventListener("DOMContentLoaded", function(){
 
         let hasError = false;
 
-        errorEmail.style.display = "none";
-        errorPassword.style.display = "none";
+        // reset erros
+        if(errorEmail) errorEmail.style.display = "none";
+        if(errorPassword) errorPassword.style.display = "none";
 
-        if (email.trim() === ""){
-            errorEmail.textContent = "Informe o email.";
-            errorEmail.style.display = "block";
+        // valida email
+        if(email.trim() === ""){
+            if(errorEmail){
+                errorEmail.textContent = "Informe o email.";
+                errorEmail.style.display = "block";
+            }
             hasError = true;
-        } else if (!regexEmail.test(email)){
-            errorEmail.textContent = "Email inválido.";
-            errorEmail.style.display = "block";
+        } 
+        else if(!regexEmail.test(email)){
+            if(errorEmail){
+                errorEmail.textContent = "Email inválido.";
+                errorEmail.style.display = "block";
+            }
             hasError = true;
         }
 
-        if (password.trim() === ""){
-            errorPassword.textContent = "Informe a senha.";
-            errorPassword.style.display = "block";
-            hasError = true;
+        // valida senha (só se existir no HTML)
+        if(passwordInput){
+            if(password.trim() === ""){
+                if(errorPassword){
+                    errorPassword.textContent = "Informe a senha.";
+                    errorPassword.style.display = "block";
+                }
+                hasError = true;
+            }
         }
 
-        if (!hasError){
+        // se tudo ok
+        if(!hasError){
             localStorage.setItem("emailUser", email);
-            window.location.href = "verify-email.html";
 
+            // 🔥 DIFERENCIAÇÃO DAS PÁGINAS
+            if(window.location.pathname.includes("write-email.html")){
+                window.location.href = "forgot-password.html";
+            } else {
+                window.location.href = "verify-email.html";
+            }
         }
 
     });

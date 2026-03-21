@@ -11,7 +11,7 @@
 
 </head>
 <body class="body-login-cadastro">
-    <form class="card" action="step4.html" method="get">
+    <form class="card" action="../home/dashboard.html" method="get" id="form-step3">
 
         <h2 class="card-h2">Dados do Responsável</h2>
         <input type="text" placeholder="Nome" class="input-login">
@@ -19,6 +19,12 @@
         <input type="text" placeholder="CPF" class="input-login">
         <input type="email" placeholder="E-mail institucional" class="input-login">
         <input type="text" placeholder="Ocupação" class="input-login">
+
+        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha" maxlength="8">
+        <p class="message-error-register" id="error-password">Mensagem de erro</p>
+
+        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha" maxlength="8">
+        <p class="message-error-register" id="error-confirm-password">Mensagem de erro</p>
 
         <div class="line">
             <button class="btn-template" type="button" onclick="window.location.href='step2.html'">Voltar</button>
@@ -30,6 +36,6 @@
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
-    <script src="script-login-cadastro.js"></script>
+    <script src="step3.js"></script>
 </body>
 </html>

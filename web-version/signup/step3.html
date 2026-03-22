@@ -11,19 +11,19 @@
 
 </head>
 <body class="body-login-cadastro">
-    <form class="card" action="../home/dashboard.html" method="get" id="form-step3">
+    <form class="card" id="form-step3">
 
         <h2 class="card-h2">Dados do Responsável</h2>
-        <input type="text" placeholder="Nome" class="input-login">
-        <input type="text" placeholder="Sobrenome" class="input-login">
-        <input type="text" placeholder="CPF" class="input-login">
-        <input type="email" placeholder="E-mail institucional" class="input-login">
-        <input type="text" placeholder="Ocupação" class="input-login">
+        <input type="text" id="first-name" placeholder="Nome" class="input-login">
+        <input type="text" id="last-name" placeholder="Sobrenome" class="input-login">
+        <input type="text" id="cpf" placeholder="CPF" class="input-login">
+        <input type="email" id="email" placeholder="E-mail institucional" class="input-login">
+        <input type="text" id="occupation" placeholder="Ocupação" class="input-login">
 
-        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha" maxlength="8">
+        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha" minlength="6">
         <p class="message-error-register" id="error-password">Mensagem de erro</p>
 
-        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha" maxlength="8">
+        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha" minlength="6">
         <p class="message-error-register" id="error-confirm-password">Mensagem de erro</p>
 
         <div class="line">
@@ -36,6 +36,6 @@
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
-    <script src="step3.js"></script>
+    <script type="module" src="step3.js"></script>
 </body>
 </html>

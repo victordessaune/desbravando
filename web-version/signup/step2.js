@@ -1,8 +1,17 @@
+const params = new URLSearchParams(window.location.search);
+const orgType = params.get("org-type");
+
+if (!orgType) {
+    window.location.href = "step1.html";
+}
+
 let form = document.getElementById("form-step2");
 
 form.addEventListener("submit", function(e){
 
     e.preventDefault();
+
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let orgName = document.getElementById("org-name").value;
     let cnpj = document.getElementById("org-cnpj").value;
@@ -67,8 +76,24 @@ form.addEventListener("submit", function(e){
     }
 
     if (!hasError){
-        form.submit();
-    }
+
+    const orgData = {
+        orgType: orgType,
+        orgName,
+        cnpj,
+        website,
+        orgEmail,
+        cep,
+        uf,
+        city,
+        number,
+        street
+    };
+
+    localStorage.setItem("orgData", JSON.stringify(orgData));
+
+    window.location.href = "step3.html";
+}
 
 });
 

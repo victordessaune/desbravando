@@ -1,69 +1,77 @@
-document.addEventListener("DOMContentLoaded", function(){
+import { auth } from "../js/api/firebase.js";
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+document.addEventListener("DOMContentLoaded", function () {
 
     let btn = document.querySelector(".btn-template");
+    if (!btn) return;
 
-    if(!btn) return;
-
-    btn.addEventListener("click", function(e){
-
+    btn.addEventListener("click", async function (e) {
         e.preventDefault();
 
-        let emailInput = document.getElementById("email-login");
-        let passwordInput = document.getElementById("password-login");
-
-        let email = emailInput ? emailInput.value : "";
-        let password = passwordInput ? passwordInput.value : "";
+        let email = document.getElementById("email-login").value.trim();
+        let password = document.getElementById("password-login").value.trim();
+        let remember = document.getElementById("remember-login").checked;
 
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
         let errorEmail = document.getElementById("error-email-login");
         let errorPassword = document.getElementById("error-password-login");
-
         let hasError = false;
 
-        // reset erros
-        if(errorEmail) errorEmail.style.display = "none";
-        if(errorPassword) errorPassword.style.display = "none";
+        errorEmail.style.display = "none";
+        errorPassword.style.display = "none";
 
-        // valida email
-        if(email.trim() === ""){
-            if(errorEmail){
-                errorEmail.textContent = "Informe o email.";
-                errorEmail.style.display = "block";
-            }
+        if (email === "") {
+            errorEmail.textContent = "Informe o email.";
+            errorEmail.style.display = "block";
             hasError = true;
-        } 
-        else if(!regexEmail.test(email)){
-            if(errorEmail){
-                errorEmail.textContent = "Email inválido.";
-                errorEmail.style.display = "block";
-            }
+        } else if (!regexEmail.test(email)) {
+            errorEmail.textContent = "Email inválido.";
+            errorEmail.style.display = "block";
             hasError = true;
         }
 
-        // valida senha (só se existir no HTML)
-        if(passwordInput){
-            if(password.trim() === ""){
-                if(errorPassword){
-                    errorPassword.textContent = "Informe a senha.";
-                    errorPassword.style.display = "block";
-                }
-                hasError = true;
-            }
+        if (password === "") {
+            errorPassword.textContent = "Informe a senha.";
+            errorPassword.style.display = "block";
+            hasError = true;
         }
 
-        // se tudo ok
-        if(!hasError){
-            localStorage.setItem("emailUser", email);
+        if (hasError) return;
 
-            // 🔥 DIFERENCIAÇÃO DAS PÁGINAS
-            if(window.location.pathname.includes("write-email.html")){
-                window.location.href = "forgot-password.html";
-            } else {
-                window.location.href = "verify-email.html";
+        try {
+            // 🔒 "Lembrar-me": define se sessão persiste ou expira ao fechar o browser
+            const persistence = remember
+                ? browserLocalPersistence   // fica logado mesmo fechando o browser
+                : browserSessionPersistence; // expira ao fechar a aba
+
+            await setPersistence(auth, persistence);
+
+            // 🔥 Login
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log("✅ Logado:", userCredential.user.uid);
+
+            window.location.href = "../home/dashboard.html";
+
+        } catch (error) {
+            console.error("❌ Erro:", error.code);
+
+            // Mensagens amigáveis por tipo de erro
+            switch (error.code) {
+                case "auth/user-not-found":
+                case "auth/wrong-password":
+                case "auth/invalid-credential":
+                    errorEmail.textContent = "Email ou senha incorretos.";
+                    errorEmail.style.display = "block";
+                    break;
+                case "auth/too-many-requests":
+                    errorEmail.textContent = "Muitas tentativas. Tente mais tarde.";
+                    errorEmail.style.display = "block";
+                    break;
+                default:
+                    errorEmail.textContent = "Erro ao fazer login. Tente novamente.";
+                    errorEmail.style.display = "block";
             }
         }
-
     });
-
 });

@@ -1,5 +1,4 @@
-import { auth } from "../js/api/firebase.js";
-import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { auth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "../js/api/firebase.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -40,23 +39,20 @@ document.addEventListener("DOMContentLoaded", function () {
         if (hasError) return;
 
         try {
-            // 🔒 "Lembrar-me": define se sessão persiste ou expira ao fechar o browser
             const persistence = remember
                 ? browserLocalPersistence   // fica logado mesmo fechando o browser
                 : browserSessionPersistence; // expira ao fechar a aba
 
             await setPersistence(auth, persistence);
 
-            // 🔥 Login
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("✅ Logado:", userCredential.user.uid);
+            console.log("Logado:", userCredential.user.uid);
 
             window.location.href = "../home/dashboard.html";
 
         } catch (error) {
-            console.error("❌ Erro:", error.code);
+            console.error("Erro:", error.code);
 
-            // Mensagens amigáveis por tipo de erro
             switch (error.code) {
                 case "auth/user-not-found":
                 case "auth/wrong-password":

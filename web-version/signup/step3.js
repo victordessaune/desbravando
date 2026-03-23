@@ -1,4 +1,4 @@
-import { db, auth, createUserWithEmailAndPassword, addDoc, collection, sendEmailVerification } from "../js/api/firebase.js";
+import { db, auth, createUserWithEmailAndPassword, addDoc, collection } from "../js/api/firebase.js";
 
 let form = document.getElementById("form-step3");
 

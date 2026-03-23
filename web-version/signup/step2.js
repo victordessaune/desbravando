@@ -5,6 +5,38 @@ if (!orgType) {
     window.location.href = "step1.html";
 }
 
+const cnpjInput = document.getElementById("org-cnpj");
+
+cnpjInput.addEventListener("input", function () {
+    let value = this.value.replace(/\D/g, "");
+    value = value.substring(0, 14);
+
+    if (value.length > 12) {
+        value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, "$1.$2.$3/$4-$5");
+    } else if (value.length > 8) {
+        value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{0,4})/, "$1.$2.$3/$4");
+    } else if (value.length > 5) {
+        value = value.replace(/^(\d{2})(\d{3})(\d{0,3})/, "$1.$2.$3");
+    } else if (value.length > 2) {
+        value = value.replace(/^(\d{2})(\d{0,3})/, "$1.$2");
+    }
+
+    this.value = value;
+});
+
+const cepInput = document.getElementById("cep");
+
+cepInput.addEventListener("input", function () {
+    let value = this.value.replace(/\D/g, "");
+    value = value.substring(0, 8);
+
+    if (value.length > 5) {
+        value = value.replace(/^(\d{5})(\d{0,3})/, "$1-$2");
+    }
+
+    this.value = value;
+});
+
 let form = document.getElementById("form-step2");
 
 form.addEventListener("submit", function(e){
@@ -14,10 +46,10 @@ form.addEventListener("submit", function(e){
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let orgName = document.getElementById("org-name").value;
-    let cnpj = document.getElementById("org-cnpj").value;
+    let cnpj = document.getElementById("org-cnpj").value.replace(/\D/g, "");
     let website = document.getElementById("website").value;
     let orgEmail = document.getElementById("org-email").value;
-    let cep = document.getElementById("cep").value;
+    let cep = document.getElementById("cep").value.replace(/\D/g, "");
     let uf = document.getElementById("uf").value;
     let city = document.getElementById("city").value;
     let number = document.getElementById("number").value;

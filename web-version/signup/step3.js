@@ -1,21 +1,11 @@
-console.log("JS carregou");
-
-// step3.js — importa tudo de um lugar só
 import { db, auth, createUserWithEmailAndPassword, addDoc, collection, sendEmailVerification } from "../js/api/firebase.js";
-
-console.log("Firebase importou");
 
 let form = document.getElementById("form-step3");
 
-console.log("✅ Form encontrado:", form);
-
 form.addEventListener("submit", async function(e){
-
-    console.log("Submit disparou");
 
     e.preventDefault();
 
-    // 🔥 PEGAR DADOS DO FORM
     let firstName = document.getElementById("first-name").value;
     let lastName = document.getElementById("last-name").value;
     let cpf = document.getElementById("cpf").value;
@@ -25,13 +15,6 @@ form.addEventListener("submit", async function(e){
     let password = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirm-password").value;
 
-    console.log("📦 Dados do usuário:", {
-        firstName,
-        email,
-        password
-    });
-
-    // 🔐 VALIDAÇÃO
     const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
     let errorPassword = document.getElementById("error-password");
@@ -57,8 +40,8 @@ form.addEventListener("submit", async function(e){
     if (hasError) return;
 
     try {
-        console.log("🔥 Tentando criar usuário...");
-        // 🔐 1. CRIA USUÁRIO
+
+        // Criar usuário no Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(
             auth,
             email,
@@ -66,21 +49,18 @@ form.addEventListener("submit", async function(e){
         );
 
         const user = userCredential.user;
-        console.log("✅ Usuário criado:", user.uid);
 
-        // 📥 2. PEGA DADOS DA EMPRESA
+        // Buscar dados da empresa do localStorage
         const orgData = JSON.parse(localStorage.getItem("orgData"));
-        console.log("orgData:", orgData); // ← o que aparece aqui?
+        console.log("orgData:", orgData); 
 
-        // 🏢 3. SALVA EMPRESA
-        console.log("🏢 Salvando empresa...", orgData);
+        // Salva empresa no Firestore
         const orgRef = await addDoc(collection(db, "organizations"), {
             ...orgData,
             createdAt: new Date()
         });
-        console.log("✅ Empresa salva:", orgRef.id);
 
-        // 👤 4. SALVA RESPONSÁVEL
+        // Salva responsável no Firestore
         await addDoc(collection(db, "users"), {
             uid: user.uid,
             firstName,
@@ -91,18 +71,14 @@ form.addEventListener("submit", async function(e){
             orgId: orgRef.id
         });
 
-        console.log("✅ Responsável salvo");
-
-        // 🧹 limpa storage
+        // Limpa localStorage
         localStorage.removeItem("orgData");
 
-        console.log("🔥 TUDO SALVO!");
-
-        // 🚀 REDIRECIONA
+        // Redireciona para dashboard
         window.location.href = "../home/dashboard.html";
 
     } catch (error){
-        console.error("❌ ERRO COMPLETO:", error);
+        console.error("Erro:", error);
         alert(error.message);
     }
 });

@@ -18,12 +18,13 @@ body{
     linear-gradient(
         to bottom,
         var(--color-blue) 0%,
-        var(--color-light-blue) 50%,
+        var(--color-light-blue) 25%,
+        var(--color-light-purple) 75%,
         var(--color-blue-secondary) 100%
         
     );
 
-    min-height:300vh;
+    min-height:400vh;
 }
 
 .navbar{
@@ -489,11 +490,11 @@ body{
 }
 
 .final-section{
-    height: 150vh;
+    height: 100vh;
     width: 100%;
     display: grid;
     grid-template-columns: 5% 90% 5%;
-    grid-template-rows: 70% 30%;
+    grid-template-rows: 60% 40%;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
 }
@@ -546,6 +547,7 @@ body{
     background-color: var(--color-blue);
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
+    z-index: 4;
 }
 
 .box-final-cta h2{

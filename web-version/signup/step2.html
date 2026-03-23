@@ -19,7 +19,7 @@
         <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Nome da Organização">
         <p class="message-error-register" id="error-name"></p>
 
-        <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="CNPJ" maxlength="14">
+        <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="CNPJ" maxlength="18">
         <p class="message-error-register" id="error-cnpj"></p>
 
 
@@ -31,7 +31,15 @@
         <p class="message-error-register" id="error-email">Mensagem de erro</p>
 
         <div class="line">
-            <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="8">
+            <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="9">
+            <input type="text" name="number" id="number" class="input-login" placeholder="Número">
+        </div>
+
+        <input type="text" name="street" id="street" class="input-login" placeholder="Rua ou avenida">
+        <p class="message-error-register" id="error-address">Mensagem de erro</p>
+
+        <div class="line">
+            <input type="text" name="city" id="city" class="input-login" placeholder="Cidade">
             <select name="uf" id="uf" class="select-login">
                 <option value="">UF</option>
                 <option value="AC">AC</option>
@@ -63,14 +71,6 @@
                 <option value="TO">TO</option>
             </select>
         </div>
-
-        <div class="line">
-            <input type="text" name="city" id="city" class="input-login" placeholder="Cidade">
-            <input type="text" name="number" id="number" class="input-login" placeholder="Número">
-        </div>
-
-        <input type="text" name="street" id="street" class="input-login" placeholder="Rua">
-        <p class="message-error-register" id="error-address">Mensagem de erro</p>
 
         <div class="btn-padding">
             <div class="line">

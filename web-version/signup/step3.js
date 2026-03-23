@@ -17,6 +17,11 @@ form.addEventListener("submit", async function(e){
 
     const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
+    let errorFirstName = document.getElementById("error-first-name");
+    let errorLastName = document.getElementById("error-last-name");
+    let errorCPF = document.getElementById("error-cpf");
+    let errorEmailInst = document.getElementById("error-email-inst");
+    let errorOccupation = document.getElementById("error-occupation");
     let errorPassword = document.getElementById("error-password");
     let errorConfirmPassword = document.getElementById("error-confirm-password");
 
@@ -24,6 +29,37 @@ form.addEventListener("submit", async function(e){
 
     errorPassword.style.display = "none";
     errorConfirmPassword.style.display = "none";
+    errorFirstName.style.display = "none";
+    errorLastName.style.display = "none";
+    errorCPF.style.display = "none";
+    errorEmailInst.style.display = "none";
+    errorOccupation.style.display = "none";
+
+    if (firstName.trim() === ""){
+        errorFirstName.textContent = "Preencha o seu nome";
+        errorFirstName.style.display = "block";
+        hasError = true;
+    }
+    if (lastName.trim() === ""){
+        errorLastName.textContent = "Preencha seu sobrenome";
+        errorLastName.style.display = "block";
+        hasError = true;
+    }
+    if (cpf.trim() === ""){
+        errorCPF.textContent = "Preencha o CPF";
+        errorCPF.style.display = "block";
+        hasError = true;
+    }
+    if (email.trim() === ""){
+        errorEmailInst.textContent = "Preencha com um e-mail institucional";
+        errorEmailInst.style.display = "block";
+        hasError = true;
+    }
+    if (occupation.trim() === ""){
+        errorOccupation.textContent = "Preencha o nome da organização";
+        errorOccupation.style.display = "block";
+        hasError = true;
+    }
 
     if (!regexSenha.test(password)) {
         errorPassword.textContent = "Senha fraca";

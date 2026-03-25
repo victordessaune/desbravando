@@ -119,4 +119,9 @@ https://www.canva.com/design/DAG6jSOHHPI/7prAVcIUiWq1h17mvJ6_hQ/edit?utm_content
 
 ---
 
+## Link do vídeo Fluxos 1 e 2
+https://drive.google.com/file/d/1CMhLRH6Xj7F5HVtJIImHRgZxpHM7gTz2/view?usp=sharing
+
+---
+
 > “Explorar o mundo ao seu redor pode ser o começo de grandes experiências.”

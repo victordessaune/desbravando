@@ -14,6 +14,26 @@ body{
     position: relative;
 }
 
+.progress-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 33.33%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-light-blue), var(--color-white));
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px rgba(var(--color-white-rgb), 0.8);
+    z-index: 999;
+}
+
+.progress-bar.step2{
+    width: 66.66%;
+}
+
+.progress-bar.step3{
+    width: 100%;
+}
+
 .steps{
     display: flex;
     gap: 12px;
@@ -26,11 +46,11 @@ body{
     gap: 6px;
     font-size: 11px;
     font-weight: 500;
-    color: rgb(var(--color-white-rgb), 0.5);
+    color: rgba(var(--color-white-rgb), 0.5);
 }
 
-.step-number-circle .active{
-    color: rgb(var(--color-white-rgb));
+.step-number.active{
+    color: rgba(var(--color-white-rgb));
 }
 
 .step-circle{
@@ -44,9 +64,10 @@ body{
     font-weight: 600;
     border: 2px solid rgb(var(--color-white-rgb), 0.3);
     background: transparent;
+    color: rgba(var(--color-white-rgb), 0.5);
 }
 
-.step-number-circle.active .step-circle{
+.step-number.active .step-circle{
     background: var(--color-white);
     color: var(--color-purple);
     box-shadow: 0px 0px 20px rgba(var(--color-white-rgb), 0.4);
@@ -55,7 +76,7 @@ body{
 .step-line{
     width: 24px;
     height: 2px;
-    background: var(--color-white), 0.3;
+    background: rgba(var(--color-white-rgb), 0.3);
     border-radius: 2px;
     align-self: center;
 }

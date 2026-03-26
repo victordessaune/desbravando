@@ -1,14 +1,65 @@
 body{
-    margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: url(../assets/images/blue-background.png);
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        var(--color-blue) 0%,
+        var(--color-light-blue) 50%,
+        var(--color-light-purple) 100%
+    );
+    position: relative;
 }
+
+.steps{
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.step-number{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgb(var(--color-white-rgb), 0.5);
+}
+
+.step-number-circle .active{
+    color: rgb(var(--color-white-rgb));
+}
+
+.step-circle{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    border: 2px solid rgb(var(--color-white-rgb), 0.3);
+    background: transparent;
+}
+
+.step-number-circle.active .step-circle{
+    background: var(--color-white);
+    color: var(--color-purple);
+    box-shadow: 0px 0px 20px rgba(var(--color-white-rgb), 0.4);
+}
+
+.step-line{
+    width: 24px;
+    height: 2px;
+    background: var(--color-white), 0.3;
+    border-radius: 2px;
+    align-self: center;
+}
+
 .card{
     background-color: rgb(255, 255, 255);
     max-width: 400px;

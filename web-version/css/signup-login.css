@@ -24,14 +24,33 @@ body{
     border-radius: 0 4px 4px 0;
     box-shadow: 0 0 12px rgba(var(--color-white-rgb), 0.8);
     z-index: 999;
+    transition: width 1s ease;
+    animation: progressAnimation1 1s ease forwards;
+}
+
+@keyframes progressAnimation1 {
+    0% { width: 0; }
+    100% { width: 33.33%; }
+}
+
+@keyframes progressAnimation2 {
+    0% { width: 33.33%; }
+    100% { width: 66.66%; }
+}
+
+@keyframes progressAnimation3 {
+    0% { width: 66.66%; }
+    100% { width: 100%; }
 }
 
 .progress-bar.step2{
-    width: 66.66%;
+    transition: width s ease;
+    animation: progressAnimation2 1s ease forwards;
 }
 
 .progress-bar.step3{
-    width: 100%;
+    transition: width 1s ease;
+    animation: progressAnimation3 1s ease forwards;
 }
 
 .steps{
@@ -86,12 +105,15 @@ body{
     max-width: 400px;
     padding: 40px;
     text-align: center;
-    border-radius: 20px; 
+    border-radius: 24px; 
 }
+
 .card-h2{
     font-size: 26px;
     color: #5170FF;
-    font-weight: 400;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 
 }
 .card-p{
@@ -101,6 +123,30 @@ body{
     color: black;
     font-weight: 300px;
 } 
+
+.button-org-type{
+    width: 100%;
+    border: 1.5px solid var(--color-light-gray);
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.button-org-type-title{
+    font-size: 14px;
+    color: var(--color-dark-blue);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.button-org-type-description {
+    font-size: 11px;
+    font-weight: 300;
+    color: #9ca3af;
+    display: block;
+}
+
 .btn-template{
     width: 100%;
     padding: 10px;
@@ -135,7 +181,9 @@ body{
     position: absolute;
     bottom: 20px;
     color: white;
-    font-size: 20px;
+    font-size: clamp(12px, 2vw, 14px);
+    font-weight: 600;
+    letter-spacing: 0.72px;
 }
 .input-login,select{
     border-radius: 20px;

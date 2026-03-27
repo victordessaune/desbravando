@@ -11,9 +11,9 @@ body{
     linear-gradient(
         120deg,
         rgba(var(--color-white-rgb),0.9) 0%,
-        rgba(var(--color-white-rgb),0.75) 35%,
-        rgba(var(--color-white-rgb),0.4) 50%,
-        rgba(var(--color-white-rgb),0) 80%
+        rgba(var(--color-white-rgb),0.75) 20%,
+        rgba(var(--color-white-rgb),0.4) 40%,
+        rgba(var(--color-white-rgb),0) 100%
     ),
     linear-gradient(
         to bottom,
@@ -58,6 +58,9 @@ body{
     }
 }
 
+
+/* NAVBAR */
+
 .navbar{
     opacity: 0;
     transform: translateY(-30px);
@@ -95,8 +98,8 @@ body{
     font-size: clamp(1rem, 2vw, 2.5rem);
     color: var(--color-purple);
     margin-left: 0.5%;
-    font-weight: 700;
-    letter-spacing: 0px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
 }
 
 .navbar-right{
@@ -119,6 +122,8 @@ body{
     font-size: clamp(0.2rem, 2.5vw, 1.5rem);
     font-weight: 600;
     transition: transform 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden; 
 }
 
 .navbar.scrolled .button-navbar{
@@ -126,13 +131,35 @@ body{
     color: var(--color-white);
 }
 
+.button-navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;          
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.4) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: skewX(-20deg);     
+    transition: left 0.5s ease;
+}
+
+.button-navbar:hover::before {
+    left: 125%;           
+}
+
 .text-login-navbar{
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: clamp(0.8rem, 1.8em, 2rem);
     color: var(--color-white);
     font-weight: 700;
     margin-right: 2vw;
     transition: transform 0.3s ease-in-out;
+    position: relative; 
 }
 
 .text-login-navbar:hover, 
@@ -140,9 +167,33 @@ body{
     transform: scale(1.1);
 }
 
+.text-login-navbar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-white);
+    transform: scaleX(0);
+    transform-origin: center;   
+    transition: transform 0.3s ease;
+}
+
+.text-login-navbar:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar.scrolled .text-login-navbar::after {
+    background: var(--color-purple);
+}
+
+
 .navbar.scrolled .text-login-navbar{
     color: var(--color-purple);
 }
+
+/* HERO */
 
 .hero {
     display: grid;
@@ -247,6 +298,8 @@ body{
     animation: floating 5s ease-in-out infinite;
 }
 
+/* APP FEATURES */
+
 .section-features{
     display: grid;
     height: 100vh;
@@ -344,6 +397,8 @@ body{
     text-align: center;
 }
 
+/* APP STATISTICS */
+
 .statistics{
     background: linear-gradient(to top, var(--color-purple) 0%, var(--color-light-purple) 100%);
     width: 100%;
@@ -408,6 +463,8 @@ body{
     font-size: clamp(1.5rem, 2vw, 4rem);
     text-align: center;
 }
+
+/* HOW THE APP WORKS */
 
 .how-it-works{
     display: grid;
@@ -533,6 +590,8 @@ body{
     max-height: 60%; 
 }
 
+/* FINAL SECTION */
+
 .final-section{
     height: 100vh;
     width: 100%;
@@ -624,9 +683,7 @@ body{
     transform: scale(1.05);
 }
 
-.spacer{
-    height: 10vh;
-}
+/* FOOTER */
 
 footer{
     height: 10vh;
@@ -640,6 +697,8 @@ footer p{
     color: var(--color-purple);
     font-size: clamp(0.8rem, 1.5vw, 2rem);
 }
+
+/* RESPONSIVE */
 
 @media (max-width: 1300px) {
 

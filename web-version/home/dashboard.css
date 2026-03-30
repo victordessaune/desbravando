@@ -1,0 +1,98 @@
+aside{
+    width: 250px;
+    background-color:var(--color-purple);
+    justify-items: center;
+}
+.first-text{
+    margin-top: 10px;
+    display: grid;
+    
+    
+}
+.logo-text{
+    justify-self: center;
+    font-size: 15px;
+    font-weight:500;
+    color: white;
+
+}
+.logo-text-two{
+
+    font-size: 13px;
+    font-weight:500;
+    color: white ;
+    opacity: 45%;
+    
+}
+body{
+    display: flex;
+}
+.top-bar{
+    display: flex;
+}
+.top-right{
+    margin-top: 5px;
+    margin-left: 360px;
+    display: flex;
+}
+.top-left{
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.top-left p{
+    font-size: 13px;
+    color:darkgray;
+}
+.top-left h1{
+    font-size: 23px;
+    color:var(--color-dark-blue)
+}
+.notifications-button{
+    margin:5px;
+    background-color: rgba(108,92,231,0.07);
+    border: 1px solid rgba(108,92,231,0.12);
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    color: var(--color-purple);
+}
+.coments-button{
+    margin:5px;
+    background-color: rgba(108,92,231,0.07);
+    border: 1px solid rgba(108,92,231,0.12);
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    color: var(--color-purple);
+}
+.btn-primary{
+    margin:5px;
+    background: var(--color-purple);
+    border: 1px solid rgba(108,92,231,0.12);
+    border-radius: 20px;
+    padding: 8px 12px;
+    height: 43px;
+    width: 150px;
+}
+
+button.btn-primary p{
+    color: white;
+    font-size: 14px;
+}
+.search-bar{ 
+    margin:5px;
+    background: rgba(108,92,231,0.07);
+    border: 1px solid rgba(108,92,231,0.12);
+    border-radius: 20px;
+    padding: 8px 12px;
+    height: 43px;
+
+}
+.search-bar input {
+    
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  width: 200px;
+}

@@ -1,10 +1,19 @@
 aside{
     width: 250px;
+    height: auto;
     background-color:var(--color-purple);
-    justify-items: center;
+}
+.sidebar-logo{
+    width: 250px;
+    height: 70px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.345) ;
+}
+.sidebar-rest{
+    margin-left: 25px;
+    margin-top: 10px;
 }
 .first-text{
-    margin-top: 10px;
+    margin-top: 15px;
     display: grid;
     
     
@@ -17,26 +26,55 @@ aside{
 
 }
 .logo-text-two{
-
+    margin-left: 74px;
     font-size: 13px;
     font-weight:500;
     color: white ;
     opacity: 45%;
     
 }
+.principal{
+    font-size: 13px;
+    font-weight:400;
+    color: white;
+    opacity: 45%;
+    margin-bottom: 3px;
+}
+.principal-icons{
+    margin-right: 10px;
+    font-size: 13px;
+    font-weight:300;
+    color: white ;
+    
+}
+.principal-icons p{
+    padding-top: 7px;
+    padding-left: 40px;
+    margin-bottom:7px;
+    height: 35px;
+    border-radius: 10px;
+    
+}
+.principal-icons p:hover{
+    background-color: rgb(108, 92, 231);
+}
+.principal-icons .fa-solid{  
+    margin-right: 5px;
+}
 body{
     display: flex;
 }
 .top-bar{
     display: flex;
+    height: 70px;
 }
 .top-right{
     margin-top: 5px;
-    margin-left: 360px;
+    margin-left: 30px;
     display: flex;
 }
 .top-left{
-    margin-top: 5px;
+    margin-top: 8px;
     margin-left: 10px;
 }
 .top-left p{
@@ -69,7 +107,7 @@ body{
     margin:5px;
     background: var(--color-purple);
     border: 1px solid rgba(108,92,231,0.12);
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 8px 12px;
     height: 43px;
     width: 150px;
@@ -79,7 +117,13 @@ button.btn-primary p{
     color: white;
     font-size: 14px;
 }
+.search-bar .fa-solid{
+    margin-top: 4px;
+    margin-right:10px ;
+    color: rgba(122, 122, 125, 0.63);
+}
 .search-bar{ 
+    display: flex;
     margin:5px;
     background: rgba(108,92,231,0.07);
     border: 1px solid rgba(108,92,231,0.12);

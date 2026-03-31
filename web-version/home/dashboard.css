@@ -1,7 +1,10 @@
 aside{
+    position: fixed;
     width: 220px;
-    height: auto;
+    height: 100vh;
     background-color:var(--color-purple);
+    display: flex;
+    flex-direction: column;
 }
 .sidebar-logo{
     width: 220px;
@@ -11,17 +14,20 @@ aside{
 .sidebar-rest{
     padding-left: 25px;
     margin-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.345) ;
+    
 }
 .admin{
-    height: 13vh;
+    display:flex;
+    margin-top: auto;
+    padding-bottom: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.345) ;
 }
 .box-admin{
-    margin-top: 35px;
+    margin:20px;
     width: 190px;
     height: 50px;
     justify-self: center;
+    align-self: center;
     border-radius: 15px;
     border:1px solid rgba(245, 245, 245, 0.252);
     background-color: rgba(255, 255, 255, 0.093);
@@ -132,19 +138,30 @@ aside{
 body{
     display: flex;
 }
+main{
+    margin-left: 220px;
+    width: calc(100% - 220px); 
+    min-height: 100vh;
+    background-color: rgb(218, 218, 218);
+    
+}
 .top-bar{
     display: flex;
-    height: 70px;
+    justify-content: space-between; /* 👈 separa esquerda e direita */
+    align-items: center; /* 👈 alinha vertical */
+    height: 10vh;
+    background-color: white;
+    padding: 0 20px;
 }
+
 .top-right{
-    margin-top: 10px;
-    /*toda vez q for fzr commit mudar p 390px*/
-    margin-left: 30px;
     display: flex;
+    gap: 10px; /* espaço entre botões */
+    align-items: center;
 }
 .top-left{
-    margin-top: 10px;
-    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
 }
 .top-left p{
     font-size: 13px;
@@ -157,15 +174,17 @@ body{
 .cards{
     padding-top: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    
 }
 .cards .card{
     margin: 5px;
     align-self: center;
-    background-color: aquamarine;
-    height: 170px;
-    width: 230px;
-    border: 1px solid ;
+    border-radius: 30px;
+    background-color: rgb(255, 255, 255);
+    height: 25vh;
+    width: 35vh;
+    border: 1px solid rgb(180, 180, 180) ;
 }
 .notifications-button{
     margin:5px;
@@ -191,8 +210,8 @@ body{
     border: 1px solid rgba(108,92,231,0.12);
     border-radius: 15px;
     padding: 8px 12px;
-    height: 35px;
-    width: 140px;
+    height: 40px;
+    width: 160px;
 }
 .btn-primary:hover{
     background-color:rgb(108, 92, 231);
@@ -215,7 +234,7 @@ button.btn-primary p{
     border: 1px solid rgba(108,92,231,0.12);
     border-radius: 20px;
     padding: 8px 12px;
-    height: 35px;
+    height: 40px;
 
 }
 .search-bar input {

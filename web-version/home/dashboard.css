@@ -1,19 +1,52 @@
 aside{
-    width: 250px;
+    width: 220px;
     height: auto;
     background-color:var(--color-purple);
 }
 .sidebar-logo{
-    width: 250px;
+    width: 220px;
     height: 70px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.345) ;
 }
 .sidebar-rest{
-    margin-left: 25px;
+    padding-left: 25px;
     margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.345) ;
 }
+.admin{
+    height: 13vh;
+}
+.box-admin{
+    margin-top: 35px;
+    width: 190px;
+    height: 50px;
+    justify-self: center;
+    border-radius: 15px;
+    border:1px solid rgba(245, 245, 245, 0.252);
+    background-color: rgba(255, 255, 255, 0.093);
+    padding-left: 20px;
+}
+
+.name-admin{
+    padding-top:5px;
+    padding-left:50px;
+    margin-right: 10px;
+    font-size: 13px;
+    font-weight:300;
+    color: white ;
+}
+.class-admin{
+    padding-left:50px;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight:300;
+    color: white ;
+    opacity: 45%;
+}
+
 .first-text{
-    margin-top: 15px;
+    margin-top: 17px;
     display: grid;
     
     
@@ -26,7 +59,7 @@ aside{
 
 }
 .logo-text-two{
-    margin-left: 74px;
+    margin-left: 59px;
     font-size: 13px;
     font-weight:500;
     color: white ;
@@ -38,18 +71,19 @@ aside{
     font-weight:400;
     color: white;
     opacity: 45%;
+    margin-top: 4px;
     margin-bottom: 3px;
 }
 .principal-icons{
     margin-right: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight:300;
     color: white ;
     
 }
 .principal-icons p{
     padding-top: 7px;
-    padding-left: 40px;
+    padding-left: 30px;
     margin-bottom:7px;
     height: 35px;
     border-radius: 10px;
@@ -69,12 +103,13 @@ body{
     height: 70px;
 }
 .top-right{
-    margin-top: 5px;
+    margin-top: 10px;
+    /*toda vez q for fzr commit mudar p 300px*/
     margin-left: 30px;
     display: flex;
 }
 .top-left{
-    margin-top: 8px;
+    margin-top: 10px;
     margin-left: 10px;
 }
 .top-left p{
@@ -111,6 +146,9 @@ body{
     padding: 8px 12px;
     height: 43px;
     width: 150px;
+}
+.btn-primary:hover{
+    background-color:rgb(108, 92, 231);
 }
 
 button.btn-primary p{

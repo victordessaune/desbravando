@@ -28,19 +28,25 @@
         </div>
     </div>
     <div class="card">
-        <h2 class="card-h2">Cadastro</h2>
-        <p class="card-p">Que tipo de organização você representa?</p>
+        <p class="card-title">Cadastro · Passo 1 de 3</p>
+        <h2 class="card-h2">Que tipo de <span>organização</span> você representa?</h2>
 
-        <form action="step2.html" method="GET">
+        <p class="card-p">Selecione abaixo para começarmos a configurar seu perfil no Desbravando.</p>
+
+        <form action="step2.html" method="GET" class="org-buttons">
             <button class="button-org-type" type="submit" name="org-type" value="public">
                 <span class="button-org-type-title">Organização Pública</span>
-                <span class="button-org-type-description">Órgãos governamentais e outras instituições públicas.</span>
+                <span class="button-org-type-description">Museus, centros culturais e espaços municipais</span>
             </button>
             <button class="button-org-type" type="submit" name="org-type" value="private">
                 <span class="button-org-type-title">Organização Privada</span>
                 <span class="button-org-type-description">Restaurantes e outras instituições privadas.</span>
             </button>
         </form>
+        <div class="divider"></div>
+        <p class="p-login-link">
+            Já tem uma conta? <a href="../login/login.html">Fazer login</a>
+        </p>
     </div>
 
     <footer class="footer-login">

@@ -1,0 +1,64 @@
+.body-profile{
+    margin: 0;
+}
+.navbar-profile{
+    background-color: rgb(140, 164, 164);
+    position: fixed;
+    width: 100%;
+    color: white;
+    height: 96px;
+    display: flex;
+    align-items: center;
+}
+.logo-navbar{
+    height: 50%;
+    width: auto;
+    margin-left: 2%;
+}
+
+.text-navbar{
+    font-size: clamp(1rem, 1.2vw, 2rem);
+    color: var(--color-purple);
+    margin-left: 0.5%;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+
+.navbar-right{
+    margin-left: auto;
+    margin-right: 2%;
+    display: flex;
+    align-items: center;
+    width: auto;
+    gap:20px;
+}
+.btn-navbar{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-dark-blue);
+    padding: clamp(4px, 1vh, 6px) clamp(2px, 4vw, 15px);
+    border-radius: 15px;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+    font-weight: 400;
+    position: relative;
+    border:2px solid var(--color-purple)
+}
+.btn-navbar:hover{
+    background-color: var(--color-light-gray);
+    border: 2px solid var(--color-light-gray);
+}
+.banner{
+    background-color: aquamarine;
+    height: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 20px;
+    
+}
+.change-banner{
+    background-color: white;
+    border: 1px solid white;
+}

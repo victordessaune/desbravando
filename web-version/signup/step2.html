@@ -14,10 +14,12 @@
 <body>
     <div class="progress-bar step2"></div>
     <div class="steps">
-        <div class="step-number active">
-            <div class="step-circle">1</div>
-            <span>Tipo</span>
-        </div>
+        <a href="step1.html">
+            <div class="step-number done">
+                <div class="step-circle">✓</div>
+                <span>Tipo</span>
+            </div>
+        </a>
         <div class="step-line"></div>
         <div class="step-number active">
             <div class="step-circle">2</div>
@@ -30,9 +32,10 @@
         </div>
     </div>
     <form id="form-step2" class="card" action="step3.html" method="GET">
+        <p class="card-title">Cadastro · Passo 2 de 3</p>
         <input type="hidden" name="type" id="type">
 
-        <h2 class="card-h2">Dados da Organização</h2>
+        <h2 class="card-h2">Dados da <span>Organização</span></h2>
         <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Nome da Organização">
         <p class="message-error-register" id="error-name"></p>
 

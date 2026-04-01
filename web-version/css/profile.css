@@ -2,13 +2,15 @@
     margin: 0;
 }
 .navbar-profile{
-    background-color: rgb(140, 164, 164);
+    background-color: rgb(255, 255, 255);
     position: fixed;
     width: 100%;
     color: white;
     height: 96px;
     display: flex;
     align-items: center;
+    top: 0;
+    left: 0;
 }
 .logo-navbar{
     height: 50%;
@@ -37,9 +39,9 @@
     text-align: center;
     text-decoration: none;
     color: var(--color-dark-blue);
-    padding: clamp(4px, 1vh, 6px) clamp(2px, 4vw, 15px);
-    border-radius: 15px;
-    font-size: clamp(0.9rem, 1vw, 1.5rem);
+    padding: clamp(2px, 1vh, 4px) clamp(2px, 4vw, 15px);
+    border-radius: 10px;
+    font-size: clamp(0.7rem, 0.8vw, 1rem);
     font-weight: 400;
     position: relative;
     border:2px solid var(--color-purple)
@@ -49,16 +51,29 @@
     border: 2px solid var(--color-light-gray);
 }
 .banner{
-    background-color: aquamarine;
-    height: 350px;
+    height: 230px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
     padding: 20px;
+    margin-top: 96px;
+    background: linear-gradient(
+        135deg,
+        var(--color-blue) 0%,
+        var(--color-light-blue) 50%,
+        var(--color-light-purple) 100%
+    );
     
 }
 .change-banner{
-    background-color: white;
-    border: 1px solid white;
+    border: 1px solid rgb(255, 255, 255);
+    font-size: clamp(0.7rem, 0.9vh, 1rem);
+    padding: 6px;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+.fa-camera{
+    color: black;
+    margin-right: 8px;
 }

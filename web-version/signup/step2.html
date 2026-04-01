@@ -31,72 +31,116 @@
             <span>Responsável</span>
         </div>
     </div>
-    <form id="form-step2" class="card" action="step3.html" method="GET">
+    <form id="form-step2" class="bigger-card" action="step3.html" method="GET">
         <p class="card-title">Cadastro · Passo 2 de 3</p>
-        <input type="hidden" name="type" id="type">
 
         <h2 class="card-h2">Dados da <span>Organização</span></h2>
-        <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Nome da Organização">
-        <p class="message-error-register" id="error-name"></p>
+        <div class="box-input">
+            <label class="field-label">Nome da Organização</label>
+            <input type="text" name="org-name" id="org-name" class="input-login" placeholder="Ex: Prefeitura de Vitória">
+            <p class="message-error-register" id="error-name"></p>
 
-        <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="CNPJ" maxlength="18">
-        <p class="message-error-register" id="error-cnpj"></p>
-
-
-        <input type="text" name="website" id="website" class="input-login" placeholder="Website">
-        <p class="message-error-register" id="error-website"></p>
-
-
-        <input type="email" name="org-email" id="org-email" class="input-login" placeholder="Email institucional">
-        <p class="message-error-register" id="error-email"></p>
-
-        <div class="line">
-            <input type="text" name="cep" id="cep" class="input-login" placeholder="CEP" maxlength="9">
-            <input type="text" name="number" id="number" class="input-login" placeholder="Número">
         </div>
 
-        <input type="text" name="street" id="street" class="input-login" placeholder="Rua ou avenida">
+
+        <div class="line">
+            <div class="box-input">
+                <label class="field-label">CNPJ</label>
+                <input type="text" name="org-cnpj" id="org-cnpj" class="input-login" placeholder="00.000.000/0000-00" maxlength="18">
+                <p class="message-error-register" id="error-cnpj"></p>
+            </div>
+
+            <div class="box-input">
+                <label class="field-label">Website</label>
+                <input type="text" name="website" id="website" class="input-login" placeholder="https://www...">
+                <p class="message-error-register" id="error-website"></p>
+            </div>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">Email institucional</label>
+            <input type="email" name="org-email" id="org-email" class="input-login" placeholder="contato@organizacao.com.br">
+            <p class="message-error-register" id="error-email"></p>
+        </div>
+
+        <div class="adress-title">
+            Endereço
+        </div>
+
+        <div class="line">
+            <div class="box-input" style="flex: 0 0 140px;">
+                <label class="field-label">CEP</label>
+                <input type="text" name="cep" id="cep" class="input-login" placeholder="00000-000" maxlength="9">
+            </div>
+
+            <div class="box-input" style="flex: 1;">
+                <label class="field-label">Logradouro</label>
+                <input type="text" name="street" id="street" class="input-login" placeholder="Rua, avenida, etc.">
+            </div>  
+        </div>
+
+        
         <p class="message-error-register" id="error-address">Mensagem de erro</p>
 
         <div class="line">
-            <input type="text" name="city" id="city" class="input-login" placeholder="Cidade">
-            <select name="uf" id="uf" class="select-login">
-                <option value="">UF</option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-            </select>
+            <div class="box-input" style="flex: 0 0 100px;">
+                <label class="field-label">Número</label>
+                <input type="text" name="number" id="number" class="input-login" placeholder="Nº">
+            </div>
+            <div class="box-input" style="flex: 0 0 140px;">
+                <label class="field-label">Complemento</label>
+                <input type="text" name="complement" id="complement" class="input-login" placeholder="Apto, sala, etc.">
+            </div>
+
+            <div class="box-input" style="flex: 1;">
+                <label class="field-label">Bairro</label>
+                <input type="text" name="neighborhood" id="neighborhood" class="input-login" placeholder="Laranjeiras">
+            </div>
         </div>
 
-        <div class="btn-padding">
-            <div class="line">
-            <button class="btn-template" type="button" onclick="window.location.href='step1.html'">Voltar</button>
-            <button class="btn-template" type="submit">Próximo</button> 
+        <div class="line">
+            <div class="box-input" style="flex: 1;">
+                <label class="field-label">Cidade</label>
+                <input type="text" name="city" id="city" class="input-login" placeholder="Sua cidade">
+            </div>
+            <div class="box-input">
+                <label class="field-label">UF</label>
+                <select name="uf" id="uf">
+                    <option value="">—</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                </select>
+            </div>
         </div>
+
+        <div class="button-line">
+            <button class="btn-back" type="button" onclick="window.location.href='step1.html'">Voltar</button>
+            <button class="btn-template" type="submit">Próximo</button> 
         </div>
 
             

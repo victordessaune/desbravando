@@ -1,9 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 const orgType = params.get("org-type");
 
-if (!orgType) {
-    window.location.href = "step1.html";
-}
+
 
 const cnpjInput = document.getElementById("org-cnpj");
 

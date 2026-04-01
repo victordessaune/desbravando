@@ -24,8 +24,8 @@ aside{
 }
 .box-admin{
     margin:20px;
-    width: 190px;
-    height: 50px;
+    width: 195px;
+    height: 55px;
     justify-self: center;
     align-self: center;
     border-radius: 15px;
@@ -33,19 +33,27 @@ aside{
     background-color: rgba(255, 255, 255, 0.093);
     padding-left: 20px;
 }
+.box-admin:hover{
+    background-color: rgba(255, 255, 255, 0.164);
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
+    transform: translateY(-1px);
+    transition: 0.3s ease;
+
+}
+
 
 .name-admin{
     padding-top:5px;
     padding-left:50px;
     margin-right: 10px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight:300;
     color: white ;
 }
 .class-admin{
     padding-left:50px;
     margin-right: 10px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight:300;
     color: white ;
     opacity: 45%;
@@ -66,14 +74,15 @@ aside{
 }
 .logo-text-two{
     margin-left: 59px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight:500;
     color: white ;
     opacity: 45%;
     
 }
 .principal{
-    font-size: 12px;
+    padding: 2px;
+    font-size: 14px;
     font-weight:400;
     color: white;
     opacity: 45%;
@@ -82,7 +91,7 @@ aside{
 }
 .principal-icons{
     margin-right: 10px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight:300;
     color: white ;
     
@@ -90,17 +99,17 @@ aside{
 /*pagina do momento*/
 .principal-icon-page{
     margin-right: 10px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight:300;
     color: white ;
     
     
 }
 .principal-icon-page p{
-    padding-top: 7px;
+    padding-top: 9px;
     padding-left: 30px;
     margin-bottom:7px;
-    height: 35px;
+    height: 40px;
     border-radius: 10px;
     background-color: rgba(108, 92, 231, 0.552);
     position: relative;
@@ -122,15 +131,16 @@ aside{
     border-radius: 3px;
 }
 .principal-icons p{
-    padding-top: 7px;
+    padding-top: 9px;
     padding-left: 30px;
     margin-bottom:7px;
-    height: 35px;
+    height: 40px;
     border-radius: 10px;
     
 }
 .principal-icons p:hover{
     background-color: rgba(108, 92, 231, 0.304);
+    
 }
 .principal-icons .fa-solid{  
     margin-right: 5px;
@@ -142,7 +152,11 @@ main{
     margin-left: 220px;
     width: calc(100% - 220px); 
     min-height: 100vh;
-    background-color: rgb(218, 218, 218);
+    background: linear-gradient(0deg,
+    #ffffff,
+    #4c3cc33d
+
+);
     
 }
 .top-bar{
@@ -184,12 +198,17 @@ main{
     background-color: rgb(255, 255, 255);
     height: 25vh;
     width: 35vh;
-    border: 1px solid rgb(180, 180, 180) ;
+    border: 0px solid rgb(180, 180, 180) ;
+}
+.cards .card:hover{
+    box-shadow: 0 0 10px #4c3cc321;
+    transform: translateY(-4px);
+    transition: 0.2s ease-in-out;
 }
 .notifications-button{
     margin:5px;
     background-color: rgba(108,92,231,0.07);
-    border: 1px solid rgba(108,92,231,0.12);
+    border: 1px solid rgb(204, 204, 204);
     height: 40px;
     width: 40px;
     border-radius: 10px;
@@ -198,7 +217,7 @@ main{
 .coments-button{
     margin:5px;
     background-color: rgba(108,92,231,0.07);
-    border: 1px solid rgba(108,92,231,0.12);
+    border: 1px solid rgb(204, 204, 204);
     height: 40px;
     width: 40px;
     border-radius: 10px;
@@ -215,23 +234,26 @@ main{
 }
 .btn-primary:hover{
     background-color:rgb(108, 92, 231);
+    transform: translateY(-3px); /* sobe */
+    transition: 0.3s ease;
 }
+
 
 button.btn-primary p{
     color: white;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 65 0px;
 }
 .search-bar .fa-solid{
     margin-top: 4px;
     margin-right:10px ;
-    color: rgba(122, 122, 125, 0.63);
+    color: rgba(122, 122, 125, 0.678);
 }
 .search-bar{ 
     display: flex;
     margin:5px;
     background: rgba(108,92,231,0.07);
-    border: 1px solid rgba(108,92,231,0.12);
+    border: 1px solid rgb(204, 204, 204);
     border-radius: 20px;
     padding: 8px 12px;
     height: 40px;

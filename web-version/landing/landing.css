@@ -154,7 +154,7 @@ body{
 
 .text-login-navbar{
     text-decoration: none;
-    font-size: clamp(0.8rem, 1.8em, 2rem);
+    font-size: clamp(0.2rem, 2.5vw, 1.5rem);
     color: var(--color-white);
     font-weight: 700;
     margin-right: 2vw;

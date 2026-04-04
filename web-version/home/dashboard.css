@@ -185,7 +185,7 @@ main{
     font-size: 23px;
     color:var(--color-dark-blue)
 }
-.cards{
+.cards{ 
     padding-top: 30px;
     display: flex;
     justify-content: space-evenly;

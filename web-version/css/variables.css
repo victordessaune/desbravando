@@ -1,8 +1,8 @@
 :root {
   --font-main: 'Poppins', sans-serif; /* Fonte geral utilizada no aplicativo */
 
-  --color-purple: #4B3CC3; /* Cor roxa principal */
-  --color-light-purple: #C48FCE; /* Cor roxa clara */
+  --color-purple: #4b3cc3; /* Cor roxa principal */
+  --color-light-purple: rgb(196, 143, 206); /* Cor roxa clara */
   --color-blue: #5170ff; /* Cor azul principal */
   --color-blue-secondary: #7aa8ff; /* Cor azul secundária (usada no degradê da landing page) */
   --color-light-blue: #6ee7f9; /* Cor azul clara (usada no degradê da landing page) */
@@ -13,4 +13,5 @@
   --color-dark-gray: #6B7280; /* Cor cinza escura */
   --color-gray: #9ca3af; /* Cor cinza intermediária (usada para textos secundários) */
   --color-medium-gray: #C4C9D4; /* Cor cinza média */
+  --color-off-white: #F4F5FB; /* Cor cinza mais clara (usada de background no profile)*/
 }

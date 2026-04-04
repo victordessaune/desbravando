@@ -1,11 +1,12 @@
 .body-profile{
     margin: 0;
+    background-color: var(--color-off-white);
 }
 .navbar-profile{
-    background-color: rgb(255, 255, 255);
+    background-color: var(--color-white);
     position: fixed;
     width: 100%;
-    color: white;
+    color: var(--color-white);
     height: 96px;
     display: flex;
     align-items: center;
@@ -67,17 +68,18 @@
     
 }
 .change-banner{
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid var(--color-white);
     font-size: clamp(0.7rem, 0.9vh, 1rem);
     padding: 6px;
     margin-right: 15px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.2);
-    color: white;
+    color: var(--color-white);
     
 }
+/* Estilização dos ícones*/
 .fa-camera{
-    color: #ffffff;
+    color: var(--color-white);
     margin-right: 8px;
 }
 .fa-location-dot{
@@ -88,39 +90,82 @@
     color: var(--color-purple);
     margin-right: 3px;
 }
+.fa-map-pin{
+    color: var(--color-blue);
+}
+.fa-eye{
+    color: var(--color-purple);
+}
+.fa-star{
+    color: var(--color-light-purple);
+}
+.fa-people-group{
+    color: var(--color-light-blue);
+    font-weight: 600;
+}
+.fa-pen{
+    color: var(--color-purple);
+    margin-right: 8px;
+}
+.fa-building-columns{
+    color: var(--color-purple);
+}
+.fa-map-location-dot{
+    color: var(--color-purple);
+}
+.fa-address-card{
+    color: var(--color-purple);
+    margin-right: 8px;
+}
+.fa-envelope{
+    color: var(--color-white);
+    font-size: 16px;
+}
+.fa-link{
+    color: var(--color-white);
+}
+.fa-map{
+    color: var(--color-white);
+}
+.fa-id-card-clip{
+    color: var(--color-white);
+}
+.fa-user{
+    color: var(--color-purple);
+    margin-right: 8px;
+}
 .main-content{
     max-width: 1100px;
     margin: auto;
-
 }
-.identity{
+/*Estilo dos cards*/
+.identity-section{
     display: flex;
     align-items: flex-end;
-    margin-top: -50px;
+    margin-top: -54px;
     gap: 40px;
-    padding: 20px;
+    margin-bottom: 40px;
 }
 .user-icon{
     background: linear-gradient(135deg, var(--color-blue), var(--color-blue-secondary));
     width: 100px;
     height: 100px;
     border-radius: 12px;
-    border: 4px solid white;
+    border: 4px solid var(--color-white);
     font-size: 36px;
     display:flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    color: white;
+    color: var(--color-white);
     box-shadow: 0 8px 28px rgba(75, 60, 195, 0.3);
     position: relative;
 }
 .identity-info{
     flex: 1;
-
 }
 .org-type{
-    background-color: white;
+    background-color: var(--color-white);
     border-radius: 20px;
     display: inline-flex;
     align-items: center;
@@ -129,20 +174,21 @@
     color: var(--color-blue);
     font-weight: 700;
     letter-spacing: 1px;
-    margin-bottom: 6px;
     padding: 5px 10px;
     position: relative;
     background-color: rgb(81, 112, 255, 0.1);
     border:  solid rgba(81, 112, 255, 0.2)
 }
-.org-informations{
+.org-name{
+    font-size: clamp(1.5rem, 4vw, 2.5rem)
+}
+.org-details{
     color: var(--color-gray);
     display: flex;
     align-items: center;
     gap: 25px;
-    padding: 6px;
-    font-size: 14px;
-    flex: 1;
+    padding-bottom: 6px;
+    font-size: clamp(0.75rem, 0.9vw, 0.875rem);
 }
 .buttons-identity{
     display: flex;
@@ -154,32 +200,194 @@
     border: 2px solid var(--color-purple);
     border-radius: 10px;
     box-shadow: 0 8px 28px var(--color-light-gray);
-    font-size: 13px;
+    font-size: clamp(0.7rem, 1vh, 1.5rem);
     font-weight: 600;
 }
-.boxes{
+.cards-row{
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 20px;
 }
 .card{
-    background-color: aqua;
-    width: 20%;
-    height: 70px;
-    border-radius: 20px;
+    background-color: var(--color-white);
+    border-radius: 16px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    gap: 14px;
+    transition: all 0.25s;
+    box-shadow: 0 8px 28px var(--color-light-gray);
+    border: 1px solid rgba(var(--color-light-gray), 0.08);
+    width: 25%;
+    height: 86px;
+}
+.card:hover{
+    transform: translateY(-5px);
 }
 .bg-icon{
-    background-color: #ffffff;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     padding: 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 20px;
+}
+.bg-icon.blue{
+    background-color: rgba(122, 168, 255, 0.2);
+}
+.bg-icon.dark-purple{
+    background-color:rgba(75, 60, 195, 0.1)
+}
+.bg-icon.light-green{
+    background-color: rgba(110, 231, 249, 0.2);
+}
+.bg-icon.light-purple{
+    background-color: rgba(196, 143, 206, 0.2)
+}
+.bg-icon.purple{
+    background: linear-gradient(
+        135deg,
+        var(--color-purple) 35%,
+        var(--color-blue) 100%
+    );
+}
+.bg-icon.pink-blue{
+    background: linear-gradient(
+        135deg,
+        var(--color-light-purple) 35%,
+        var(--color-blue) 100%
+    );
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 20px;
+}
+    
+.card-value{
+    font-size: 20px;
+    font-weight: 800;
+}
+.card-text{
+    display: flex;
+    align-items: flex-end;
+    color: var(--color-gray);
+    font-weight: 500;
+    font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+}
+
+/*Estilos da parte principal da página*/
+.information-boxes{
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    margin-top: 35px;
+}
+.box-left{
+    display: flex;
+    flex-direction: column;
+}
+.box-template{
+    background-color: var(--color-white);
+    padding: 10px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px var(--color-light-gray);
+    margin-bottom: 30px;
+}
+.box-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+.box-title{
+    font-weight: 600;
+    margin-left: 10px;
+    color: var(--color-purple);
+    flex: 1;
+}
+.box-content{
+    padding: 20px;
+    text-align: justify;
+    font-size: 15px;
+}
+/*Estilo do box de "Locais Cadastrados"*/
+.places-area{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+}
+.place-card{
+    border: 1px solid var(--color-gray);
+    border-radius: 16px;
+    transition: all 0.25s;
+}
+.place-card:hover{
+    transform: translateY(-5px);
+}
+.banner-place{
+    background: linear-gradient(
+        135deg,
+        var(--color-blue) 50%,
+        var(--color-light-blue) 100%,
+        var(--color-light-purple) 100%
+    );
+    border-radius: 16px 16px 0 0;
+    height: 110px;
+}
+.place-name{
+    margin-left: 15px;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 15px;
+}
+.place-location{
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--color-dark-gray);
+    font-weight: 400;
+}
+/*Estilo do box de "Informações"*/
+.info-space{
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 10px 0px;
+    border-radius: 10px;
+    background-color: var(--color-off-white);
+    margin-bottom: 15px;
+    transition: all 0.25s;
+}
+.info-space:hover{
+    transform: translateY(-5px);
+}
+.info-content{
+    margin-left: 15px;
+}
+.info-label{
+    color: var(--color-dark-gray);
+    font-weight: 500;
+    font-size: 11px;
+}
+.info-value{
+    font-size: 13px;
+}
+/*Estilo do box de "Responsáveis"*/
+.name-value{
+    font-size: 14px;
+    font-weight: 700;
+}
+.occupation-value{
+    font-size: 12px;
+    color: var(--color-dark-gray);
+    font-weight: 500;
+}
+.email-resp-value{
+    font-size: 14px;
+    color: var(--color-blue);
 }

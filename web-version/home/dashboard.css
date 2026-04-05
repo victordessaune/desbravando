@@ -357,6 +357,7 @@ button.btn-primary p{
 }
 .divide-table{
     display: grid;
+    justify-items: center;
     background-color: rgba(169, 169, 169, 0.174);
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     height: 30px;
@@ -365,13 +366,100 @@ button.btn-primary p{
 
     
 }
+.divide-table p{
+    padding-right: 15px;
+}
 .table-body{
     display: grid;
+    justify-items: center;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
-  
-    
-
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
+
+.table-org{
+display: flex;
+padding-left: 20px;
+gap:15px;
+}
+.table-org i{
+margin-top:10px;
+display: flex; 
+justify-content: center;
+align-items: center;
+border-radius: 10px;
+background: linear-gradient(135deg, #00c896, #be4ffe);
+height: 40px; 
+width: 40px;
+color: white;
+}
+
+.informations{
+margin-top:7px;
+}
+
+.name-org{
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-dark-blue);
+}
+.email-org{
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(88, 88, 88);
+}
+
+.type-org{
+    margin-top: 15px;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    background-color: #e9e5ff;
+    padding: 4px 10px;
+    border-radius: 15px;
+    height: 30px;
+    width: 90px;
+    font-size: 12px;
+    font-weight: 500;
+    color:var(--color-purple);
+}
+.type-org i{
+    padding-left: 5px;
+}
+.mood-org{
+    margin-top: 10px;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    color:var(--color-purple);
+}
+.mood-org i{
+    font-size: 8px;
+}
+.date-org{
+    margin-top: 20px;
+    display: inline-flex;
+    font-size: 13px;
+    
+    font-weight: 500;
+    color: rgb(88, 88, 88);
+}
+.actions-org button{
+    margin-top: 15px;
+    background: var(--color-purple);
+    border-radius: 15px;
+    padding: 8px 12px;
+    height: 35px;
+    width: 75px;
+     color:white;
+   
+}
+
+
+
+
 .divide-table p{
     align-self: center;
     padding-left: 20px;

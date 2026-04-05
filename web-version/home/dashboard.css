@@ -151,23 +151,24 @@ aside{
 body{
     display: flex;
 }
+.content{
+    background: linear-gradient(to top, #00c896, #00a884, #005296);
+}
 main{
     margin-left: 220px;
     width: calc(100% - 220px); 
     min-height: 100vh;
-    background: linear-gradient(0deg,
-    #ffffff,
-    #4c3cc33d
-
-);
+    
     
 }
 .top-bar{
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between; /* 👈 separa esquerda e direita */
     align-items: center; /* 👈 alinha vertical */
     height: 10vh;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.952);
     padding: 0 20px;
 }
 
@@ -191,6 +192,7 @@ main{
 .cards{ 
     padding-top: 30px;
     display: flex;
+    padding-left: 20px;
     justify-content: space-evenly;
     
 }
@@ -334,4 +336,75 @@ button.btn-primary p{
   background: transparent;
   font-size: 14px;
   width: 200px;
+}
+.grid-2{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 15px;
+}
+.table{
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    margin-right: 10px;
+}
+.table-head{
+   display: flex;
+   justify-content: space-between;
+  align-items: center;
+   padding: 20px;
+}
+.divide-table{
+    display: grid;
+    background-color: rgba(169, 169, 169, 0.174);
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
+    height: 30px;
+    border-top:1px solid rgba(169, 169, 169, 0.280);
+    border-bottom:1px solid rgba(169, 169, 169, 0.280);
+
+    
+}
+.table-body{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
+  
+    
+
+}
+.divide-table p{
+    align-self: center;
+    padding-left: 20px;
+    font-size: 12px;
+    font-weight: 550;
+    color: rgb(99, 99, 99);
+    
+}
+.table-action{
+    margin:5px;
+    background: rgba(122, 122, 125, 0.160);
+    border-radius: 20px;
+    color: var(--color-purple);
+    font-size: 13px;
+    font-weight: bold;
+    padding: 8px 12px;
+    height: 40px;
+    width: 100px;
+}
+
+p.title-table{
+    font-size: 16px;
+    font-weight: 600;
+}
+p.subtitle-table{
+    font-size: 13px;
+    color: darkgrey;
+}
+
+.graphic{
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    
+    margin-left: 10px;
+
 }

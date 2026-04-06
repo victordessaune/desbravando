@@ -371,7 +371,7 @@ button.btn-primary p{
 }
 .table-body{
     display: grid;
-    justify-items: center;
+
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -382,21 +382,25 @@ display: flex;
 padding-left: 20px;
 gap:15px;
 }
-.table-org i{
-margin-top:10px;
-display: flex; 
-justify-content: center;
-align-items: center;
-border-radius: 10px;
+.icon-name{
+
+  display: flex;
+  justify-content: center; /* centraliza letra */
+  align-items: center;
+
+  border-radius: 10px;
+  height: 40px;
+  width: 40px;
+  color: white;
+}
+.icon-name.N{
 background: linear-gradient(135deg, #00c896, #be4ffe);
-height: 40px; 
-width: 40px;
-color: white;
+}
+.icon-name.M{
+    background: linear-gradient(135deg, #3965d3, #83d449);
+
 }
 
-.informations{
-margin-top:7px;
-}
 
 .name-org{
     font-size: 15px;
@@ -404,7 +408,7 @@ margin-top:7px;
     color: var(--color-dark-blue);
 }
 .email-org{
-    font-size: 13px;
+    font-size: 10px;
     font-weight: 500;
     color: rgb(88, 88, 88);
 }
@@ -414,13 +418,21 @@ margin-top:7px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
-    background-color: #e9e5ff;
+
     padding: 4px 10px;
     border-radius: 15px;
     height: 30px;
     width: 90px;
     font-size: 12px;
     font-weight: 500;
+
+}
+.type-org.pub{
+    background-color: #ddedfe;
+    color:var(--color-blue);
+}
+.type-org.priv{
+    background-color: #e9e5ff;
     color:var(--color-purple);
 }
 .type-org i{
@@ -433,6 +445,11 @@ margin-top:7px;
     align-items: center;
     font-size: 12px;
     font-weight: 500;
+}
+.mood-org.pendent{
+    color:rgb(255, 157, 0);
+}
+.mood-org.active{
     color:var(--color-purple);
 }
 .mood-org i{
@@ -448,15 +465,29 @@ margin-top:7px;
 }
 .actions-org button{
     margin-top: 15px;
-    background: var(--color-purple);
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
-    width: 75px;
-     color:white;
-   
+    width: 75px; 
+    font-weight: 600;
 }
 
+.actions-org.view button{
+    background: rgba(233, 222, 255, 0.634);
+     color:var(--color-purple);
+     border: 2px solid rgba(169, 169, 169, 0.626);
+}
+.actions-org.view button:hover{
+     border: 2px solid var(--color-purple);
+}
+.actions-org.aprove button{
+    background: var(--color-purple);
+     color:white;
+}
+.actions-org.aprove button:hover{
+    background-color:rgb(108, 92, 231);
+     color:white;
+}
 
 
 
@@ -495,4 +526,9 @@ p.subtitle-table{
     
     margin-left: 10px;
 
+}
+
+.graphic-head{
+    align-items: center;
+    padding: 20px;
 }

@@ -199,14 +199,50 @@
             </div>
             <div class="graphic">
                 <div class="graphic-head">
-                                <p class="name-org">Tipos de Local</p>
-                                <p class="email-org">Distribuição por categoria</p></div>
-                <div class="circle-graphic">.</div>
+                    <p class="name-org">Tipos de Local</p>
+                    <p class="email-org">Distribuição por categoria</p>
+                </div>
+                <div class="circle-graphic">
+                    <div style="position: relative; width: 160px; height: 160px; margin: 0 auto;">
+                    <canvas id="donutChart"></canvas>
+                    <div class="donut-center">
+                        <p class="donut-number">128</p>
+                        <p class="donut-label">locais</p>
+                    </div>
+                    </div>
+                    <div class="legend">
+                    <div class="legend-item">
+                        <span class="dot" style="background:#7F77DD;"></span>
+                        <span class="legend-label">Cultura &amp; Arte</span>
+                        <span class="legend-count">49</span>
+                        <span class="legend-pct">38%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#1D9E75;"></span>
+                        <span class="legend-label">Gastronomia</span>
+                        <span class="legend-count">32</span>
+                        <span class="legend-pct">25%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#D4537E;"></span>
+                        <span class="legend-label">Lazer &amp; Esporte</span>
+                        <span class="legend-count">28</span>
+                        <span class="legend-pct">22%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#EF9F27;"></span>
+                        <span class="legend-label">Outros</span>
+                        <span class="legend-count">19</span>
+                        <span class="legend-pct">15%</span>
+                    </div>
+                    </div>
+                </div>
             </div>
             
         </div>
     </main>
 
 </aside>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="dashboard.js"></script>
 </body>

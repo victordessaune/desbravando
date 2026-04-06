@@ -17,3 +17,17 @@
   }
 
   atualizarData();
+new Chart(document.getElementById('donutChart'), {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [49, 32, 28, 19],
+      backgroundColor: ['#7F77DD', '#1D9E75', '#D4537E', '#EF9F27'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    cutout: '72%',
+    plugins: { legend: { display: false }, tooltip: { enabled: false } }
+  }
+});

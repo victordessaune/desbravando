@@ -152,7 +152,7 @@ body{
     display: flex;
 }
 .content{
-    background: linear-gradient(to top, #00c896, #00a884, #005296);
+    background: linear-gradient(to top, #ffffff, #dfdfdf, #cfcfcf);
 }
 main{
     margin-left: 220px;
@@ -163,12 +163,14 @@ main{
 }
 .top-bar{
     position: sticky;
+    z-index: 2; 
     top: 0;
     display: flex;
     justify-content: space-between; /* 👈 separa esquerda e direita */
     align-items: center; /* 👈 alinha vertical */
     height: 10vh;
-    background-color: rgba(255, 255, 255, 0.952);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.773);
     padding: 0 20px;
 }
 
@@ -532,3 +534,34 @@ p.subtitle-table{
     align-items: center;
     padding: 20px;
 }
+
+.graphic {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 1.25rem;
+  max-width: 320px;
+}
+
+.graphic-head { margin-bottom: 1.25rem; }
+.name-org { font-size: 15px; font-weight: 600; margin: 0 0 2px; color: #1a1a1a; }
+.email-org { font-size: 12px; color: #888; margin: 0; }
+
+.circle-graphic { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.donut-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.donut-number { font-size: 26px; font-weight: 700; margin: 0; color: #1a1a1a; line-height: 1; }
+.donut-label { font-size: 12px; color: #888; margin: 0; }
+
+.legend { display: flex; flex-direction: column; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-label { flex: 1; color: #1a1a1a; }
+.legend-count { font-weight: 600; color: #1a1a1a; min-width: 24px; text-align: right; }
+.legend-pct { color: #888; min-width: 32px; text-align: right; }

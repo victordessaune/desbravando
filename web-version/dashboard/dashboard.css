@@ -150,10 +150,10 @@ aside{
 }
 body{
     display: flex;
+    background: linear-gradient(to top, rgb(231, 231, 231), #dfdfdf, #cfcfcf);
+
 }
-.content{
-    background: linear-gradient(to top, var(--color-purple), #dfdfdf, #cfcfcf);
-}
+
 main{
     margin-left: 220px;
     width: calc(100% - 220px); 
@@ -183,21 +183,24 @@ main{
     display: flex;
     align-items: center;
     gap: 6px;
-    padding-left: 20px;
-    color: #6c3fc5; /* roxo */
-}
-
-.verify i {
-    font-size: 1.2rem;
-    color: #6c3fc5; /* roxo no ícone */
-}
-
-.p-teste{
-    margin: 0;
+    margin-left: 20px;
+    padding-left: 10px;
+    color: var(--color-purple); 
+    font-weight: 500;
     font-size: 0.9rem;
-    color: #6c3fc5;
-    font-weight: 900;
+    background-color: #e2ddff;
+    border-radius: 20px;
+    padding-right: 10px;
 }
+.verify.v{
+    background-color: #e2ddff;
+    color: var(--color-purple); 
+}
+.verify.p{
+    background-color: #ffddc9;
+    color:rgb(219, 123, 6); 
+}
+
 
 .top-right{
     display: flex;
@@ -317,6 +320,17 @@ main{
     border-radius: 10px;
     color: var(--color-purple);
 }
+.coments-button:hover{
+    border: 1px solid rgb(189, 188, 188);
+    transform: translateY(-3px); /* sobe */
+    transition: 0.3s ease;
+}
+
+.notifications-button:hover{
+    border: 1px solid rgb(189, 188, 188);
+    transform: translateY(-3px); /* sobe */
+    transition: 0.3s ease;
+}
 .btn-primary{
     margin:5px;
     background: var(--color-purple);
@@ -372,6 +386,7 @@ button.btn-primary p{
 .table{
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
+    padding-bottom: 10px;
 }
 .table-head{
    display: flex;
@@ -381,8 +396,8 @@ button.btn-primary p{
 }
 .divide-table{
     display: grid;
-    justify-items: center;
-    background-color: rgba(169, 169, 169, 0.174);
+
+    background-color: rgba(169, 169, 169, 0.356);
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     height: 30px;
     border-top:1px solid rgba(169, 169, 169, 0.280);

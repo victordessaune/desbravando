@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desbravando</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel ="stylesheet" href="dashboard.css">
+    <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="first-text">
+                <div class="logo-text">Desbravando</div>
+                <span class="logo-text-two">Admin Painel</span>
+            </div>
+        </div>
+        <div class="sidebar-rest">
+            <!-- bloco 1-->
+            <div class="principal">
+                <p>Principal</p>
+            </div>
+            <div class="principal-icon-page active">
+                <p> <i class="fa-solid fa-chart-column"></i> Dashboard</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-building"></i> Organizações</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-user"></i> Usuários</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-map-pin"></i> Locais</p>
+            </div>
+
+            <!-- bloco 2-->
+            <div class="principal">
+                <p>Gestão</p>
+            </div>
+            <div class="principal-icons">
+                <p> <i class="fa-solid fa-calendar-days"></i> Eventos</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-tag"></i> Promoções</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-regular fa-chart-bar"></i>  Relatórios</p>
+            </div>
+
+            <!-- bloco 3-->
+            <div class="principal">
+                <p>Sistema</p>
+            </div>
+            <div class="principal-icons">
+                <p> <i class="fa-solid fa-gear"></i> Configurações</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-lock"></i> Segurança</p>
+            </div>
+            
+        </div>
+        <div class="admin">
+            <div class="box-admin">
+                <p class="name-admin">Victor Ramos</p>
+                <p class="class-admin">Super admin</p>
+            </div>
+        </div>
+        
+
+    </div>
+    
+</aside>
+    <main>
+        <div class="top-bar">
+            <div class="top-left">
+                    <h1>Visão geral</h1>
+                    <p id="data-atual"></p>
+            </div>
+            <div class="top-right">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input type="text" id="searchInput" placeholder="Buscar..." />
+                    </div>
+
+                    <button class="notifications-button">
+                        <i class="fa-solid fa-bell" ></i>
+                    </button>
+
+                    <button class="coments-button">
+                        <i class="fa-solid fa-comment"></i>
+                    </button>
+
+                    <button class="btn-primary">
+                        <p>+ Novo Local</p>
+                    </button>
+            </div>
+        </div>
+        <div class="content"> 
+            <div class="cards">
+                <div class="card">
+                    <div class="card-img"><i class="fa-solid fa-building"></i> </div>
+                    <div class="card-value">128</div>
+                    <div class="card-label">Locais Cadastrados</div>
+                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 12% este mês</span>
+                    
+                </div>
+                <div class="card">
+                    <div class="card-img"><i class="fa-solid fa-users"></i> </div>
+                    <div class="card-value">502</div>
+                    <div class="card-label">Usuários ativos</div>
+                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 8% este mês</span>
+                    
+                </div>
+                <div class="card">
+                     <div class="card-img"><i class="fa-solid fa-eye"></i> </div>
+                    <div class="card-value">31.4k</div>
+                    <div class="card-label">Visualizações diárias</div>
+                    <span class="card-number down"><i class="fa-solid fa-arrow-down"></i> 10% este mês</span>
+                    
+                </div>
+                <div class="card">
+                     <div class="card-img"><i class="fa-solid fa-hourglass-half"></i> </div>
+                    <div class="card-value">7</div>
+                    <div class="card-label">Aprovações pendentes</div>
+                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 2 novas</span>
+                    
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="table">
+                    <div class="table-head">
+                        <div class="table-head-left">
+                            <p class="title-table">Organizações Recentes</p>
+                            <p class="subtitle-table">Últimas empresas cadastradas na plataforma</p>
+                        </div>
+                        <div class="table-head-right">
+                        <button class="table-action">Ver todas <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="divide-table">
+                        <p>ORGANIZAÇÃO</p>
+                        <p>TIPO</p>
+                        <p>STATUS</p>
+                        <p>CADASTRO</p>
+                        <p>AÇÕES</p>
+                    </div>
+                    
+                <div class="body">
+                    <div class="table-body">
+                        <div class="table-org">
+                            <div class="icon-name N"><i class="fa-solid fa-n"></i></div>
+                            <div class="informations">
+                                <p class="name-org">Nutri</p>
+                                <p class="email-org">nutri@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="type-org priv">
+                            <div class="icon-type priv"><i class="fa-solid fa-building"></i></div>
+                            <p>Praia</p>
+                        </div>
+                         <div class="mood-org active">
+                            <i class="fa-solid fa-circle"></i>
+                            <p>Ativo</p>
+                        </div>
+                        <div class="date-org">
+                            <p>23 de Março</p>
+                        </div>
+                        <div class="actions-org aprove">
+                            <button>Aprovar</button>
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <div class="table-org">
+                            <div class="icon-name M"><i class="fa-solid fa-m"></i></div>
+                            <div class="informations">
+                                <p class="name-org">Museu da Serra</p>
+                                <p class="email-org">museudaserra@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="type-org pub">
+                            <div class="icon-type pub"><i class="fa-solid fa-landmark"></i></div>
+                            <p>Pública</p>
+                        </div>
+                         <div class="mood-org pendent">
+                            <i class="fa-solid fa-circle"></i>
+                            <p>Pendente</p>
+                        </div>
+                        <div class="date-org">
+                            <p>23 de Março</p>
+                        </div>
+                        <div class="actions-org view">
+                            <button>Ver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graphic">
+                <div class="graphic-head">
+                    <p class="name-org">Tipos de Local</p>
+                    <p class="email-org">Distribuição por categoria</p>
+                </div>
+                <div class="circle-graphic">
+                    <div style="position: relative; width: 160px; height: 160px; margin: 0 auto;">
+                    <canvas id="donutChart"></canvas>
+                    <div class="donut-center">
+                        <p class="donut-number">128</p>
+                        <p class="donut-label">locais</p>
+                    </div>
+                    </div>
+                    <div class="legend">
+                    <div class="legend-item">
+                        <span class="dot" style="background:#7F77DD;"></span>
+                        <span class="legend-label">Cultura &amp; Arte</span>
+                        <span class="legend-count">49</span>
+                        <span class="legend-pct">38%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#1D9E75;"></span>
+                        <span class="legend-label">Gastronomia</span>
+                        <span class="legend-count">32</span>
+                        <span class="legend-pct">25%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#D4537E;"></span>
+                        <span class="legend-label">Lazer &amp; Esporte</span>
+                        <span class="legend-count">28</span>
+                        <span class="legend-pct">22%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot" style="background:#EF9F27;"></span>
+                        <span class="legend-label">Outros</span>
+                        <span class="legend-count">19</span>
+                        <span class="legend-pct">15%</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+</aside>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="dashboard.js"></script>
+</body>

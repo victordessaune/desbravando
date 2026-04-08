@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("Logado:", userCredential.user.uid);
 
-            window.location.href = "../home/dashboard.html";
+            window.location.href = "../dashboard/dashboard.html";
 
         } catch (error) {
             console.error("Erro:", error.code);

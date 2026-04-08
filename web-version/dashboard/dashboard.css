@@ -152,7 +152,7 @@ body{
     display: flex;
 }
 .content{
-    background: linear-gradient(to top, #ffffff, #dfdfdf, #cfcfcf);
+    background: linear-gradient(to top, var(--color-purple), #dfdfdf, #cfcfcf);
 }
 main{
     margin-left: 220px;
@@ -174,6 +174,31 @@ main{
     padding: 0 20px;
 }
 
+.top-first {
+    display: flex;
+    align-items: center;
+}
+
+.verify {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 20px;
+    color: #6c3fc5; /* roxo */
+}
+
+.verify i {
+    font-size: 1.2rem;
+    color: #6c3fc5; /* roxo no ícone */
+}
+
+.p-teste{
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c3fc5;
+    font-weight: 900;
+}
+
 .top-right{
     display: flex;
     gap: 10px; /* espaço entre botões */
@@ -192,20 +217,17 @@ main{
     color:var(--color-dark-blue)
 }
 .cards{ 
-    padding-top: 30px;
-    display: flex;
-    padding-left: 20px;
-    justify-content: space-evenly;
-    
+    height: 30vh;
+    padding: 30px 24px 0 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
 }
 .cards .card{
-    margin: 5px;
-    align-self: center;
-    border-radius: 30px;
+    border-radius: 24px;
     background-color: rgb(255, 255, 255);
-    height: 30vh;
-    width: 40vh;
-    border: 0px solid rgb(180, 180, 180) ;
+    min-height: 180px;
+    border: 1px solid rgba(180, 180, 180, 0.18);
 }
 .cards .card:hover{
     box-shadow: 0 0 10px #4c3cc321;
@@ -314,7 +336,7 @@ main{
 button.btn-primary p{
     color: white;
     font-size: 14px;
-    font-weight: 65 0px;
+    font-weight: 600;
 }
 .search-bar .fa-solid{
     margin-top: 4px;
@@ -343,13 +365,13 @@ button.btn-primary p{
     display: grid;
     grid-template-columns: 2fr 1fr;
     margin-top: 20px;
-    padding-left: 20px;
-    padding-right: 15px;
+    padding: 0 24px 30px 24px;
+    gap: 16px;
+    align-items: start;
 }
 .table{
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
-    margin-right: 10px;
 }
 .table-head{
    display: flex;
@@ -373,10 +395,10 @@ button.btn-primary p{
 }
 .table-body{
     display: grid;
-
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(169, 169, 169, 0.15);
 }
 
 .table-org{
@@ -395,18 +417,18 @@ gap:15px;
   width: 40px;
   color: white;
 }
-.icon-name.N{
+.icon-name.PI{
 background: linear-gradient(135deg, #00c896, #be4ffe);
 }
-.icon-name.M{
+.icon-name.PS{
     background: linear-gradient(135deg, #3965d3, #83d449);
 
 }
 
 
-.name-org{
+p.name-org{
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-dark-blue);
 }
 .email-org{
@@ -416,18 +438,15 @@ background: linear-gradient(135deg, #00c896, #be4ffe);
 }
 
 .type-org{
-    margin-top: 15px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
-
     padding: 4px 10px;
     border-radius: 15px;
     height: 30px;
     width: 90px;
     font-size: 12px;
     font-weight: 500;
-
 }
 .type-org.pub{
     background-color: #ddedfe;
@@ -441,7 +460,6 @@ background: linear-gradient(135deg, #00c896, #be4ffe);
     padding-left: 5px;
 }
 .mood-org{
-    margin-top: 10px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -458,15 +476,12 @@ background: linear-gradient(135deg, #00c896, #be4ffe);
     font-size: 8px;
 }
 .date-org{
-    margin-top: 20px;
     display: inline-flex;
     font-size: 13px;
-    
     font-weight: 500;
     color: rgb(88, 88, 88);
 }
 .actions-org button{
-    margin-top: 15px;
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
@@ -525,9 +540,7 @@ p.subtitle-table{
 .graphic{
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
-    
-    margin-left: 10px;
-
+    margin-left: 0;
 }
 
 .graphic-head{
@@ -538,9 +551,8 @@ p.subtitle-table{
 .graphic {
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 16px;
+  border-radius: 25px;
   padding: 1.25rem;
-  max-width: 320px;
 }
 
 .graphic-head { margin-bottom: 1.25rem; }

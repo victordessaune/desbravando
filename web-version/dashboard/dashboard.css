@@ -150,7 +150,7 @@ aside{
 }
 body{
     display: flex;
-    background: linear-gradient(to top, rgb(231, 231, 231), #dfdfdf, #cfcfcf);
+    background: linear-gradient(to top, rgb(247, 247, 247), #ebebeb, #dddddd);
 
 }
 
@@ -397,7 +397,7 @@ button.btn-primary p{
 .divide-table{
     display: grid;
 
-    background-color: rgba(169, 169, 169, 0.356);
+    background-color: rgb(245, 245, 245);
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     height: 30px;
     border-top:1px solid rgba(169, 169, 169, 0.280);

@@ -22,17 +22,18 @@ aside{
     padding-bottom: 20px;
     border-top: 2px solid rgba(255, 255, 255, 0.345) ;
 }
-.box-admin{
-    margin:20px;
-    width: 195px;
-    height: 55px;
+.box-admin {
+    margin: 20px;
+    width: 195px; /* largura fixa em vez de max-width */
     justify-self: center;
     align-self: center;
     border-radius: 15px;
-    border:1px solid rgba(245, 245, 245, 0.252);
+    border: 1px solid rgba(245, 245, 245, 0.252);
     background-color: rgba(255, 255, 255, 0.093);
-    padding-left: 20px;
+    padding: 10px 10px 10px 20px; /* padding vertical pra respirar */
+    box-sizing: border-box; /* garante que o padding não estoure a largura */
 }
+
 .box-admin:hover{
     background-color: rgba(255, 255, 255, 0.164);
     box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
@@ -42,21 +43,26 @@ aside{
 }
 
 
-.name-admin{
-    padding-top:5px;
-    padding-left:50px;
+.name-admin {
+    padding-top: 5px;
+    padding-left: 50px;
     margin-right: 10px;
     font-size: 14px;
-    font-weight:300;
-    color: white ;
+    font-weight: 300;
+    color: white;
+    overflow-wrap: break-word; /* quebra palavras longas */
+    word-break: break-word;
 }
-.class-admin{
-    padding-left:50px;
+
+.class-admin {
+    padding-left: 50px;
     margin-right: 10px;
     font-size: 13px;
-    font-weight:300;
-    color: white ;
+    font-weight: 300;
+    color: white;
     opacity: 45%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .first-text{

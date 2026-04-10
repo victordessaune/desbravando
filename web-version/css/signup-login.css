@@ -262,7 +262,8 @@ body{
 }
 
 .box-input{
-    margin-bottom: 10px;
+    position: relative;
+    margin-bottom: 22px;
 }
 
 .line{
@@ -289,6 +290,7 @@ body{
     color: var(--color-dark-blue);
     font-size: 14px;
     outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 select{
@@ -306,13 +308,18 @@ select{
     box-shadow: 0 0 0 4px rgba(81,112,255,0.12);
 }
 
+.input-error {
+    border-color: #e12a2a !important;
+    box-shadow: 0 0 0 4px rgba(225, 42, 42, 0.1) !important;
+}
+
 .adress-title{
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--color-medium-gray);
-    margin: 20px 0px 12px 4px;
+    margin: 4px 0px 12px 4px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -397,13 +404,16 @@ select{
     animation-delay: 0.4s;
 }
 
-.message-error-register{
+.message-error-register {
+    position: absolute;
     font-size: 11px;
     text-align: left;
     color: #e12a2a;
     margin-top: 4px;
     margin-left: 10px;
-    display: none;
+    display: block;
+    visibility: hidden;
+    white-space: nowrap;
 }
 
 .logo-footer{

@@ -1,7 +1,17 @@
 const params = new URLSearchParams(window.location.search);
 const orgType = params.get("org-type");
 
+function setError(input, errorEl, message) {
+    input.classList.add("input-error");
+    errorEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${message}`;
+    errorEl.style.visibility = "visible";
 
+    input.addEventListener("focus", function clearError() {
+        input.classList.remove("input-error");
+        errorEl.style.visibility = "hidden";
+        input.removeEventListener("focus", clearError);
+    });
+}
 
 const cnpjInput = document.getElementById("org-cnpj");
 
@@ -37,97 +47,123 @@ cepInput.addEventListener("input", function () {
 
 let form = document.getElementById("form-step2");
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", function (e) {
 
     e.preventDefault();
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    let orgName = document.getElementById("org-name").value;
-    let cnpj = document.getElementById("org-cnpj").value.replace(/\D/g, "");
-    let website = document.getElementById("website").value;
-    let orgEmail = document.getElementById("org-email").value;
-    let cep = document.getElementById("cep").value.replace(/\D/g, "");
-    let uf = document.getElementById("uf").value;
-    let city = document.getElementById("city").value;
-    let number = document.getElementById("number").value;
-    let street = document.getElementById("street").value;
-    let complement = document.getElementById("complement").value;
-    let neighborhood = document.getElementById("neighborhood").value;
+    const fields = {
+        orgName:      document.getElementById("org-name"),
+        cnpj:         document.getElementById("org-cnpj"),
+        website:      document.getElementById("website"),
+        orgEmail:     document.getElementById("org-email"),
+        cep:          document.getElementById("cep"),
+        street:       document.getElementById("street"),
+        number:       document.getElementById("number"),
+        neighborhood: document.getElementById("neighborhood"),
+        city:         document.getElementById("city"),
+        uf:           document.getElementById("uf"),
+    };
 
-    let errorName = document.getElementById("error-name");
-    let errorCNPJ = document.getElementById("error-cnpj");
-    let errorWebsite = document.getElementById("error-website");
-    let errorOrgEmail = document.getElementById("error-email");
-    let errorAddress = document.getElementById("error-address");
+    const errors = {
+        orgName:      document.getElementById("error-name"),
+        cnpj:         document.getElementById("error-cnpj"),
+        website:      document.getElementById("error-website"),
+        orgEmail:     document.getElementById("error-email"),
+        cep:          document.getElementById("error-cep"),
+        street:       document.getElementById("error-street"),
+        number:       document.getElementById("error-number"),
+        neighborhood: document.getElementById("error-neighborhood"),
+        city:         document.getElementById("error-city"),
+        uf:           document.getElementById("error-uf"),
+    };
+
+    // Limpa todos os erros
+    Object.keys(fields).forEach(key => {
+        fields[key].classList.remove("input-error");
+        errors[key].style.visibility = "hidden";
+    });
 
     let hasError = false;
 
-    errorName.style.display = "none";
-    errorCNPJ.style.display = "none";
-    errorWebsite.style.display = "none";
-    errorOrgEmail.style.display = "none";
-    errorAddress.style.display = "none";
-
-    if (orgName.trim() === ""){
-        errorName.textContent = "Preencha o nome da organização";
-        errorName.style.display = "block";
+    if (fields.orgName.value.trim() === "") {
+        setError(fields.orgName, errors.orgName, "Preencha o nome da organização");
         hasError = true;
     }
 
-    if (cnpj.trim() === ""){
-        errorCNPJ.textContent = "Informe o CNPJ";
-        errorCNPJ.style.display = "block";
+    if (fields.cnpj.value.trim() === "") {
+        setError(fields.cnpj, errors.cnpj, "Informe o CNPJ");
         hasError = true;
-    } else if (cnpj.length < 14){
-        errorCNPJ.textContent = "CNPJ inválido";
-        errorCNPJ.style.display = "block";
+    } else if (fields.cnpj.value.replace(/\D/g, "").length < 14) {
+        setError(fields.cnpj, errors.cnpj, "CNPJ inválido");
         hasError = true;
     }
 
-    if (website.trim() === ""){
-        errorWebsite.textContent = "Informe um website.";
-        errorWebsite.style.display = "block";
+    if (fields.website.value.trim() === "") {
+        setError(fields.website, errors.website, "Informe um website");
         hasError = true;
     }
 
-    if (orgEmail.trim() === ""){
-        errorOrgEmail.textContent = "Informe um email institucional"
-        errorOrgEmail.style.display = "block";
+    if (fields.orgEmail.value.trim() === "") {
+        setError(fields.orgEmail, errors.orgEmail, "Informe um email institucional");
         hasError = true;
-    } else if(!regexEmail.test(orgEmail.trim())){
-        errorOrgEmail.textContent = "Email institucional inválido"
-        errorOrgEmail.style.display = "block";
+    } else if (!regexEmail.test(fields.orgEmail.value.trim())) {
+        setError(fields.orgEmail, errors.orgEmail, "Email institucional inválido");
         hasError = true;
     }
 
-    if(cep === "" || uf === "" || city === "" || number === "" || street === ""){
-        errorAddress.textContent = "O endereço está incompleto";
-        errorAddress.style.display = "block";
+    if (fields.cep.value.trim() === "") {
+        setError(fields.cep, errors.cep, "Informe um CEP");
+        hasError = true;
+    } else if (fields.cep.value.replace(/\D/g, "").length < 8) {
+        setError(fields.cep, errors.cep, "CEP inválido");
         hasError = true;
     }
 
-    if (!hasError){
+    if (fields.street.value.trim() === "") {
+        setError(fields.street, errors.street, "Informe um logradouro");
+        hasError = true;
+    }
 
-    const orgData = {
-        orgType: orgType,
-        orgName,
-        cnpj,
-        website,
-        orgEmail,
-        cep,
-        uf,
-        city,
-        number,
-        street,
-        complement,
-        neighborhood
-    };
+    if (fields.number.value.trim() === "") {
+        setError(fields.number, errors.number, "Informe um número");
+        hasError = true;
+    }
 
-    localStorage.setItem("orgData", JSON.stringify(orgData));
+    if (fields.neighborhood.value.trim() === "") {
+        setError(fields.neighborhood, errors.neighborhood, "Informe um bairro");
+        hasError = true;
+    }
 
-    window.location.href = "step3.html";
-}
+    if (fields.city.value.trim() === "") {
+        setError(fields.city, errors.city, "Informe uma cidade");
+        hasError = true;
+    }
+
+    if (fields.uf.value === "" || fields.uf.value === "—") {
+        setError(fields.uf, errors.uf, "Selecione um estado");
+        hasError = true;
+    }
+
+    if (!hasError) {
+        const orgData = {
+            orgType,
+            orgName:      fields.orgName.value,
+            cnpj:         fields.cnpj.value,
+            website:      fields.website.value,
+            orgEmail:     fields.orgEmail.value,
+            cep:          fields.cep.value,
+            uf:           fields.uf.value,
+            city:         fields.city.value,
+            number:       fields.number.value,
+            street:       fields.street.value,
+            complement:   document.getElementById("complement").value,
+            neighborhood: fields.neighborhood.value,
+        };
+
+        localStorage.setItem("orgData", JSON.stringify(orgData));
+        window.location.href = "step3.html";
+    }
 
 });
-

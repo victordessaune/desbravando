@@ -6,9 +6,7 @@
     <title>Cadastro — Desbravando</title>
     <link rel="stylesheet" href="../css/signup-login.css">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
-
 </head>
 <body>
     <div class="progress-bar step3"></div>
@@ -32,36 +30,70 @@
             <span>Responsável</span>
         </div>
     </div>
-    <form class="card" id="form-step3">
+    <form class="bigger-card" id="form-step3">
+        <p class="card-title">Cadastro · Passo 3 de 3</p>
 
-        <h2 class="card-h2">Dados do Responsável</h2>
-        <input type="text" id="first-name" placeholder="Nome" class="input-login">
-        <p class="message-error-register" id="error-first-name">Erro</p>
+        <h2 class="card-h2">Dados do <span>Responsável</span></h2>
 
-        <input type="text" id="last-name" placeholder="Sobrenome" class="input-login">
-        <p class="message-error-register" id="error-last-name"></p>
-
-        <input type="text" id="cpf" placeholder="CPF" class="input-login">
-        <p class="message-error-register" id="error-cpf"></p>
-
-        <input type="email" id="email" placeholder="E-mail institucional" class="input-login">
-        <p class="message-error-register" id="error-email-inst"></p>
-
-        <input type="text" id="occupation" placeholder="Ocupação" class="input-login">
-        <p class="message-error-register" id="error-occupation"></p>
-
-        <input type="password" name="password" id="password" class="input-login" placeholder="Crie uma senha" minlength="6">
-        <p class="message-error-register" id="error-password"></p>
-
-        <input type="password" name="confirm-password" id="confirm-password" class="input-login" placeholder="Confirme a senha" minlength="6">
-        <p class="message-error-register" id="error-confirm-password"></p>
-
-        <div class="btn-padding">
-            <div class="line">
-            <button class="btn-template" type="button" onclick="window.location.href='step2.html'">Voltar</button>
-            <button class="btn-template">Próximo</button>
+        <div class="line">
+            <div class="box-input">
+                <label class="field-label">Nome</label>
+                <input type="text" id="first-name" placeholder="Seu nome" class="input-login">
+                <p class="message-error-register" id="error-first-name"></p>
+            </div>
+            <div class="box-input">
+                <label class="field-label">Sobrenome</label>
+                <input type="text" id="last-name" placeholder="Sobrenome" class="input-login">
+                <p class="message-error-register" id="error-last-name"></p>
+            </div>
         </div>
 
+        <div class="line">
+            <div class="box-input">
+                <label class="field-label">CPF</label>
+                <input type="text" id="cpf" placeholder="000.000.000-00" class="input-login">
+                <p class="message-error-register" id="error-cpf"></p>
+            </div>
+            <div class="box-input">
+                <label class="field-label">Ocupação</label>
+                <input type="text" id="occupation" placeholder="Ex: Diretor" class="input-login">
+                <p class="message-error-register" id="error-occupation"></p>
+            </div>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">E-mail institucional</label>
+            <input type="email" id="email" placeholder="voce@organizacao.com" class="input-login">
+            <p class="message-error-register" id="error-email-inst"></p>
+        </div>
+
+        <div class="adress-title">Senha</div>
+
+        <div class="box-input">
+            <label class="field-label">Crie uma senha</label>
+            <div class="input-wrapper">
+                <input type="password" id="password" class="input-login" placeholder="Mínimo 6 caracteres">
+                <button type="button" class="btn-eye" onclick="togglePassword('password', this)" aria-label="Mostrar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <p class="message-error-register" id="error-password"></p>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">Digite a senha novamente</label>
+            <div class="input-wrapper">
+                <input type="password" id="confirm-password" class="input-login" placeholder="Repita a senha">
+                <button type="button" class="btn-eye" onclick="togglePassword('confirm-password', this)" aria-label="Mostrar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <p class="message-error-register" id="error-confirm-password"></p>
+        </div>
+
+        <div class="button-line">
+            <button class="btn-back" type="button" onclick="window.location.href='step2.html'">Voltar</button>
+            <button class="btn-template">Próximo</button>
         </div>
     </form>
 
@@ -69,6 +101,27 @@
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
+
+    <script>
+        const cpfInput = document.getElementById("cpf");
+        cpfInput.addEventListener("input", function () {
+            let value = this.value.replace(/\D/g, "").substring(0, 11);
+            value = value
+                .replace(/(\d{3})(\d)/, "$1.$2")
+                .replace(/(\d{3})(\d)/, "$1.$2")
+                .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            this.value = value;
+        });
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const isHidden = input.type === "password";
+            input.type = isHidden ? "text" : "password";
+            btn.innerHTML = isHidden
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+        }
+    </script>
     <script type="module" src="step3.js"></script>
 </body>
 </html>

@@ -51,13 +51,15 @@ form.addEventListener("submit", function(e){
     let uf = document.getElementById("uf").value;
     let city = document.getElementById("city").value;
     let number = document.getElementById("number").value;
-    let street = document.getElementById("street").value
+    let street = document.getElementById("street").value;
+    let complement = document.getElementById("complement").value;
+    let neighborhood = document.getElementById("neighborhood").value;
 
     let errorName = document.getElementById("error-name");
     let errorCNPJ = document.getElementById("error-cnpj");
     let errorWebsite = document.getElementById("error-website");
     let errorOrgEmail = document.getElementById("error-email");
-    let errorAddress = document.getElementById("error-address")
+    let errorAddress = document.getElementById("error-address");
 
     let hasError = false;
 
@@ -117,7 +119,9 @@ form.addEventListener("submit", function(e){
         uf,
         city,
         number,
-        street
+        street,
+        complement,
+        neighborhood
     };
 
     localStorage.setItem("orgData", JSON.stringify(orgData));

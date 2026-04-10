@@ -1,4 +1,5 @@
-import { auth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "../js/api/firebase.js";
+import { auth, db, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "../js/api/firebase.js";
+import { collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -40,15 +41,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const persistence = remember
-                ? browserLocalPersistence   // fica logado mesmo fechando o browser
-                : browserSessionPersistence; // expira ao fechar a aba
+                ? browserLocalPersistence
+                : browserSessionPersistence;
 
             await setPersistence(auth, persistence);
 
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("Logado:", userCredential.user.uid);
+            const uid = userCredential.user.uid;
 
-            window.location.href = "../home/dashboard.html";
+            // Busca pelo campo uid dentro da collection
+            const q = query(collection(db, "users"), where("uid", "==", uid));
+            const querySnap = await getDocs(q);
+
+            if (querySnap.empty) {
+                errorEmail.textContent = "Usuário não encontrado no sistema.";
+                errorEmail.style.display = "block";
+                return;
+            }
+
+            const usuario = querySnap.docs[0].data();
+
+            const empresaSnap = await getDoc(doc(db, "organizations", usuario.orgId));
+            const empresa = empresaSnap.exists() ? empresaSnap.data() : { orgName: "Organização não encontrada" };
+
+            sessionStorage.setItem("usuarioNome", usuario.firstName);
+            sessionStorage.setItem("usuarioCargo", usuario.occupation);
+            sessionStorage.setItem("empresaNome", empresa.orgName);
+
+            window.location.href = "../dashboard/dashboard.html";
 
         } catch (error) {
             console.error("Erro:", error.code);

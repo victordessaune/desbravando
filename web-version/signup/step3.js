@@ -1,4 +1,5 @@
 import { db, auth, createUserWithEmailAndPassword, addDoc, collection } from "../js/api/firebase.js";
+import { getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let form = document.getElementById("form-step3");
 
@@ -65,7 +66,7 @@ form.addEventListener("submit", async function(e){
         errorPassword.textContent = "Informe uma senha";
         errorPassword.style.display = "block";
         hasError = true;
-    }else if(!regexSenha.test(password)){
+    } else if(!regexSenha.test(password)){
         errorPassword.textContent = "Senha fraca";
         errorPassword.style.display = "block";
         hasError = true;
@@ -80,19 +81,12 @@ form.addEventListener("submit", async function(e){
     if (hasError) return;
 
     try {
-
         // Criar usuário no Firebase Authentication
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         // Buscar dados da empresa do localStorage
         const orgData = JSON.parse(localStorage.getItem("orgData"));
-        console.log("orgData:", orgData); 
 
         // Salva empresa no Firestore
         const orgRef = await addDoc(collection(db, "organizations"), {
@@ -111,11 +105,19 @@ form.addEventListener("submit", async function(e){
             orgId: orgRef.id
         });
 
+        // Busca o orgName da empresa recém criada
+        const empresaSnap = await getDoc(doc(db, "organizations", orgRef.id));
+        const empresa = empresaSnap.exists() ? empresaSnap.data() : { orgName: "Organização" };
+
+        // 💾 Salva na sessionStorage pra usar no dashboard
+        sessionStorage.setItem("usuarioNome", firstName);
+        sessionStorage.setItem("usuarioCargo", occupation);
+        sessionStorage.setItem("empresaNome", empresa.orgName);
+
         // Limpa localStorage
         localStorage.removeItem("orgData");
 
-        // Redireciona para dashboard
-        window.location.href = "../home/dashboard.html";
+        window.location.href = "../dashboard/dashboard.html";
 
     } catch (error){
         console.error("Erro:", error);

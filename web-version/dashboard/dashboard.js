@@ -48,28 +48,6 @@ onAuthStateChanged(auth, async (user) => {
         let empresaNome = sessionStorage.getItem("empresaNome");
         let usuarioCargo = sessionStorage.getItem("usuarioCargo");
 
-        if (!usuarioNome || !empresaNome) {
-            // Busca pelo campo uid dentro da collection
-            const q = query(collection(db, "users"), where("uid", "==", user.uid));
-            const querySnap = await getDocs(q);
-
-            if (querySnap.empty) {
-                window.location.href = "../login/login.html";
-                return;
-            }
-
-            const usuario = querySnap.docs[0].data();
-
-            const empresaSnap = await getDoc(doc(db, "organizations", usuario.orgId));
-            const empresa = empresaSnap.exists() ? empresaSnap.data() : { orgName: "Organização" };
-
-            usuarioNome = `${usuario.firstName} ${usuario.lastName}`;
-            empresaNome = empresa.orgName;
-
-            sessionStorage.setItem("usuarioNome", usuarioNome);
-            sessionStorage.setItem("empresaNome", empresaNome);
-        }
-
         document.querySelector(".top-left h1").textContent = empresaNome;
         document.querySelector(".name-admin").textContent = usuarioNome;
         document.querySelector(".class-admin").textContent = usuarioCargo;

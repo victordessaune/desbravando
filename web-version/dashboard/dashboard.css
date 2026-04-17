@@ -397,7 +397,7 @@ button.btn-primary p{
 .table-head{
    display: flex;
    justify-content: space-between;
-  align-items: center;
+   align-items: center;
    padding: 20px;
 }
 .divide-table{

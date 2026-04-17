@@ -1,0 +1,66 @@
+.cards-row{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+    justify-content: space-between;
+
+}
+.search-space{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    background-color: var(--color-white);
+    padding: 20px;
+    border-radius: 10px;
+}
+.search-input{
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    font-size: 15px;
+    color: var(--color-white);
+}
+.card-total{
+    background-color: var(--color-white);
+    border-radius: 10px;
+    height: 57px;
+    width: 20%;
+
+}
+.card-title{
+    font-size: 13px;
+    margin-left: 20px;
+    margin-top: 6px;
+    font-weight: 750;
+    color: var(--color-purple);
+}
+.card-value-adm{
+    font-weight: 700;
+    font-size: 20px;
+}
+.card-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    margin-left: 20px;
+}
+.card-text{
+    color: var(--color-gray);
+}
+
+/*ESTILO TABELA DE ADMINISTRADORES*/
+.table-admin{
+    background-color: var(--color-white);
+    border-radius: 25px;
+    padding-bottom: 10px;
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}

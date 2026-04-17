@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Administradores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/global.css">
     <link rel ="stylesheet" href="../dashboard/dashboard.css">
+    <link rel="stylesheet" href="admin-list.css">
+    <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
 </head>
 <body>
     <aside class="sidebar">
@@ -66,5 +69,103 @@
             </div>
         </div>
     </aside>
+
+    <main>
+        <div class="top-bar">
+            <div class="top-left">
+                    <div class="top-first">
+                        <h1>Gestão de Administradores  </h1>
+                    </div>
+                    <p id="data-atual">Gerencie acessos, permissões e perfis da equipe</p>
+            </div>
+            <div class="top-right">
+                <button class="btn-primary">
+                    <p>+ Novo Administrador</p>
+                </button>
+            </div>
+        </div>
+        <div class="cards-row">
+            <div class="search-space">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input class="search-input" type="text" placeholder="Buscar por nome, email ou cargo...">
+            </div>
+
+            <div class="card-total">
+                <div class="card-title">TOTAL</div>
+                <div class="card-info">
+                    <div class="card-value-adm">12</div>
+                    <div class="card-text">administradores</div>
+                </div>
+            </div>
+        </div>
+        <div class="table-admin">
+            <div class="table-head">
+                <div class="divide-table">
+                    <p>ORGANIZAÇÃO</p>
+                    <p>TIPO</p>
+                    <p>STATUS</p>
+                    <p>CADASTRO</p>
+                    <p>AÇÕES</p>
+                </div>
+                    <div class="table-head-left">
+                        </div>
+                    </div>
+                    
+                    
+                <div class="body">
+                    <div class="table-body">
+                        <div class="table-org">
+                            <div class="icon-name PI"><i class="fa-solid fa-p"></i></div>
+                            <div class="informations">
+                                <p class="name-org">Praia de Camburi</p>
+                                <p class="email-org"></p>
+                            </div>
+                        </div>
+                        <div class="type-org priv">
+                            <div class="icon-type priv"><i class="fa-solid fa-building"></i></div>
+                            <p>Praia</p>
+                        </div>
+                         <div class="mood-org active">
+                            <i class="fa-solid fa-circle"></i>
+                            <p>Publicado</p>
+                        </div>
+                        <div class="date-org">
+                            <p>23 de Março</p>
+                        </div>
+                        <div class="actions-org aprove">
+                            <button>Aprovar</button>
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <div class="table-org">
+                            <div class="icon-name PS"><i class="fa-solid fa-p"></i></div>
+                            <div class="informations">
+                                <p class="name-org">Praça do Papa</p>
+                                <p class="email-org"></p>
+                            </div>
+                        </div>
+                        <div class="type-org pub">
+                            <div class="icon-type pub"><i class="fa-solid fa-landmark"></i></div>
+                            <p>ECO</p>
+                        </div>
+                         <div class="mood-org pendent">
+                            <i class="fa-solid fa-circle"></i>
+                            <p>Pendente</p>
+                        </div>
+                        <div class="date-org">
+                            <p>23 de Março</p>
+                        </div>
+                        <div class="actions-org view">
+                            <button>Ver</button>
+                        </div>
+                    </div>
+                </div>
+            
+            <!--
+            <select class="filter-select"></select>
+            <select class="filter-select"></select>
+            -->
+        
+        
 </body>
 </html>

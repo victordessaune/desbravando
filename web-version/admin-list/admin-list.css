@@ -69,24 +69,37 @@
    padding: 20px;
    width: 100%;
 }
-.table-subheading{
+.table-head-content{
     height: 30px;
     width: 100%;
     display: grid;
     align-items: center;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    justify-items:flex-start;
+    margin-left: 20px;
     
 }
-.subheading-content{
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    font-size: 13px;
-    margin-left: 20px;
-    font-weight: 500;
-    justify-items:space-between;
+.table-body-admin{
+    border-bottom:1px solid var(--color-light-gray);
+    padding: 20px;
+    width: 100%;
 }
+.table-body-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: flex-start;
+    width: 100%;
+    margin-left: 20px;
+}
+.column-admin-info{
+    display: flex;
+    gap:15px;
+}
+
 .icon-user{
     width: 50px;
     height: 50px;
@@ -95,7 +108,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 20px;
     color: var(--color-white);
     font-weight: 600;
     background: linear-gradient(
@@ -107,4 +119,25 @@
 .admin-email{
     font-size: 13px;
     color: var(--color-purple);
+}
+.admin-occupation{
+    font-size: 15px;
+}
+.admin-status{
+    font-size: 15px;
+}
+.admin-date{
+    font-size: 15px;   
+}
+.admin-action button{
+    border-radius: 15px;
+    height: 35px;
+    width: 100px; 
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    background-color: rgba(81, 112, 255, 0.8);
+
 }

@@ -6,34 +6,66 @@
     <title>Login — Desbravando</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/signup-login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
 </head>
 <body>
-</div>
-<div class="card">
-    <h2 class="card-h2">Login Administrador</h2>
-    <div class="form" id="form-login">
-        <input id="email-login" class="input-login" type="text" placeholder="Email">
-        <span id="error-email-login" class="message-error-register"></span>
-        <input id="password-login" class="input-login" type="password" placeholder="Senha">
-        <span id="error-password-login" class="message-error-register"></span>
+    <div class="card">
+        <p class="card-title">Acesso</p>
+        <h2 class="card-h2">Login <span>Administrador</span></h2>
+        <p class="card-p">Entre com suas credenciais para acessar o painel.</p>
+
+        <div class="box-input">
+            <label class="field-label">Email</label>
+            <input id="email-login" class="input-login" type="text" placeholder="seu@email.com">
+            <span id="error-email-login" class="message-error-register"></span>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">Senha</label>
+            <div class="input-wrapper">
+                <input id="password-login" class="input-login" type="password" placeholder="••••••••">
+                <button type="button" class="btn-eye" onclick="togglePassword('password-login', this)" aria-label="Mostrar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <span id="error-password-login" class="message-error-register"></span>
+        </div>
+
         <div class="remember-section">
             <input id="remember-login" type="checkbox">
             <label for="remember-login">Lembrar-me</label>
         </div>
-        <div>
+
+        <div class="button-line">
             <button type="submit" class="btn-template">Entrar</button>
         </div>
-        <div class="links">
+
+        <div class="divider"></div>
+
+        <div class="p-login-link">
             <a href="write-email.html">Esqueci a senha</a>
-            <a href="../signup/step1.html">Criar Conta</a>
+        </div>
+        <div class="p-login-link">
+            Não tem conta? <a href="../signup/step1.html">Criar Conta</a>
         </div>
     </div>
-</div>
-<footer class="footer-login">
-    <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
-    Desbravando
-</footer>
-<script type="module" src="login.js"></script>
+
+    <footer class="footer-login">
+        <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
+        Desbravando
+    </footer>
+
+    <script>
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const isHidden = input.type === "password";
+            input.type = isHidden ? "text" : "password";
+            btn.innerHTML = isHidden
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+        }
+    </script>
+    <script type="module" src="login.js"></script>
 </body>
 </html>

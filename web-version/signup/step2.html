@@ -71,23 +71,23 @@
             <div class="box-input" style="flex: 0 0 140px;">
                 <label class="field-label">CEP</label>
                 <input type="text" name="cep" id="cep" class="input-login" placeholder="00000-000" maxlength="9">
+                <p class="message-error-register" id="error-cep"></p>
             </div>
 
             <div class="box-input" style="flex: 1;">
                 <label class="field-label">Logradouro</label>
                 <input type="text" name="street" id="street" class="input-login" placeholder="Rua, avenida, etc.">
+                <p class="message-error-register" id="error-street"></p>
             </div>  
         </div>
-
-        
-        <p class="message-error-register" id="error-address">Mensagem de erro</p>
 
         <div class="line">
             <div class="box-input" style="flex: 0 0 100px;">
                 <label class="field-label">Número</label>
                 <input type="text" name="number" id="number" class="input-login" placeholder="Nº">
+                <p class="message-error-register" id="error-number"></p>
             </div>
-            <div class="box-input" style="flex: 0 0 140px;">
+            <div class="box-input error-inline" style="flex: 0 0 140px;">
                 <label class="field-label">Complemento</label>
                 <input type="text" name="complement" id="complement" class="input-login" placeholder="Apto, sala, etc.">
             </div>
@@ -95,13 +95,15 @@
             <div class="box-input" style="flex: 1;">
                 <label class="field-label">Bairro</label>
                 <input type="text" name="neighborhood" id="neighborhood" class="input-login" placeholder="Laranjeiras">
+                <p class="message-error-register" id="error-neighborhood"></p>
             </div>
         </div>
 
-        <div class="line">
+        <div class="line" style="margin-bottom: 16px;">
             <div class="box-input" style="flex: 1;">
                 <label class="field-label">Cidade</label>
                 <input type="text" name="city" id="city" class="input-login" placeholder="Sua cidade">
+                <p class="message-error-register" id="error-city"></p>
             </div>
             <div class="box-input">
                 <label class="field-label">UF</label>
@@ -135,6 +137,7 @@
                     <option value="SE">SE</option>
                     <option value="TO">TO</option>
                 </select>
+                <p class="message-error-register" id="error-uf" style="white-space: normal; right: 0; left: 0;"></p>
             </div>
         </div>
 
@@ -147,7 +150,6 @@
     </form>
 
     <footer class="footer-login">
-        <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
     <script src="step2.js"></script>

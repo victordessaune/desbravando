@@ -379,7 +379,7 @@
 }
 /*Estilo do box de "Responsáveis"*/
 .name-value{
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
 }
 .occupation-value{
@@ -388,6 +388,6 @@
     font-weight: 500;
 }
 .email-resp-value{
-    font-size: 14px;
+    font-size: 11px;
     color: var(--color-blue);
 }

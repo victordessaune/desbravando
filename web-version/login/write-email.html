@@ -7,22 +7,32 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/signup-login.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-<form class="card" action="login.html" method="get">   
-    <h2 class="card-h2">Esqueci a senha</h2>
-    <div class="form" id="form-write-email">
-        <p class="card-p">Digite seu email cadastrado para receber um link para redefinir sua senha</p>
-        <input id="email-login" class="input-login" type="text" placeholder="Email">
-        <span id="error-email-login" class="message-error-register"></span>
-        <div class="btn-padding">
+    <div class="card">
+        <p class="card-title">Recuperação</p>
+        <h2 class="card-h2">Esqueci a <span>senha</span></h2>
+        <p class="card-p">Digite seu email cadastrado para receber um link de redefinição de senha.</p>
+
+        <div class="box-input">
+            <label class="field-label">Email</label>
+            <input id="email-login" class="input-login" type="text" placeholder="seu@email.com">
+            <span id="error-email-login" class="message-error-register"></span>
+        </div>
+
+        <div class="button-line">
+            <button class="btn-back" type="button" onclick="window.location.href='login.html'">Voltar</button>
             <button class="btn-template" type="submit">Enviar email</button>
         </div>
     </div>
-</form>
-<footer class="footer-login">
+
+    <div id="toast" class="toast"></div>
+
+    <footer class="footer-login">
         <img class="logo-footer" src="../assets/logos/desbravando-logo.svg" alt="logo-desbravando">
         Desbravando
     </footer>
+    <script type="module" src="write-email.js"></script>
 </body>
 </html>

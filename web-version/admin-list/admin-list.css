@@ -1,0 +1,143 @@
+.cards-row{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+    justify-content: space-between;
+
+}
+.search-space{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    background-color: var(--color-white);
+    padding: 20px;
+    border-radius: 10px;
+}
+.search-input{
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    font-size: 15px;
+    color: var(--color-white);
+}
+.card-total{
+    background-color: var(--color-white);
+    border-radius: 10px;
+    height: 57px;
+    width: 20%;
+
+}
+.card-title{
+    font-size: 13px;
+    margin-left: 20px;
+    margin-top: 6px;
+    font-weight: 750;
+    color: var(--color-purple);
+}
+.card-value-adm{
+    font-weight: 700;
+    font-size: 20px;
+}
+.card-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    margin-left: 20px;
+}
+.card-text{
+    color: var(--color-gray);
+}
+
+/*ESTILO TABELA DE ADMINISTRADORES*/
+.table-admin{
+    background-color: var(--color-white);
+    border-radius: 25px;
+    padding-bottom: 10px;
+  
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.table-head-admin{
+   border-bottom:1px solid var(--color-light-gray);
+   padding: 20px;
+   width: 100%;
+}
+.table-head-content{
+    height: 30px;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    justify-items:flex-start;
+    margin-left: 20px;
+    
+}
+.table-body-admin{
+    border-bottom:1px solid var(--color-light-gray);
+    padding: 20px;
+    width: 100%;
+}
+.table-body-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: flex-start;
+    width: 100%;
+    margin-left: 20px;
+}
+.column-admin-info{
+    display: flex;
+    gap:15px;
+}
+
+.icon-user{
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        var(--color-blue) 45%,
+        var(--color-purple) 100% 
+    );
+}
+.admin-email{
+    font-size: 13px;
+    color: var(--color-purple);
+}
+.admin-occupation{
+    font-size: 15px;
+}
+.admin-status{
+    font-size: 15px;
+}
+.admin-date{
+    font-size: 15px;   
+}
+.admin-action button{
+    border-radius: 15px;
+    height: 35px;
+    width: 100px; 
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    background-color: rgba(81, 112, 255, 0.8);
+
+}

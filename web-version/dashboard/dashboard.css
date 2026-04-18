@@ -22,17 +22,17 @@ aside{
     padding-bottom: 20px;
     border-top: 2px solid rgba(var(--color-white-rgb), 0.345) ;
 }
-.box-admin {
-    margin: 20px;
-    width: 195px; /* largura fixa em vez de max-width */
+.box-admin{
+    margin:20px;
+    width: 195px;
+    height: 55px;
     justify-self: center;
     align-self: center;
     border-radius: 15px;
-    border:1px solid rgba(245, 245, 245, 0.252);
-    background-color: rgba(255, 255, 255, 0.093);
+    border:1px solid rgba(var(--color-white-rgb), 0.25);
+    background-color: rgba(var(--color-white-rgb), 0.09);
     padding-left: 20px;
 }
-
 .box-admin:hover{
     background-color: rgba(var(--color-white-rgb), 0.16);
     box-shadow: 0 0 10px rgba(75, 60, 195, 0.6);
@@ -42,24 +42,21 @@ aside{
 }
 
 
-.name-admin {
-    padding-top: 5px;
-    padding-left: 50px;
+.name-admin{
+    padding-top:5px;
+    padding-left:50px;
     margin-right: 10px;
     font-size: 14px;
     font-weight:300;
-    color: white ;
+    color: var(--color-white) ;
 }
-
-.class-admin {
-    padding-left: 50px;
+.class-admin{
+    padding-left:50px;
     margin-right: 10px;
     font-size: 13px;
     font-weight:300;
-    color: white ;
+    color: var(--color-white) ;
     opacity: 45%;
-    overflow-wrap: break-word;
-    word-break: break-word;
 }
 
 .first-text{
@@ -153,11 +150,9 @@ aside{
 }
 body{
     display: flex;
-    background: linear-gradient(to top, rgb(247, 247, 247), #ebebeb, #dddddd);
-
 }
 .content{
-    background: linear-gradient(to top, #ffffff, #dfdfdf, #cfcfcf);
+    background: linear-gradient(to top, var(--color-white), var(--color-light-gray), var(--color-medium-gray));
 }
 main{
     margin-left: 220px;
@@ -179,34 +174,6 @@ main{
     padding: 0 20px;
 }
 
-.top-first {
-    display: flex;
-    align-items: center;
-}
-
-.verify {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: 20px;
-    padding-left: 10px;
-    color: var(--color-purple); 
-    font-weight: 500;
-    font-size: 0.9rem;
-    background-color: #e2ddff;
-    border-radius: 20px;
-    padding-right: 10px;
-}
-.verify.v{
-    background-color: #e2ddff;
-    color: var(--color-purple); 
-}
-.verify.p{
-    background-color: #ffddc9;
-    color:rgb(219, 123, 6); 
-}
-
-
 .top-right{
     display: flex;
     gap: 10px;
@@ -225,20 +192,20 @@ main{
     color:var(--color-dark-blue)
 }
 .cards{ 
-    height: 30vh;
-    padding: 30px 24px 0 24px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    padding-top: 30px;
+    display: flex;
+    padding-left: 20px;
+    justify-content: space-evenly;
+    
 }
 .cards .card{
     margin: 5px;
     align-self: center;
     border-radius: 30px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--color-white);
     height: 30vh;
     width: 40vh;
-    border: 0px solid rgb(180, 180, 180) ;
+    border: 0px solid var(--color-medium-gray) ;
 }
 .cards .card:hover{
     box-shadow: 0 0 10px rgba(75, 60, 195, 0.13);
@@ -320,17 +287,6 @@ main{
     border-radius: 10px;
     color: var(--color-purple);
 }
-.coments-button:hover{
-    border: 1px solid rgb(189, 188, 188);
-    transform: translateY(-3px); /* sobe */
-    transition: 0.3s ease;
-}
-
-.notifications-button:hover{
-    border: 1px solid rgb(189, 188, 188);
-    transform: translateY(-3px); /* sobe */
-    transition: 0.3s ease;
-}
 .btn-primary{
     margin:5px;
     background: var(--color-purple);
@@ -349,7 +305,6 @@ main{
 button.btn-primary p{
     color: var(--color-white);
     font-size: 14px;
-    font-weight: 65 0px;
 }
 .search-bar .fa-solid{
     margin-top: 4px;
@@ -376,14 +331,13 @@ button.btn-primary p{
     display: grid;
     grid-template-columns: 2fr 1fr;
     margin-top: 20px;
-    padding: 0 24px 30px 24px;
-    gap: 16px;
-    align-items: start;
+    padding-left: 20px;
+    padding-right: 15px;
 }
 .table{
     background-color: var(--color-white);
     border-radius: 25px;
-    padding-bottom: 10px;
+    margin-right: 10px;
 }
 .table-head{
    display: flex;
@@ -394,7 +348,7 @@ button.btn-primary p{
 .divide-table{
     display: grid;
     justify-items: center;
-    background-color: rgba(169, 169, 169, 0.174);
+    background-color: rgba(var(--color-dark-gray), 0.17);
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     height: 30px;
     border-top:1px solid rgba(var(--color-dark-gray), 0.28);
@@ -405,7 +359,6 @@ button.btn-primary p{
 }
 .table-body{
     display: grid;
-
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -426,16 +379,15 @@ button.btn-primary p{
   color: var(--color-white);
 }
 .icon-name.N{
-background: linear-gradient(135deg, #00c896, #be4ffe);
+    background: linear-gradient(135deg, #00c896, var(--color-light-purple));
 }
 .icon-name.M{
-    background: linear-gradient(135deg, #3965d3, #83d449);
-
+    background: linear-gradient(135deg, var(--color-blue), #83d449);
 }
 
-p.name-org{
+.name-org{
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-dark-blue);
 }
 .email-org{
@@ -445,6 +397,7 @@ p.name-org{
 }
 
 .type-org{
+    margin-top: 15px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -468,6 +421,7 @@ p.name-org{
 }
 
 .mood-org{
+    margin-top: 10px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -485,6 +439,7 @@ p.name-org{
 }
 
 .date-org{
+    margin-top: 20px;
     display: inline-flex;
     font-size: 13px;
     font-weight: 500;
@@ -492,6 +447,7 @@ p.name-org{
 }
 
 .actions-org button{
+    margin-top: 15px;
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
@@ -548,9 +504,7 @@ p.subtitle-table{
 .graphic{
     background-color: var(--color-white);
     border-radius: 25px;
-    
     margin-left: 10px;
-
 }
 
 .graphic-head{
@@ -559,10 +513,11 @@ p.subtitle-table{
 }
 
 .graphic {
-  background: #fff;
-  border: 1px solid #eee;
+  background: var(--color-white);
+  border: 1px solid var(--color-light-gray);
   border-radius: 16px;
   padding: 1.25rem;
+  max-width: 320px;
 }
 
 .graphic-head { margin-bottom: 1.25rem; }

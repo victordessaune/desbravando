@@ -289,19 +289,20 @@
 }
 .box-template{
     background-color: var(--color-white);
-    padding: 10px;
     height: auto;
     border-radius: 16px;
     box-shadow: 0 8px 28px var(--color-light-gray);
     margin-bottom: 30px;
 }
 .box-header{
+    border-bottom:2px solid var(--color-light-gray);
+    width: 100%  
+}
+.box-header-content{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 20px;
-    margin-top: 15px;
-    margin-right: 20px;
+    padding: 20px;
 }
 .box-title{
     font-weight: 600;
@@ -310,7 +311,7 @@
     flex: 1;
 }
 .box-content{
-    padding: 20px;
+    padding: 25px;
     text-align: justify;
     font-size: 15px;
 }

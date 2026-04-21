@@ -1,5 +1,5 @@
 import { db, auth, createUserWithEmailAndPassword, addDoc, collection } from "../js/api/firebase.js";
-import { getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getDoc, doc, setDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 function setError(input, errorEl, message) {
     input.classList.add("input-error");
@@ -100,7 +100,7 @@ form.addEventListener("submit", async function (e) {
             createdAt: new Date()
         });
 
-        await addDoc(collection(db, "users"), {
+        await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             firstName: fields.firstName.value,
             lastName: fields.lastName.value,

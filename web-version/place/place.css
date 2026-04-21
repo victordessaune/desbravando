@@ -1,0 +1,26 @@
+.banner-place{
+    height: 230px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: 96px;
+    background: linear-gradient(
+        135deg,
+        var(--color-off-white) 0%,
+        var(--color-light-blue) 50%,
+        var(--color-blue) 100%
+    );
+
+}
+.identity-place-section{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    gap: 320px;
+    margin-bottom: 40px;
+    background-color: var(--color-white);
+    padding: 15px;
+}

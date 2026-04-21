@@ -22,7 +22,6 @@
     width: 100%;
     background-color: transparent;
     font-size: 15px;
-    color: var(--color-white);
 }
 .card-total{
     background-color: var(--color-white);

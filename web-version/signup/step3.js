@@ -1,5 +1,5 @@
 import { db, auth, createUserWithEmailAndPassword, addDoc, collection } from "../js/api/firebase.js";
-import { getDoc, doc, setDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 function setError(input, errorEl, message) {
     input.classList.add("input-error");
@@ -41,7 +41,6 @@ form.addEventListener("submit", async function (e) {
 
     const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
-    // Limpa todos os erros
     Object.keys(fields).forEach(key => {
         fields[key].classList.remove("input-error");
         errors[key].style.visibility = "hidden";
@@ -97,7 +96,8 @@ form.addEventListener("submit", async function (e) {
 
         const orgRef = await addDoc(collection(db, "organizations"), {
             ...orgData,
-            createdAt: new Date()
+            createdAt: new Date(),
+            verified: false
         });
 
         await setDoc(doc(db, "users", user.uid), {
@@ -109,13 +109,6 @@ form.addEventListener("submit", async function (e) {
             occupation: fields.occupation.value,
             orgId: orgRef.id
         });
-
-        const empresaSnap = await getDoc(doc(db, "organizations", orgRef.id));
-        const empresa = empresaSnap.exists() ? empresaSnap.data() : { orgName: "Organização" };
-
-        sessionStorage.setItem("usuarioNome", fields.firstName.value);
-        sessionStorage.setItem("usuarioCargo", fields.occupation.value);
-        sessionStorage.setItem("empresaNome", empresa.orgName);
 
         localStorage.removeItem("orgData");
 

@@ -61,24 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
             await setPersistence(auth, persistence);
 
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const uid = userCredential.user.uid;
-
-            const q = query(collection(db, "users"), where("uid", "==", uid));
-            const querySnap = await getDocs(q);
-
-            if (querySnap.empty) {
-                setError(emailInput, errorEmail, "Usuário não encontrado no sistema.");
-                return;
-            }
-
-            const usuario = querySnap.docs[0].data();
-
-            const empresaSnap = await getDoc(doc(db, "organizations", usuario.orgId));
-            const empresa = empresaSnap.exists() ? empresaSnap.data() : { orgName: "Organização não encontrada" };
-
-            sessionStorage.setItem("usuarioNome", usuario.firstName);
-            sessionStorage.setItem("usuarioCargo", usuario.occupation);
-            sessionStorage.setItem("empresaNome", empresa.orgName);
 
             window.location.href = "../dashboard/dashboard.html";
 

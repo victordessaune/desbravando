@@ -1,3 +1,6 @@
+.body-admin{
+    background-color: var(--color-off-white);
+}
 .cards-row{
     display: flex;
     align-items: center;

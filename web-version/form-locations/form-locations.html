@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Locais — Desbravando</title>
+    <title>Desbravando</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/signup-login.css">
-    <link rel="stylesheet" href="form-locations.css">
+    <link rel ="stylesheet" href="form-locations.css">
+    <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
 </head>
 <body>
-
-<aside class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="first-text">
                 <div class="logo-text">Desbravando</div>
@@ -26,27 +26,13 @@
                 <p> <i class="fa-solid fa-chart-column"></i> Dashboard</p>
             </div>
             <div class="principal-icons">
-                <p><i class="fa-solid fa-building"></i> Organizações</p>
+                <p><i class="fa-solid fa-building"></i> Organização</p>
             </div>
             <div class="principal-icons">
-                <p><i class="fa-solid fa-user"></i> Usuários</p>
+                <p><i class="fa-solid fa-user"></i> Administradores</p>
             </div>
             <div class="principal-icons">
                 <p><i class="fa-solid fa-map-pin"></i> Locais</p>
-            </div>
-
-            <!-- bloco 2-->
-            <div class="principal">
-                <p>Gestão</p>
-            </div>
-            <div class="principal-icons">
-                <p> <i class="fa-solid fa-calendar-days"></i> Eventos</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-tag"></i> Promoções</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-regular fa-chart-bar"></i>  Relatórios</p>
             </div>
 
             <!-- bloco 3-->
@@ -67,319 +53,10 @@
                 <p class="class-admin">Super admin</p>
             </div>
         </div>
-
     </aside>
-<!-- ══════════════════════════════
-     CONTEÚDO
-══════════════════════════════ -->
+    <main>
 
- 
-<div class="page-wrapper">
- 
-    <!-- ── Hero / Stepper ── -->
-    <div class="form-hero">
-        <div class="form-hero-text">
-            <h1 id="hero-title">Informações Básicas</h1>
-            <p  id="hero-subtitle">Preencha as informações básicas do local.</p>
-            <div class="progress-bar-wrap" style="margin-top:12px; max-width:260px;">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
- 
-        <!-- Stepper horizontal -->
-        <div class="stepper" id="stepper">
-            <div class="step-item active" data-step="1">
-                <div class="step-dot">1</div>
-                <div class="step-info">
-                    <span class="step-label">Info Básicas</span>
-                    <span class="step-desc">Nome e endereço</span>
-                </div>
-            </div>
-            <div class="step-item" data-step="2">
-                <div class="step-dot">2</div>
-                <div class="step-info">
-                    <span class="step-label">Estrutura</span>
-                    <span class="step-desc">Infra e horários</span>
-                </div>
-            </div>
-            <div class="step-item" data-step="3">
-                <div class="step-dot">3</div>
-                <div class="step-info">
-                    <span class="step-label">Detalhes</span>
-                    <span class="step-desc">Avaliações</span>
-                </div>
-            </div>
-            <div class="step-item" data-step="4">
-                <div class="step-dot">4</div>
-                <div class="step-info">
-                    <span class="step-label">Publicação</span>
-                    <span class="step-desc">Imagens e preço</span>
-                </div>
-            </div>
-        </div>
-    </div>
- 
-    <!-- ── Formulário ── -->
-    <main class="form-body">
- 
-        <!-- ─── PANEL 1 — Info Básicas ─── -->
-        <div class="panel active" id="panel-1">
- 
-            <div class="row-2 box-input">
-                <div style="grid-column: span 2">
-                    <label class="field-label">Nome do Local <span class="req">*</span></label>
-                    <input type="text" id="nome-local" placeholder="Ex: Praça das Artes">
-                    <span class="message-error" id="err-nome">Campo obrigatório.</span>
-                </div>
-            </div>
- 
-            <div class="box-input">
-                <label class="field-label">Descrição do Local</label>
-                <textarea id="descricao-local" placeholder="Descreva brevemente o local..."></textarea>
-            </div>
- 
-            <div class="section-heading">Endereço</div>
- 
-            <div class="row-3 box-input">
-                <div>
-                    <label class="field-label">CEP <span class="req">*</span></label>
-                    <input type="text" id="cep" placeholder="00000-000" maxlength="9">
-                </div>
-                <div>
-                    <label class="field-label">UF</label>
-                    <select id="uf">
-                        <option value="">UF</option>
-                        <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
-                        <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
-                        <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
-                        <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
-                        <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
-                        <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
-                        <option>SP</option><option>SE</option><option>TO</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="field-label">Número</label>
-                    <input type="text" id="numero" placeholder="Nº">
-                </div>
-            </div>
- 
-            <div class="row-2 box-input">
-                <div>
-                    <label class="field-label">Cidade <span class="req">*</span></label>
-                    <input type="text" id="cidade" placeholder="Cidade">
-                </div>
-                <div>
-                    <label class="field-label">Rua / Bairro</label>
-                    <input type="text" id="rua" placeholder="Rua ou bairro">
-                </div>
-            </div>
- 
-            <button class="btn-map" onclick="handleMapClick()">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Buscar no Mapa
-            </button>
- 
-            <div class="divider"></div>
-            <div class="section-heading">Contato</div>
- 
-            <div class="row-2 box-input">
-                <div>
-                    <label class="field-label">Telefone</label>
-                    <input type="tel" id="telefone" placeholder="(00) 00000-0000">
-                </div>
-                <div>
-                    <label class="field-label">E-mail</label>
-                    <input type="email" id="email" placeholder="contato@local.com">
-                </div>
-            </div>
- 
-            <div class="button-line">
-                <button class="btn-primary" onclick="nextStep(1)">
-                    Próximo
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-            </div>
-        </div>
- 
-        <!-- ─── PANEL 2 — Estrutura ─── -->
-        <div class="panel" id="panel-2">
- 
-            <div class="section-heading">Infraestrutura</div>
-            <div class="check-grid">
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Estacionamento</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Lanchonete</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Playground</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Bicicletas</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Segurança</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Toaletes</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Monitoramento</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Na Sombra</span></label>
-                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Acessível</span></label>
-            </div>
- 
-            <div class="section-heading">Horários de Funcionamento</div>
-            <div id="hours-list">
-                <div class="hours-grid">
-                    <span class="day-label">Segunda-feira</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
-                </div>
-                <div class="hours-grid">
-                    <span class="day-label">Sábado</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
-                </div>
-                <div class="hours-grid">
-                    <span class="day-label">Domingo</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
-                </div>
-            </div>
-            <button class="add-day-btn" onclick="addHourRow()">+ Adicionar dia</button>
- 
-            <div class="button-line">
-                <button class="btn-secondary" onclick="prevStep(2)">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                    Voltar
-                </button>
-                <button class="btn-primary" onclick="nextStep(2)">
-                    Próximo
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-            </div>
-        </div>
- 
-        <!-- ─── PANEL 3 — Detalhes ─── -->
-        <div class="panel" id="panel-3">
- 
-            <div class="section-heading">Avaliação do Local</div>
- 
-            <div class="row-2 box-input" style="margin-bottom:0">
-                <div>
-                    <label class="field-label" style="margin-bottom:8px">Qualidade Geral</label>
-                    <div class="stars" id="stars-qualidade" data-val="0">
-                        <span class="star" onclick="setStars('qualidade',1)">★</span>
-                        <span class="star" onclick="setStars('qualidade',2)">★</span>
-                        <span class="star" onclick="setStars('qualidade',3)">★</span>
-                        <span class="star" onclick="setStars('qualidade',4)">★</span>
-                        <span class="star" onclick="setStars('qualidade',5)">★</span>
-                    </div>
-                </div>
-                <div>
-                    <label class="field-label" style="margin-bottom:8px">Acessibilidade</label>
-                    <div class="stars" id="stars-acesso" data-val="0">
-                        <span class="star" onclick="setStars('acesso',1)">★</span>
-                        <span class="star" onclick="setStars('acesso',2)">★</span>
-                        <span class="star" onclick="setStars('acesso',3)">★</span>
-                        <span class="star" onclick="setStars('acesso',4)">★</span>
-                        <span class="star" onclick="setStars('acesso',5)">★</span>
-                    </div>
-                </div>
-            </div>
- 
-            <div class="box-input" style="margin-top:16px">
-                <label class="field-label" style="margin-bottom:8px">Boa Preservação</label>
-                <div class="stars" id="stars-preserv" data-val="0">
-                    <span class="star" onclick="setStars('preserv',1)">★</span>
-                    <span class="star" onclick="setStars('preserv',2)">★</span>
-                    <span class="star" onclick="setStars('preserv',3)">★</span>
-                    <span class="star" onclick="setStars('preserv',4)">★</span>
-                    <span class="star" onclick="setStars('preserv',5)">★</span>
-                </div>
-            </div>
- 
-            <div class="divider"></div>
-            <div class="section-heading">Serviços / Facilidades</div>
-            <div class="tag-group" id="services-tags">
-                <span class="tag" onclick="toggleTag(this)">Wi-Fi</span>
-                <span class="tag" onclick="toggleTag(this)">Cafeteria</span>
-                <span class="tag" onclick="toggleTag(this)">Guarda-Volumes</span>
-                <span class="tag" onclick="toggleTag(this)">Loja</span>
-                <span class="tag" onclick="toggleTag(this)">Bilheteria</span>
-                <span class="tag" onclick="toggleTag(this)">Visita Guiada</span>
-                <span class="tag" onclick="toggleTag(this)">Pet Friendly</span>
-                <span class="tag" onclick="toggleTag(this)">Entrada Gratuita</span>
-            </div>
- 
-            <div class="divider"></div>
-            <div class="section-heading">Informações Adicionais</div>
-            <div class="box-input">
-                <label class="field-label">Observações</label>
-                <textarea placeholder="Informações extras, dicas, avisos importantes..."></textarea>
-            </div>
- 
-            <div class="button-line">
-                <button class="btn-secondary" onclick="prevStep(3)">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                    Voltar
-                </button>
-                <button class="btn-primary" onclick="nextStep(3)">
-                    Próximo
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-            </div>
-        </div>
- 
-        <!-- ─── PANEL 4 — Publicação ─── -->
-        <div class="panel" id="panel-4">
- 
-            <div class="box-input">
-                <label class="field-label">Website</label>
-                <input type="url" id="website" placeholder="https://sitedomeulocal.com.br">
-            </div>
- 
-            <div class="section-heading">Faixa de Preço</div>
-            <div class="price-options box-input">
-                <div class="price-opt" onclick="selectPrice(this)">Grátis</div>
-                <div class="price-opt" onclick="selectPrice(this)">$</div>
-                <div class="price-opt" onclick="selectPrice(this)">$$</div>
-                <div class="price-opt" onclick="selectPrice(this)">$$$</div>
-            </div>
- 
-            <div class="section-heading">Tags</div>
-            <div class="tags-preview" id="tags-preview"></div>
-            <div class="box-input" style="display:flex; gap:10px">
-                <input type="text" id="tag-input" placeholder="Adicionar tag..." style="flex:1">
-                <button class="btn-primary" style="padding:10px 18px; font-size:0.8rem; border-radius:10px" onclick="addTag()">+ Tag</button>
-            </div>
- 
-            <div class="divider"></div>
-            <div class="section-heading">Imagens</div>
- 
-            <label class="upload-area" for="file-upload">
-                <input type="file" id="file-upload" accept="image/*" multiple onchange="previewImages(event)">
-                <div class="upload-icon">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
-                </div>
-                <p><strong>Clique para enviar</strong> ou arraste as imagens</p>
-                <p style="font-size:0.7rem; margin-top:6px">PNG, JPG — máx 5MB cada</p>
-            </label>
- 
-            <div id="image-preview" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;"></div>
- 
-            <div class="button-line">
-                <button class="btn-danger"    onclick="prevStep(4)">✕ Cancelar</button>
-                <button class="btn-primary"   onclick="publishLocal()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                    Publicar Local
-                </button>
-            </div>
-        </div>
- 
-        <!-- ─── SUCCESS ─── -->
-        <div class="success-screen" id="success-screen">
-            <div class="success-icon">🎉</div>
-            <h3>Local Publicado!</h3>
-            <p>O local foi cadastrado com sucesso e já está disponível na plataforma.</p>
-            <div style="margin-top:32px">
-                <button class="btn-primary" style="margin:0 auto" onclick="resetForm()">Cadastrar novo local</button>
-            </div>
-        </div>
- 
     </main>
-</div>
- 
-<script type="module" src="form-locations.js"></script>
+    
 </body>
-</html>
+  

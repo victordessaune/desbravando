@@ -1,4 +1,191 @@
 /* ══════════════════════════════
+   SIDEBAR — CORREÇÃO
+   Adicione ao final do seu form-locations.css
+   ou substitua o bloco "aside" existente
+══════════════════════════════ */
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: var(--color-purple);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+}
+.sidebar-logo{
+    width: 220px;
+    height: 70px;
+    border-bottom: 2px solid rgba(var(--color-white-rgb), 0.345) ;
+}
+.sidebar-rest{
+    padding-left: 25px;
+    margin-top: 10px;
+    
+}
+.admin{
+    display:flex;
+    margin-top: auto;
+    padding-bottom: 20px;
+    border-top: 2px solid rgba(var(--color-white-rgb), 0.345) ;
+}
+.box-admin{
+    margin:20px;
+    width: 195px;
+    height: 55px;
+    justify-self: center;
+    align-self: center;
+    border-radius: 15px;
+    border:1px solid rgba(var(--color-white-rgb), 0.25);
+    background-color: rgba(var(--color-white-rgb), 0.09);
+    padding-left: 20px;
+}
+.box-admin:hover{
+    background-color: rgba(var(--color-white-rgb), 0.16);
+    box-shadow: 0 0 10px rgba(75, 60, 195, 0.6);
+    transform: translateY(-1px);
+    transition: 0.3s ease;
+
+}
+
+
+.name-admin{
+    padding-top:5px;
+    padding-left:50px;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight:300;
+    color: var(--color-white) ;
+}
+.class-admin{
+    padding-left:50px;
+    margin-right: 10px;
+    font-size: 13px;
+    font-weight:300;
+    color: var(--color-white) ;
+    opacity: 45%;
+}
+
+.first-text{
+    margin-top: 17px;
+    display: grid;
+    
+    
+}
+.logo-text{
+    justify-self: center;
+    font-size: 15px;
+    font-weight:500;
+    color: var(--color-white);
+
+}
+.logo-text-two{
+    margin-left: 59px;
+    font-size: 14px;
+    font-weight:500;
+    color: var(--color-white) ;
+    opacity: 45%;
+    
+}
+.principal{
+    padding: 2px;
+    font-size: 14px;
+    font-weight:400;
+    color: var(--color-white);
+    opacity: 45%;
+    margin-top: 4px;
+    margin-bottom: 3px;
+}
+.principal-icons{
+    margin-right: 10px;
+    font-size: 14px;
+    opacity: 0.75;
+    font-weight:300;
+    color: var(--color-white) ;
+    border-radius: 10px;
+    
+}
+/*pagina do momento*/
+.principal-icon-page{
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight:300;
+    color: var(--color-white) ;
+    
+    
+}
+.principal-icon-page p{
+    padding-top: 9px;
+    padding-left: 30px;
+    margin-bottom:7px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgba(var(--color-white-rgb), 0.1);
+    position: relative;
+    
+}
+/*barrinha do icone principal*/
+.principal-icon-page.active p::before{
+    content: "";
+    position: absolute;
+
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 4px;
+    height: 20px;
+
+    background: var(--color-light-blue);
+    border-radius: 3px;
+}
+.principal-icons p{
+    padding-top: 9px;
+    padding-left: 30px;
+    margin-bottom:7px;
+    height: 40px;
+    border-radius: 10px;
+    
+}
+.principal-icons:hover{
+    background-color: rgba(var(--color-white-rgb), 0.1);
+    opacity: 100%;
+    
+}
+.principal-icons .fa-solid{  
+    margin-right: 5px;
+}
+
+/* ── Offset do conteúdo ── */
+.page-wrapper {
+    margin-left: 220px;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 800px) {
+    aside         { width: 200px; }
+    .page-wrapper { margin-left: 200px; }
+}
+
+@media (max-width: 640px) {
+    aside         { display: none; }
+    .page-wrapper { margin-left: 0; }
+}
+
+
+
+
+
+
+
+
+
+/* ══════════════════════════════
    VARIÁVEIS DO PROJETO
 ══════════════════════════════ */
 :root {

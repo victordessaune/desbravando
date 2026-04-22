@@ -2,55 +2,7 @@
     margin: 0;
     background-color: var(--color-off-white);
 }
-.navbar-profile{
-    background-color: var(--color-white);
-    position: fixed;
-    width: 100%;
-    color: var(--color-white);
-    height: 96px;
-    display: flex;
-    align-items: center;
-    top: 0;
-    left: 0;
-}
-.logo-navbar{
-    height: 50%;
-    width: auto;
-    margin-left: 2%;
-}
 
-.text-navbar{
-    font-size: clamp(1rem, 1.2vw, 2rem);
-    color: var(--color-purple);
-    margin-left: 0.5%;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-}
-
-.navbar-right{
-    margin-left: auto;
-    margin-right: 2%;
-    display: flex;
-    align-items: center;
-    width: auto;
-    gap:20px;
-}
-.btn-navbar{
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: var(--color-dark-blue);
-    padding: clamp(2px, 1vh, 4px) clamp(2px, 4vw, 15px);
-    border-radius: 10px;
-    font-size: clamp(0.7rem, 0.8vw, 1rem);
-    font-weight: 400;
-    position: relative;
-    border:2px solid var(--color-purple)
-}
-.btn-navbar:hover{
-    background-color: var(--color-light-gray);
-    border: 2px solid var(--color-light-gray);
-}
 .banner{
     height: 230px;
     width: 100%;
@@ -58,7 +10,6 @@
     justify-content: flex-end;
     align-items: flex-start;
     padding: 20px;
-    margin-top: 96px;
     background: linear-gradient(
         135deg,
         var(--color-blue) 0%,

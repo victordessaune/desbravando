@@ -8,53 +8,10 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel ="stylesheet" href="dashboard.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+    <script src="../js/sidebar.js" defer></script>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <div class="first-text">
-                <div class="logo-text">Desbravando</div>
-                <span class="logo-text-two">Admin Painel</span>
-            </div>
-        </div>
-        <div class="sidebar-rest">
-            <!-- bloco 1-->
-            <div class="principal">
-                <p>Principal</p>
-            </div>
-            <div class="principal-icon-page active">
-                <p> <i class="fa-solid fa-chart-column"></i> Dashboard</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-building"></i> Organização</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-user"></i> Administradores</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-map-pin"></i> Locais</p>
-            </div>
-
-            <!-- bloco 3-->
-            <div class="principal">
-                <p>Sistema</p>
-            </div>
-            <div class="principal-icons">
-                <p> <i class="fa-solid fa-gear"></i> Configurações</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-lock"></i> Segurança</p>
-            </div>
-            
-        </div>
-        <div class="admin">
-            <div class="box-admin">
-                <p class="name-admin">Victor Ramos</p>
-                <p class="class-admin">Super admin</p>
-            </div>
-        </div>
-
-    </aside>
+    <app-sidebar page="dashboard"></app-sidebar>
     <main>
         <div class="top-bar">
             <div class="top-left">
@@ -72,19 +29,7 @@
                     <p id="data-atual"></p>
             </div>
             <div class="top-right">
-                    <div class="search-bar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
 
-                        <input type="text" id="searchInput" placeholder="Buscar..." />
-                    </div>
-
-                    <button class="notifications-button">
-                        <i class="fa-solid fa-bell" ></i>
-                    </button>
-
-                    <button class="coments-button">
-                        <i class="fa-solid fa-comment"></i>
-                    </button>
 
                     <button class="btn-primary" id="btn-new-local">
                         <p>+ Novo Local</p>

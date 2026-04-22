@@ -55,4 +55,8 @@ onAuthStateChanged(auth, async (user) => {
     } catch (error) {
         console.error("Erro ao carregar dados:", error);
     }
+
+    document.querySelector(".btn-primary").addEventListener("click", () => {
+    window.location.href = "../form-locations/form-locations.html";
+});
 });

@@ -33,6 +33,7 @@ document.querySelector(".btn-template").addEventListener("click", async () => {
     }
 
     try {
+        console.log("Enviando e-mail...")
         await sendPasswordResetEmail(auth, email);
 
         const popup = document.getElementById("toast");

@@ -8,67 +8,19 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel ="stylesheet" href="form-locations.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+    <script src="../js/sidebar.js"></script>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <div class="first-text">
-                <div class="logo-text">Desbravando</div>
-                <span class="logo-text-two">Admin Painel</span>
-            </div>
-        </div>
-        <div class="sidebar-rest">
-            <!-- bloco 1-->
-            <div class="principal">
-                <p>Principal</p>
-            </div>
-            <div class="principal-icons">
-                <p> <i class="fa-solid fa-chart-column"></i> Dashboard</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-building"></i> Organização</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-user"></i> Administradores</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-map-pin"></i> Locais</p>
-            </div>
-
-            <!-- bloco 3-->
-            <div class="principal">
-                <p>Sistema</p>
-            </div>
-            <div class="principal-icons">
-                <p> <i class="fa-solid fa-gear"></i> Configurações</p>
-            </div>
-            <div class="principal-icons">
-                <p><i class="fa-solid fa-lock"></i> Segurança</p>
-            </div>
-            
-        </div>
-        <div class="admin">
-            <div class="box-admin">
-                <p class="name-admin">Victor Ramos</p>
-                <p class="class-admin">Super admin</p>
-            </div>
-        </div>
-    </aside>
+    <app-sidebar page="locais"></app-sidebar>
 
 
 
-
-
-
-
-
-   
     <main>
         <div class="top-bar">
             <div class="top-left">
                     <div class="top-first">
                         <a><h1>Informações Básicas</h1></a>
-                        <div class="verify v">
+                        <div class="top-second">
                            Preencha as informações básicas do local
 
                         </div>
@@ -79,7 +31,7 @@
         </div>
 
         <div class="content"> 
- <!-- Stepper horizontal 
+ <!-- Stepper horizontal -->
     <div class="stepper-total">
         <div class="stepper" id="stepper">
             <div class="step-item active" data-step="1">
@@ -110,7 +62,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div> 
 
     <!-- ── Formulário ── -->
     <div class="form-body">

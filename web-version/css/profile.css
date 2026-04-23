@@ -123,7 +123,7 @@ main .fa-user{
     align-items: center;
 }
 .signin-date{
-    margin-left: 6px;
+    margin-left: 9px;
     font-weight: 600;
 }
 .identity-info{
@@ -153,6 +153,11 @@ main .fa-user{
     gap: 35px;
     padding-bottom: 6px;
     font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+}
+.item-detail{
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 .buttons-identity{
     display: flex;

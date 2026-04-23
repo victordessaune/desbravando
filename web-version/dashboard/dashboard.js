@@ -1,6 +1,6 @@
 import { auth, db } from "../js/api/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ─── Data atual ───────────────────────────────────────────
 function atualizarData() {
@@ -44,15 +44,21 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     try {
-        let usuarioNome = sessionStorage.getItem("usuarioNome");
-        let empresaNome = sessionStorage.getItem("empresaNome");
-        let usuarioCargo = sessionStorage.getItem("usuarioCargo");
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        const usuario = userSnap.data();
 
-        document.querySelector(".top-left h1").textContent = empresaNome;
-        document.querySelector(".name-admin").textContent = usuarioNome;
-        document.querySelector(".class-admin").textContent = usuarioCargo;
+        const orgSnap = await getDoc(doc(db, "organizations", usuario.orgId));
+        const empresa = orgSnap.exists() ? orgSnap.data() : { orgName: "Organização não encontrada" };
+
+        document.querySelector(".top-left h1").textContent = empresa.orgName;
+        document.querySelector(".name-admin").textContent = usuario.firstName;
+        document.querySelector(".class-admin").textContent = usuario.occupation;
 
     } catch (error) {
         console.error("Erro ao carregar dados:", error);
     }
+
+    document.querySelector(".btn-primary").addEventListener("click", () => {
+        window.location.href = "../form-locations/form-locations.html";
+    });
 });

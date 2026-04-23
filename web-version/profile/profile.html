@@ -9,207 +9,183 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <script src="../js/sidebar.js" defer></script>
 
 </head>
 <body class="body-profile">
-    <section class="navbar-profile">
-        <img src="../assets/logos/purple-desbravando-logo.svg" alt="Purple Desbravando logo" class="logo-navbar">
-        <p class="text-navbar">DESBRAVANDO</p>
-        <div class="navbar-right">
-            <a href="../dashboard/dashboard.html" class="btn-ed">Dashboard</a>
-        </div>
-    </section>
-    <section class="banner">
-        <button class="change-banner"><i class="fa-solid fa-camera"></i>Alterar capa</button>
-    </section>
-    <section class="main-content">
-        <div class="identity-section">
-            <div class="user-icon" id="user-icon"></div>
-            <div class="identity-info">
-                <div class="org-type" id="org-type"></div>
-                <h1 class="org-name" id="org-name"></h1>
 
-                <div class="org-details">
-                    <div class="org-location"><i class="fa-solid fa-location-dot"></i>
-                    <span class="org-item" id="org-city"></span></div>
-                    
-                    <div class="org-location">
+    <app-sidebar page="profile"></app-sidebar>
+
+    <main>
+        <section class="banner">
+            <button class="change-banner"><i class="fa-solid fa-camera"></i>Alterar capa</button>
+        </section>
+        <section class="main-content">
+            <div class="identity-section">
+                <div class="user-icon" id="user-icon">PV</div>
+                <div class="identity-info">
+                    <div class="org-type" id="org-type">Organização Pública</div>
+                    <h1 class="org-name" id="org-name">Prefeitura de Vitória</h1>
+                    <div class="org-details">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="org-item" id="org-city"> Vitória</span>
                         <i class="fa-solid fa-calendar"></i>
-                        <span class="org-item">Membro desde</span>
-                        <p class="signin-date" id="signin-date"></p>
-
+                        <span class="org-item">
+                            Membro desde <p id="signin-date">23/02/2025</p></span>
                     </div>
-                    
+                </div>
+                <div class="buttons-identity">
+                    <a href="#" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</a>
+                    <a href="#" class="btn-edit"> + Novo Local</a>
                 </div>
             </div>
-            <div class="buttons-identity">
-                <a href="#" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</a>
-            </div>
-        </div>
-        <div class="cards-row">
-            <div class="card">
-                <div class="bg-icon blue"><i class="fa-solid fa-map-pin"></i></div>
-                <div class="card-info">
-                    <div class="card-value">4</div>
-                    <div class="card-text">Locais Cadastrados</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="bg-icon dark-purple"><i class="fa-solid fa-eye"></i></div>
-                <div class="card-info">
-                    <div class="card-value">12.5k</div>
-                    <div class="card-text">Visualizações totais</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="bg-icon light-green"><i class="fa-solid fa-people-group"></i></div>
-                <div class="card-info">
-                    <div class="card-value">257</div>
-                    <div class="card-text">Visitantes únicos</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="bg-icon light-purple"><i class="fa-solid fa-star"></i></div>
-                <div class="card-info">
-                    <div class="card-value">4.1</div>
-                    <div class="card-text">Avaliação média</div>
-                </div>
-            </div>
-        </div>
-        <div class="information-boxes">
-            <div class="box-left">
-                <div class="box-template">
-                    <div class="box-header">
-                        <div class="box-header-content">
-                            <i class="fa-solid fa-building-columns"></i>
-                            <div class="box-title">Sobre a organização</div>
-                            <a href="#" class="edit-description">Editar</a>
-                        </div>
+            <div class="cards-row">
+                <div class="card">
+                    <div class="bg-icon blue"><i class="fa-solid fa-map-pin"></i></div>
+                    <div class="card-info">
+                        <div class="card-value">4</div>
+                        <div class="card-text">Locais Cadastrados</div>
                     </div>
-                    <div class="box-content">
-                    A Prefeitura de Vitória é o Poder Executivo do município de Vitória, capital do Espírito Santo, responsável pela administração pública local. 
-                    <br>
-                    Ela gerencia serviços essenciais (saúde, educação, trânsito, obras), planeja o desenvolvimento urbano e econômico, e cuida das pessoas por meio de secretarias setoriais.                    </div>
                 </div>
-
-                <div class="box-template">
-                    <div class="places">
+                <div class="card">
+                    <div class="bg-icon dark-purple"><i class="fa-solid fa-eye"></i></div>
+                    <div class="card-info">
+                        <div class="card-value">12.5k</div>
+                        <div class="card-text">Visualizações totais</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="bg-icon light-green"><i class="fa-solid fa-people-group"></i></div>
+                    <div class="card-info">
+                        <div class="card-value">257</div>
+                        <div class="card-text">Visitantes únicos</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="bg-icon light-purple"><i class="fa-solid fa-star"></i></div>
+                    <div class="card-info">
+                        <div class="card-value">4.1</div>
+                        <div class="card-text">Avaliação média</div>
+                    </div>
+                </div>
+            </div>
+            <div class="information-boxes">
+                <div class="box-left">
+                    <div class="box-template">
                         <div class="box-header">
                             <div class="box-header-content">
-                                <i class="fa-solid fa-map-location-dot"></i>
-                                <div class="box-title">Locais Cadastrados</div>
+                                <i class="fa-solid fa-building-columns"></i>
+                                <div class="box-title">Sobre a organização</div>
+                                <a href="#" class="edit-description">Editar</a>
                             </div>
                         </div>
-
                         <div class="box-content">
-                            <div class="places-area">
-                                <div class="place-card">
-                                    <div class="banner-place"></div>
-                                    <div class="place-name">Praça do Papa</div>
-                                    <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
-                                </div>
-
-                                <div class="place-card">
-                                    <div class="banner-place"></div>
-                                    <div class="place-name">Praia de Camburi</div>
-                                    <div class="place-location"><i class="fa-solid fa-location-dot"></i>Vitória</div>
-                                </div>
-
-                                <!--<div class="place-card">
-                                    <div class="banner-place"></div>
-                                    <div class="place-name">Parque</div>
-                                    <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
-                                </div>
-
-                                <div class="place-card">
-                                    <div class="banner-place"></div>
-                                    <div class="place-name">Praia</div>
-                                    <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
-                                </div>-->
-
-                            </div>
-
+                        A Prefeitura de Vitória é o Poder Executivo do município de Vitória, capital do Espírito Santo, responsável pela administração pública local. 
+                        <br>
+                        Ela gerencia serviços essenciais (saúde, educação, trânsito, obras), planeja o desenvolvimento urbano e econômico, e cuida das pessoas por meio de secretarias setoriais.
                         </div>
+                    </div>
 
+                    <div class="box-template">
+                        <div class="places">
+                            <div class="box-header">
+                                <div class="box-header-content">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                    <div class="box-title">Locais Cadastrados</div>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <div class="places-area">
+                                    <div class="place-card">
+                                        <div class="banner-place"></div>
+                                        <div class="place-name">Praça do Papa</div>
+                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
+                                    </div>
+                                    <div class="place-card">
+                                        <div class="banner-place"></div>
+                                        <div class="place-name">Praia de Camburi</div>
+                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Vitória</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
 
+                <div class="box-right">
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <div class="box-title"><i class="fa-solid fa-address-card"></i>Informações</div>
+                                <div class="edit-description">
+                                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="info-space">
+                                <div class="bg-icon purple"><i class="fa-solid fa-envelope"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">EMAIL</div>
+                                    <div class="info-value" id="org-email"></div>
+                                    <input id="email-input" style="display: none;" />
+                                </div>
+                            </div>
+
+                            <div class="info-space">
+                                <div class="bg-icon purple"><i class="fa-solid fa-link"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">WEBSITE</div>
+                                    <div class="info-value" id="website">https://www.vitoria.es.gov.br/</div>
+                                    <input id="website-input" style="display: none;" />
+                                </div>
+                            </div>
+
+                            <div class="info-space">
+                                <div class="bg-icon purple"><i class="fa-solid fa-map"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">ENDEREÇO</div>
+                                    <div class="info-value" id="address">Av. Marechal Mascarenhas de Moraes, 1927, Bento Ferreira, Vitória - ES, CEP 29050-625</div>
+                                </div>
+                            </div>
+
+                            <div class="info-space">
+                                <div class="bg-icon purple"><i class="fa-solid fa-id-card-clip"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">CNPJ</div>
+                                    <div class="info-value" id="cnpj">27.142.058/0001-26</div>
+                                    <input id="cnpj-input" style="display: none;" />
+                                </div>
+                            </div>
+
+                            <div class="buttons-edit">
+                                <button id="btn-save" class="btn-edit" onclick="save()" style="display: none;">Salvar</button>
+                                <button id="btn-cancel" class="btn-edit" onclick="cancel()" style="display: none;">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <div class="box-title"><i class="fa-solid fa-user"></i>Responsáveis</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="info-space">
+                                <div class="bg-icon pink-blue" id="person-user">AC</div>
+                                <div class="info-content">
+                                    <div class="name-value" id="person-name">Amanda Carvalho</div>
+                                    <div class="occupation-value" id="occupation">Diretora de Marketing</div>
+                                    <div class="email-resp-value" id="email">teste@gmail.com</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="box-right">
-                <div class="box-template">
-                    <div class="box-header">
-                        <div class="box-header-content">
-                            <div class="box-title"><i class="fa-solid fa-address-card"></i>Informações</div>
-                            <div class="edit-description">
-                                <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar</button></div>
-                        </div>
-                    </div>
-                    <div class="box-content">
-                        <div class="info-space">
-                            <div class="bg-icon purple"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="info-content">
-                                <div class="info-label">EMAIL</div>
-                                <div class="info-value" id="org-email"></div>
-                                <input id="email-input" style="display: none;" />
-                            </div>
-                        </div>
-
-                        <div class="info-space">
-                            <div class="bg-icon purple"><i class="fa-solid fa-link"></i></div>
-                            <div class="info-content">
-                                <div class="info-label">WEBSITE</div>
-                                <div class="info-value" id="website"></div>
-                                <input id="website-input" style="display: none;"/>
-                            </div>
-                        </div>
-
-                        <div class="info-space">
-                            <div class="bg-icon purple"><i class="fa-solid fa-map"></i></div>
-                            <div class="info-content">
-                                <div class="info-label">ENDEREÇO</div>
-                                <div class="info-value" id="address"></div>
-                            </div>
-                        </div>
-
-                        <div class="info-space">
-                            <div class="bg-icon purple"><i class="fa-solid fa-id-card-clip"></i></div>
-                            <div class="info-content">
-                                <div class="info-label">CNPJ</div>
-                                <div class="info-value" id="cnpj"></div>
-                                <input id="cnpj-input" style="display: none;"/>
-                            </div>
-                        </div>
-                        <div class="buttons-edit">
-                            <button id="btn-save" class="btn-edit" onclick="save()" style="display: none;">Salvar</button>
-                            <button id="btn-cancel" class="btn-edit" onclick="cancel()" style="display: none;">Cancelar</button>
-                        </div>
-                        
-                    </div>
-                </div>
-                <!--
-                <div class="box-template">
-                    <div class="box-header">
-                        <div class="box-header-content">
-                            <div class="box-title"><i class="fa-solid fa-user"></i>Responsáveis</div>
-                        </div>
-                    </div>
-                    <div class="box-content">
-                        <div class="info-space">
-                        <div class="bg-icon pink-blue" id="person-user">AC</div>
-                        <div class="info-content">
-                            <div class="name-value" id="person-name">Amanda Carvalho</div>
-                            <div class="occupation-value" id="occupation">Diretora de Marketing</div>
-                            <div class="email-resp-value" id="email">teste@gmail.com</div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                -->
-            
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
     <script type="module" src="profile.js"></script>
     
 </body>

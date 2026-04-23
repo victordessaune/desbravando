@@ -1,57 +1,3 @@
-/* ══════════════════════════════
-   SIDEBAR — CORREÇÃO
-   Adicione ao final do seu form-locations.css
-   ou substitua o bloco "aside" existente
-══════════════════════════════ */
-
-aside {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 220px;
-    height: 100vh;
-    background-color: var(--color-purple);
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    overflow: hidden;
-}
-.sidebar-logo{
-    width: 220px;
-    height: 70px;
-    border-bottom: 2px solid rgba(var(--color-white-rgb), 0.345) ;
-}
-.sidebar-rest{
-    padding-left: 25px;
-    margin-top: 10px;
-    
-}
-.admin{
-    display:flex;
-    margin-top: auto;
-    padding-bottom: 20px;
-    border-top: 2px solid rgba(var(--color-white-rgb), 0.345) ;
-}
-.box-admin{
-    margin:20px;
-    width: 195px;
-    height: 55px;
-    justify-self: center;
-    align-self: center;
-    border-radius: 15px;
-    border:1px solid rgba(var(--color-white-rgb), 0.25);
-    background-color: rgba(var(--color-white-rgb), 0.09);
-    padding-left: 20px;
-}
-.box-admin:hover{
-    background-color: rgba(var(--color-white-rgb), 0.16);
-    box-shadow: 0 0 10px rgba(75, 60, 195, 0.6);
-    transform: translateY(-1px);
-    transition: 0.3s ease;
-
-}
-
-
 .name-admin{
     padding-top:5px;
     padding-left:50px;
@@ -159,47 +105,45 @@ aside {
     margin-right: 5px;
 }
 
-/* ── Offset do conteúdo ── */
-.page-wrapper {
+.content{
+    background: linear-gradient(to top,  var(--color-off-white), var(--color-light-gray));
+}
+main {
     margin-left: 220px;
+    width: calc(100% - 220px); 
+}
+.top-bar{
+    position: sticky;
+    z-index: 2; 
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    backdrop-filter: blur(10px);
+    background-color: rgba(var(--color-white-rgb), 0.77);
+    padding: 0 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
-/* ══════════════════════════════
-   RESPONSIVE
-══════════════════════════════ */
-@media (max-width: 800px) {
-    aside         { width: 200px; }
-    .page-wrapper { margin-left: 200px; }
+.top-right{
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
-
-@media (max-width: 640px) {
-    aside         { display: none; }
-    .page-wrapper { margin-left: 0; }
+.top-left{
+    display: flex;
+    flex-direction: column;
 }
-
-
-
-
-
-
-
-
-
-/* ══════════════════════════════
-   VARIÁVEIS DO PROJETO
-══════════════════════════════ */
-:root {
-
-    --border:    #dde1f5;
-    --radius:    16px;
-    --radius-sm: 10px;
-    --navbar-h:  72px;
+.top-left p{
+    font-size: 13px;
+    color:var(--color-gray);
 }
-
-/* ══════════════════════════════
-   RESET
-══════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.top-left h1{
+    font-size: 22px;
+    color:var(--color-dark-blue)
+}
 
 html {
     scroll-behavior: smooth;
@@ -211,6 +155,11 @@ body {
     background: var(--color-off-white);
     overflow-x: hidden;
     min-height: 100vh;
+}
+input,
+textarea,
+select {
+    border-radius: 10px  !important;
 }
 
 /* ══════════════════════════════
@@ -228,162 +177,23 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════
-   NAVBAR
-══════════════════════════════ */
-.navbar {
-    opacity: 0;
-    transform: translateY(-30px);
-    animation: elasticDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 
-    width: 100%;
-    height: var(--navbar-h);
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 999;
-
-    display: flex;
-    align-items: center;
-
-    background: rgba(var(--color-white-rgb), 0);
-    border-bottom: 1px solid rgba(75, 60, 195, 0);
-    backdrop-filter: blur(0px);
-    transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
-}
-
-.navbar.scrolled {
-    background: rgba(var(--color-white-rgb), 0.82);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(75, 60, 195, 0.12);
-}
-
-.logo-navbar {
-    height: 36px;
-    width: auto;
-    margin-left: 5%;
-}
-
-.text-navbar {
-    font-size: clamp(1rem, 1.4vw, 1.3rem);
-    color: var(--color-purple);
-    margin-left: 0.5%;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-}
-
-.navbar-right {
-    margin-left: auto;
-    margin-right: 5%;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-}
-
-/* Botão de cadastro */
-.button-navbar {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    background: var(--color-white);
-    color: var(--color-purple);
-    padding: 9px 28px;
-    border-radius: 80px;
-    font-size: clamp(0.75rem, 1.1vw, 1rem);
-    font-weight: 600;
-    transition: transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.navbar.scrolled .button-navbar {
-    background: linear-gradient(90deg, #6A59F6, #6089F3);
-    color: var(--color-white);
-}
-
-.button-navbar::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -75%;
-    width: 50%; height: 100%;
-    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-20deg);
-    transition: left 0.5s ease;
-}
-.button-navbar:hover::before { left: 125%; }
-.button-navbar:hover { transform: scale(1.07); }
-
-/* Link de login */
-.text-login-navbar {
-    text-decoration: none;
-    font-size: clamp(0.75rem, 1.1vw, 1rem);
-    color: var(--color-purple);
-    font-weight: 700;
-    transition: transform 0.3s ease;
-    position: relative;
-}
-
-.text-login-navbar::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0;
-    width: 100%; height: 2px;
-    background: var(--color-white);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s ease;
-}
-.text-login-navbar:hover { transform: scale(1.07); }
-.text-login-navbar:hover::after { transform: scaleX(1); }
-
-.navbar.scrolled .text-login-navbar        { color: var(--color-purple); }
-.navbar.scrolled .text-login-navbar::after { background: var(--color-purple); }
-
-/* ══════════════════════════════
-   LAYOUT PRINCIPAL
-══════════════════════════════ */
-.page-wrapper {
-    padding-top: var(--navbar-h);
-    background: var(--color-off-white);
-}
-
-.form-hero {
-    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-blue-secondary) 60%, var(--color-light-blue) 100%);
-    
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    
-    padding: 36px 0 32px;
-
-    display: flex;
-    flex-direction: column; /* 👈 ISSO resolve */
-    
-    align-items: flex-start;
-    gap: 20px;
-}
-/* mantém o espaçamento interno do conteúdo */
-.form-hero > * {
-    padding: 0 5%;
-}
-
-.form-hero-text h1 {
-    font-size: clamp(1.3rem, 2.5vw, 2rem);
-    font-weight: 700;
-    color: var(--color-white);
-    line-height: 1.2;
-    margin-bottom: 4px;
-}
-
-.form-hero-text p {
-    font-size: 0.85rem;
-    color: rgba(var(--color-white-rgb), 0.75);
-}
 
 /* ── Stepper horizontal ── */
 .stepper {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-left: 130px;
+    margin-right: 130px;
     gap: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
+.stepper-total {
+background-color: var(--color-light-gray);
+}
+
 
 .step-item {
     display: flex;
@@ -394,13 +204,13 @@ body {
 }
 
 /* linha entre steps */
-.step-item:not(:last-child)::after {
+/*.step-item:not(:last-child)::after {
     content: '';
     display: block;
     width: clamp(28px, 4vw, 64px);
-    height: 2px;
-    background: rgba(255,255,255,0.3);
-    margin: 0 6px;
+    height: 1px;
+    background: var(--color-medium-gray);
+    margin: 20px 2px;
     transition: background 0.3s;
     flex-shrink: 0;
 }
@@ -409,11 +219,11 @@ body {
 .step-dot {
     width: 30px; height: 30px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.45);
+    border: 2px solid var(--color-medium-gray);
     background: transparent;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 700;
-    color: rgba(255,255,255,0.65);
+    color: var(--color-gray);
     flex-shrink: 0;
     transition: all 0.3s;
 }
@@ -432,21 +242,17 @@ body {
 .step-info { display: flex; flex-direction: column; }
 .step-label {
     font-size: 0.75rem; font-weight: 600;
-    color: rgba(255,255,255,0.5);
+    color: var(--color-dark-blue);
     line-height: 1; margin-bottom: 2px;
     transition: color 0.3s;
     white-space: nowrap;
 }
-.step-desc {
-    font-size: 0.65rem;
-    color: rgba(255,255,255,0.35);
-    transition: color 0.3s;
-    white-space: nowrap;
-}
+
 .step-item.active .step-label,
 .step-item.done .step-label  { color: var(--color-white); }
 .step-item.active .step-desc { color: rgba(255,255,255,0.7); }
 .step-item.done .step-desc   { color: rgba(255,255,255,0.5); }
+*/
 
 /* ── Barra de progresso ── */
 .progress-bar-wrap {
@@ -455,7 +261,7 @@ body {
     height: 4px;
     width: 100%;
     overflow: hidden;
-    margin-top: 6px;
+
 }
 .progress-fill {
     height: 100%;
@@ -468,7 +274,7 @@ body {
 /* ── Corpo do formulário ── */
 .form-body {
     flex: 1;
-    padding: 40px 5%;
+    padding: 20px 5%;
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
@@ -490,7 +296,7 @@ body {
 }
 .field-label .req { color: var(--color-blue); margin-left: 2px; }
 
-.box-input { margin-bottom: 18px; }
+.box-input { margin-bottom: 20px; }
 
 input[type="text"],
 input[type="email"],
@@ -586,7 +392,7 @@ select   { appearance: none; cursor: pointer; }
 .check-item input { display: none; }
 .check-item .checkmark {
     width: 14px; height: 14px;
-    border: 1.5px solid var(--border);
+    border: 1.5px solid var(--color-light-gray);
     border-radius: 3px;
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
@@ -628,7 +434,7 @@ select   { appearance: none; cursor: pointer; }
 }
 .add-day-btn:hover { border-color: var(--color-blue); color: var(--color-blue); background: rgba(81,112,255,0.04); }
 
-/* ── Star rating ── */
+/* ── Star rating 
 .stars { display: flex; gap: 4px; margin-bottom: 4px; }
 .star {
     font-size: 26px;
@@ -639,7 +445,7 @@ select   { appearance: none; cursor: pointer; }
 }
 .star:hover, .star.lit { color: #FFB800; }
 .star:active { transform: scale(1.2); }
-
+── */
 /* ── Service tags ── */
 .tag-group { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
 .tag {

@@ -82,7 +82,8 @@
                         <div class="box-content">
                         A Prefeitura de Vitória é o Poder Executivo do município de Vitória, capital do Espírito Santo, responsável pela administração pública local. 
                         <br>
-                        Ela gerencia serviços essenciais (saúde, educação, trânsito, obras), planeja o desenvolvimento urbano e econômico, e cuida das pessoas por meio de secretarias setoriais.                    </div>
+                        Ela gerencia serviços essenciais (saúde, educação, trânsito, obras), planeja o desenvolvimento urbano e econômico, e cuida das pessoas por meio de secretarias setoriais.
+                        </div>
                     </div>
 
                     <div class="box-template">
@@ -93,7 +94,6 @@
                                     <div class="box-title">Locais Cadastrados</div>
                                 </div>
                             </div>
-
                             <div class="box-content">
                                 <div class="places-area">
                                     <div class="place-card">
@@ -101,40 +101,25 @@
                                         <div class="place-name">Praça do Papa</div>
                                         <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
                                     </div>
-
                                     <div class="place-card">
                                         <div class="banner-place"></div>
                                         <div class="place-name">Praia de Camburi</div>
                                         <div class="place-location"><i class="fa-solid fa-location-dot"></i>Vitória</div>
                                     </div>
-
-                                    <!--<div class="place-card">
-                                        <div class="banner-place"></div>
-                                        <div class="place-name">Parque</div>
-                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
-                                    </div>
-
-                                    <div class="place-card">
-                                        <div class="banner-place"></div>
-                                        <div class="place-name">Praia</div>
-                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
-                                    </div>-->
-
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
-                    
-
                 </div>
+
                 <div class="box-right">
                     <div class="box-template">
                         <div class="box-header">
                             <div class="box-header-content">
                                 <div class="box-title"><i class="fa-solid fa-address-card"></i>Informações</div>
-                                <div class="edit-description">Editar</div>
+                                <div class="edit-description">
+                                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar</button>
+                                </div>
                             </div>
                         </div>
                         <div class="box-content">
@@ -143,6 +128,7 @@
                                 <div class="info-content">
                                     <div class="info-label">EMAIL</div>
                                     <div class="info-value" id="org-email"></div>
+                                    <input id="email-input" style="display: none;" />
                                 </div>
                             </div>
 
@@ -151,6 +137,7 @@
                                 <div class="info-content">
                                     <div class="info-label">WEBSITE</div>
                                     <div class="info-value" id="website">https://www.vitoria.es.gov.br/</div>
+                                    <input id="website-input" style="display: none;" />
                                 </div>
                             </div>
 
@@ -167,10 +154,17 @@
                                 <div class="info-content">
                                     <div class="info-label">CNPJ</div>
                                     <div class="info-value" id="cnpj">27.142.058/0001-26</div>
+                                    <input id="cnpj-input" style="display: none;" />
                                 </div>
+                            </div>
+
+                            <div class="buttons-edit">
+                                <button id="btn-save" class="btn-edit" onclick="save()" style="display: none;">Salvar</button>
+                                <button id="btn-cancel" class="btn-edit" onclick="cancel()" style="display: none;">Cancelar</button>
                             </div>
                         </div>
                     </div>
+
                     <div class="box-template">
                         <div class="box-header">
                             <div class="box-header-content">
@@ -179,16 +173,15 @@
                         </div>
                         <div class="box-content">
                             <div class="info-space">
-                            <div class="bg-icon pink-blue" id="person-user">AC</div>
-                            <div class="info-content">
-                                <div class="name-value" id="person-name">Amanda Carvalho</div>
-                                <div class="occupation-value" id="occupation">Diretora de Marketing</div>
-                                <div class="email-resp-value" id="email">teste@gmail.com</div>
+                                <div class="bg-icon pink-blue" id="person-user">AC</div>
+                                <div class="info-content">
+                                    <div class="name-value" id="person-name">Amanda Carvalho</div>
+                                    <div class="occupation-value" id="occupation">Diretora de Marketing</div>
+                                    <div class="email-resp-value" id="email">teste@gmail.com</div>
+                                </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-                
                 </div>
             </div>
         </section>

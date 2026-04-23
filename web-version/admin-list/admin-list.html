@@ -13,7 +13,55 @@
     <script src="../js/sidebar.js" defer></script>
 </head>
 <body>
+<<<<<<< HEAD
     <app-sidebar page="administradores"></app-sidebar>
+=======
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="first-text">
+                <div class="logo-text">Desbravando</div>
+                <span class="logo-text-two">Admin Painel</span>
+            </div>
+        </div>
+        <div class="sidebar-rest">
+            <!-- bloco 1-->
+            <div class="principal">
+                <p>Principal</p>
+            </div>
+            <div class="principal-icon-page active">
+                <p> <i class="fa-solid fa-chart-column"></i> Dashboard</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-building"></i> Organização</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-user"></i> Administradores</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-map-pin"></i> Locais</p>
+            </div>
+
+            <!-- bloco 3-->
+            <div class="principal">
+                <p>Sistema</p>
+            </div>
+            <div class="principal-icons">
+                <p> <i class="fa-solid fa-gear"></i> Configurações</p>
+            </div>
+            <div class="principal-icons">
+                <p><i class="fa-solid fa-lock"></i> Segurança</p>
+            </div>
+            
+        </div>
+        <div class="admin">
+            <div class="box-admin">
+                <p class="name-admin">Victor Ramos</p>
+                <p class="class-admin">Super admin</p>
+            </div>
+        </div>
+
+    </aside>
+>>>>>>> ab9246c1bcde87a4759fec8d97c2fc6e65604b78
 
     <main class="body-admin">
         <div class="top-bar">
@@ -24,7 +72,7 @@
                     <p id="data-atual">Gerencie acessos, permissões e perfis da equipe</p>
             </div>
             <div class="top-right">
-                <button class="btn-primary">
+                <button class="btn-add-admin">
                     <p>+ Novo Administrador</p>
                 </button>
             </div>
@@ -37,7 +85,7 @@
 
             <div class="card-total">
                 <div class="card-info">
-                    <div class="card-title">TOTAL</div>
+                    <div class="card-title">TOTAL:</div>
                     <div class="card-value-adm">12</div>
                     <div class="card-text">administradores</div>
                 </div>
@@ -74,7 +122,10 @@
                         <p>Mar 2024</p>
                     </div>
                     <div class="admin-action">
-                        <button>Remover</button>
+                        <div class="buttons-action">
+                            <button>Remover</button>
+                            <button>Editar</button>
+                        </div>
                     </div>
                 </div>
             </div>

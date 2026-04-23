@@ -1,6 +1,8 @@
 import { db, auth } from "../js/api/firebase.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -20,13 +22,14 @@ async function loadData(uid){
   if (docSnap.exists()){
     const data = docSnap.data();
     console.log("Nome:", data.firstName);
-    const personName = `${data.firstName || ""} ${data.lastName || ""}`;
+    /*const personName = `${data.firstName || ""} ${data.lastName || ""}`;
     const userLetters = getInitials(personName);
 
     document.getElementById("email").textContent = data.email;
     document.getElementById("occupation").textContent = data.occupation;
     document.getElementById("person-name").textContent = personName;
     document.getElementById("person-user").textContent = userLetters;
+    */
 
     const orgId = data.orgId;
 
@@ -39,8 +42,6 @@ async function loadData(uid){
       const userLetters = getInitials(orgData.orgName);
       const createdDate = orgData.createdAt.toDate();
       const signinDate = createdDate.toLocaleDateString("pt-BR");
-
-      
 
       console.log("Organização:", orgData.orgName);
       
@@ -76,9 +77,82 @@ async function loadData(uid){
     .slice(0, 2)
     .join("");
 }
+}
 
+/*Código para ativar o modo de edição das informações*/
+function edit(){
+  document.getElementById("org-email").style.display = "none";
+  document.getElementById("email-input").style.display = "block";
+  document.getElementById("website").style.display = "none";
+  document.getElementById("website-input").style.display = "block";
+  document.getElementById("cnpj").style.display = "none";
+  document.getElementById("cnpj-input").style.display = "block";
+
+  document.getElementById("email-input").value =
+    document.getElementById("org-email").innerText;
+  document.getElementById("website-input").value =
+    document.getElementById("website").innerText;
+  document.getElementById("cnpj-input").value =
+    document.getElementById("cnpj").innerText;
+  
+  document.getElementById("btn-save").style.display = "inline-block";
+  document.getElementById("btn-cancel").style.display = "inline-block";
+}
+
+function cancel(){
+  document.getElementById("org-email").style.display = "block";
+  document.getElementById("email-input").style.display = "none";
+  document.getElementById("website").style.display = "block";
+  document.getElementById("website-input").style.display = "none";
+  document.getElementById("cnpj").style.display = "block";
+  document.getElementById("cnpj-input").style.display = "none";
+
+  document.getElementById("btn-save").style.display = "none";
+  document.getElementById("btn-cancel").style.display = "none";
 
 }
+
+async function save(){
+  const user = auth.currentUser;
+
+  if(!user) {
+    return;
+  }
+
+  const newOrgEmail = document.getElementById("email-input").value;
+  const newWebsite = document.getElementById("website-input").value;
+  const newCnpj = document.getElementById("cnpj-input").value;
+
+  try{
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+    const orgId = userSnap.data().orgId;
+
+    const orgRef = doc(db, "organizations", orgId);
+
+    await updateDoc(orgRef, {
+      orgEmail: newOrgEmail,
+      website: newWebsite,
+      cnpj: newCnpj
+      
+    });
+    document.getElementById("org-email").innerText = newOrgEmail;
+    document.getElementById("website").innerText = newWebsite;
+    document.getElementById("cnpj").innerText = newCnpj;
+
+    cancel();
+    alert("Atualizado");
+  } catch(e){
+    console.error(e);
+    alert("erro");
+  }
+
+}
+window.edit = edit;
+window.save = save;
+window.cancel = cancel;
+
+
 
 
 

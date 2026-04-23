@@ -36,6 +36,8 @@
 .fa-location-dot{
     color: var(--color-purple);
     margin-right: 3px;
+    display: flex;
+    align-items: center;
 }
 .fa-calendar{
     color: var(--color-purple);
@@ -110,7 +112,19 @@ main .fa-user{
     font-weight: 700;
     color: var(--color-white);
     box-shadow: 0 8px 28px rgba(75, 60, 195, 0.3);
-    position: relative;
+}
+.org-item{
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+.org-location{
+    display: flex;
+    align-items: center;
+}
+.signin-date{
+    margin-left: 6px;
+    font-weight: 600;
 }
 .identity-info{
     flex: 1;
@@ -126,7 +140,6 @@ main .fa-user{
     font-weight: 700;
     letter-spacing: 1px;
     padding: 5px 10px;
-    position: relative;
     background-color: rgb(81, 112, 255, 0.1);
     border:  solid rgba(81, 112, 255, 0.2)
 }
@@ -137,7 +150,7 @@ main .fa-user{
     color: var(--color-gray);
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 35px;
     padding-bottom: 6px;
     font-size: clamp(0.75rem, 0.9vw, 0.875rem);
 }
@@ -342,4 +355,14 @@ main .fa-user{
 .email-resp-value{
     font-size: 11px;
     color: var(--color-blue);
+}
+.buttons-edit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.btn-edit:hover{
+    background-color: var(--color-gray);
+    border: none;
 }

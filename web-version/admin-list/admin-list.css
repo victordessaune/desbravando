@@ -31,30 +31,39 @@
     border-radius: 10px;
     height: 57px;
     width: 20%;
-
+    display: flex;
+    align-items: center;
 }
 .card-title{
-    font-size: 13px;
-    margin-left: 20px;
-    margin-top: 6px;
-    font-weight: 750;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--color-purple);
 }
 .card-value-adm{
     font-weight: 700;
     font-size: 20px;
+    line-height: 1;
 }
 .card-info{
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 20px;
 }
 .card-text{
     color: var(--color-gray);
 }
-
+.btn-add-admin{
+    padding: 10px 15px;
+    border: 2px solid var(--color-purple);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px var(--color-light-gray);
+    background-color: var(--color-purple);
+    font-size: clamp(0.7rem, 1vh, 1.5rem);
+    color: var(--color-white);
+    font-weight: 600;
+}
 /*ESTILO TABELA DE ADMINISTRADORES*/
 .table-admin{
     background-color: var(--color-white);
@@ -136,10 +145,14 @@
     height: 35px;
     width: 100px; 
     font-weight: 600;
-    display: flex;
-    align-items: center;
     justify-content: center;
     color: var(--color-white);
     background-color: rgba(81, 112, 255, 0.8);
-
+    gap: 20px;
 }
+.buttons-action{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+

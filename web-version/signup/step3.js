@@ -97,7 +97,8 @@ form.addEventListener("submit", async function (e) {
         const orgRef = await addDoc(collection(db, "organizations"), {
             ...orgData,
             createdAt: new Date(),
-            verified: false
+            verified: false,
+            bio: ""
         });
 
         await setDoc(doc(db, "users", user.uid), {

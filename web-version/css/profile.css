@@ -43,7 +43,7 @@
     color: var(--color-purple);
     margin-right: 3px;
 }
-.fa-map-pin{
+main .fa-map-pin{
     color: var(--color-blue);
 }
 .fa-eye{
@@ -83,7 +83,7 @@
 .fa-id-card-clip{
     color: var(--color-white);
 }
-.fa-user{
+main .fa-user{
     color: var(--color-purple);
     margin-right: 8px;
 }

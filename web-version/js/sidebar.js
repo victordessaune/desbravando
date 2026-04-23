@@ -21,9 +21,9 @@ class AppSidebar extends HTMLElement {
         section: 'Principal',
         items: [
           { id: 'dashboard',      icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
-          { id: 'organizacao',    icon: 'fa-building',     label: 'Organização',     href: '../organizacao/organizacao.html' },
-          { id: 'administradores',icon: 'fa-user',         label: 'Administradores', href: '../administradores/administradores.html' },
-          { id: 'locais',         icon: 'fa-map-pin',      label: 'Locais',          href: '../locais/locais.html' },
+          { id: 'organizacao',    icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
+          { id: 'administradores',icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
+          { id: 'locais',         icon: 'fa-map-pin',      label: 'Locais',          href: '../form-locations/form-locations.html' },
         ],
       },
       {
@@ -41,7 +41,7 @@ class AppSidebar extends HTMLElement {
         const cls = isActive ? 'principal-icon-page active' : 'principal-icons';
         return `
           <div class="${cls}">
-            <a href="${href}" style="text-decoration:none;color:inherit;">
+            <a href="${href}" style="text-decoration:none;color:#FFFFFF;">
               <p><i class="fa-solid ${icon}"></i> ${label}</p>
             </a>
           </div>`;

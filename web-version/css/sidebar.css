@@ -155,3 +155,7 @@ aside {
     color: var(--color-white);
     opacity: 45%;
 }
+
+.principal-icon-page .fa-solid {
+    margin-right: 5px;
+}

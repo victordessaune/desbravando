@@ -28,20 +28,22 @@ onAuthStateChanged(auth, (user) => {
 ═══════════════════════ */
 window.goToStep = function(step) {
 
-    document.querySelectorAll(".panel").forEach(p => 
+    document.querySelectorAll(".panel").forEach(p =>
         p.classList.remove("active")
     );
 
-    document.getElementById(`panel-${step}`)
-        .classList.add("active");
+    // verifica se o painel existe antes de ativar
+    const painel = document.getElementById(`panel-${step}`);
+    if (painel) painel.classList.add("active");
 
-    document.getElementById("progress-fill").style.width =
-        `${(step / totalSteps) * 100}%`;
+    // verifica se a barra existe antes de mexer
+    const barra = document.getElementById("progress-fill");
+    if (barra) barra.style.width = `${(step / totalSteps) * 100}%`;
 
+    // atualiza o stepper
     document.querySelectorAll(".step-item").forEach((el, i) => {
         el.classList.remove("active", "done");
-
-        if (i + 1 < step) el.classList.add("done");
+        if (i + 1 < step)  el.classList.add("done");
         if (i + 1 === step) el.classList.add("active");
     });
 
@@ -129,11 +131,27 @@ window.removeTag = function(i) {
 ═══════════════════════ */
 window.toggleTag = el => el.classList.toggle("selected");
 
-window.selectPrice = el => {
-    document.querySelectorAll(".price-opt")
-        .forEach(o => o.classList.remove("selected"));
+window.selectPrice = function(el, isPago) {
+  document.querySelectorAll('.price-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const box = document.getElementById('price-value-box');
+  if (isPago) {
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+    document.getElementById('price-value').value = '';
+    clearQuickBtns();
+  }
+};
 
-    el.classList.add("selected");
+window.setQuick = function(btn, val) {
+  document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('price-value').value = val.toFixed(2);
+};
+
+window.clearQuickBtns = function() {
+  document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
 };
 
 /* ═══════════════════════

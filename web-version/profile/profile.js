@@ -22,14 +22,14 @@ async function loadData(uid){
   if (docSnap.exists()){
     const data = docSnap.data();
     console.log("Nome:", data.firstName);
-    /*const personName = `${data.firstName || ""} ${data.lastName || ""}`;
+    const personName = `${data.firstName || ""} ${data.lastName || ""}`;
     const userLetters = getInitials(personName);
 
-    document.getElementById("email").textContent = data.email;
+    document.getElementById("email-resp-value").textContent = data.email;
     document.getElementById("occupation").textContent = data.occupation;
     document.getElementById("person-name").textContent = personName;
     document.getElementById("person-user").textContent = userLetters;
-    */
+  
 
     const orgId = data.orgId;
 
@@ -81,31 +81,59 @@ async function loadData(uid){
 
 /*Código para ativar o modo de edição das informações*/
 function edit(){
+  /*Email*/
   document.getElementById("org-email").style.display = "none";
-  document.getElementById("email-input").style.display = "block";
+  document.getElementById("org-email-input").style.display = "block";
+  document.getElementById("org-email-input").value =
+    document.getElementById("org-email").innerText;
+
+  /*Website*/
   document.getElementById("website").style.display = "none";
   document.getElementById("website-input").style.display = "block";
-  document.getElementById("cnpj").style.display = "none";
-  document.getElementById("cnpj-input").style.display = "block";
-
-  document.getElementById("email-input").value =
-    document.getElementById("org-email").innerText;
   document.getElementById("website-input").value =
     document.getElementById("website").innerText;
+
+  /*cnpj*/
+  document.getElementById("cnpj").style.display = "none";
+  document.getElementById("cnpj-input").style.display = "block";
   document.getElementById("cnpj-input").value =
     document.getElementById("cnpj").innerText;
-  
+
+  /*Nome da Responsável
+  document.getElementById("person-name").style.display = "none";
+  document.getElementById("person-name-input").style.display = "block";
+  document.getElementById("person-name-input").value =
+    document.getElementById("person-name").innerText;*/
+
+  /*Ocupação*/
+  document.getElementById("occupation").style.display = "none";
+  document.getElementById("occupation-input").style.display = "block";
+  document.getElementById("occupation").innerText;
+
+  /*Email do Responsável*/
+  document.getElementById("email-resp").style.display = "none";
+  document.getElementById("email-resp-input").style.display = "block";
+  document.getElementById("email-resp-input").value =
+    document.getElementById("email-resp").innerText;
+
   document.getElementById("btn-save").style.display = "inline-block";
   document.getElementById("btn-cancel").style.display = "inline-block";
 }
 
 function cancel(){
   document.getElementById("org-email").style.display = "block";
-  document.getElementById("email-input").style.display = "none";
+  document.getElementById("org-email-input").style.display = "none";
   document.getElementById("website").style.display = "block";
   document.getElementById("website-input").style.display = "none";
   document.getElementById("cnpj").style.display = "block";
   document.getElementById("cnpj-input").style.display = "none";
+  /*document.getElementById("person-name").style.display = "block";
+  document.getElementById("person-name-input").style.display = "none";*/
+  document.getElementById("occupation").style.display = "block";
+  document.getElementById("occupation-input").style.display = "none";
+  document.getElementById("email-resp").style.display = "block";
+  document.getElementById("email-resp-input").style.display = "none";
+
 
   document.getElementById("btn-save").style.display = "none";
   document.getElementById("btn-cancel").style.display = "none";
@@ -119,9 +147,12 @@ async function save(){
     return;
   }
 
-  const newOrgEmail = document.getElementById("email-input").value;
+  const newOrgEmail = document.getElementById("org-email-input").value;
   const newWebsite = document.getElementById("website-input").value;
   const newCnpj = document.getElementById("cnpj-input").value;
+  /*const newCnpj = document.getElementById("person-name-input").value;
+  const newCnpj = document.getElementById("occupation-input").value;
+  const newCnpj = document.getElementById("email-resp-input").value;*/
 
   try{
     const userRef = doc(db, "users", user.uid);
@@ -134,6 +165,7 @@ async function save(){
       orgEmail: newOrgEmail,
       website: newWebsite,
       cnpj: newCnpj
+      
       
     });
     document.getElementById("org-email").innerText = newOrgEmail;

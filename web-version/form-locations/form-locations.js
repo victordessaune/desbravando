@@ -1,10 +1,7 @@
-// 🔥 IMPORTA DO SEU FIREBASE (SEM MEXER NO firebase.js)
+// 🔥 IMPORTS
 import { db, auth } from "../js/api/firebase.js";
-
-// 🔥 IMPORTS NECESSÁRIOS
 import { collection, addDoc, serverTimestamp } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -13,7 +10,6 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 ═══════════════════════ */
 let currentStep = 1;
 const totalSteps = 4;
-const tags = [];
 let currentUser = null;
 
 /* ═══════════════════════
@@ -24,160 +20,296 @@ onAuthStateChanged(auth, (user) => {
 });
 
 /* ═══════════════════════
-   STEPS (FUNCIONA COM HTML ATUAL)
+   STEPS
 ═══════════════════════ */
 window.goToStep = function(step) {
 
-    document.querySelectorAll(".panel").forEach(p =>
-        p.classList.remove("active")
-    );
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
 
-    // verifica se o painel existe antes de ativar
     const painel = document.getElementById(`panel-${step}`);
     if (painel) painel.classList.add("active");
 
-    // verifica se a barra existe antes de mexer
-    const barra = document.getElementById("progress-fill");
-    if (barra) barra.style.width = `${(step / totalSteps) * 100}%`;
-
-    // atualiza o stepper
     document.querySelectorAll(".step-item").forEach((el, i) => {
         el.classList.remove("active", "done");
-        if (i + 1 < step)  el.classList.add("done");
+        if (i + 1 < step) el.classList.add("done");
         if (i + 1 === step) el.classList.add("active");
     });
 
     currentStep = step;
 };
 
-window.nextStep = function(from) {
-    if (from < totalSteps) {
-        window.goToStep(from + 1);
-    }
+window.goToStepSafe = function(step) {
+    if (step <= currentStep + 1) window.goToStep(step);
 };
 
 window.prevStep = function(from) {
-    if (from > 1) {
-        window.goToStep(from - 1);
+    if (from > 1) window.goToStep(from - 1);
+};
+
+/* ═══════════════════════
+   VALIDAÇÃO GERAL
+═══════════════════════ */
+/* ═══════════════════════
+   VALIDAÇÃO GERAL
+═══════════════════════ */
+function validateStep(step) {
+    const panel = document.getElementById(`panel-${step}`);
+    const required = panel.querySelectorAll("input[required], select[required], textarea[required]");
+    
+    let valid = true;
+
+    // 🔹 CAMPOS OBRIGATÓRIOS
+    required.forEach(field => {
+        const errorMsg = field.parentElement.querySelector(".error-msg");
+
+        if (!field.value.trim()) {
+            field.classList.add("input-error");
+
+            if (errorMsg) {
+                errorMsg.textContent = "Campo obrigatório";
+                errorMsg.classList.add("show");
+            }
+
+            valid = false;
+        } else {
+            field.classList.remove("input-error");
+
+            if (errorMsg) {
+                errorMsg.textContent = "";
+                errorMsg.classList.remove("show");
+            }
+        }
+
+        // evita duplicar listener
+        if (!field.dataset.listener) {
+            field.addEventListener("input", () => {
+                field.classList.remove("input-error");
+                if (errorMsg) {
+                    errorMsg.textContent = "";
+                    errorMsg.classList.remove("show");
+                }
+            });
+            field.dataset.listener = "true";
+        }
+    });
+
+    /* ═══════════════════════
+       STEP 2 — HORÁRIO
+    ════════════════════════ */
+    if (step === 2) {
+        const rows = document.querySelectorAll("#hours-list .hours-grid");
+        const errorMsg = document.getElementById("hours-error");
+
+        let hasValid = false;
+
+        rows.forEach(row => {
+            const inputs = row.querySelectorAll("input");
+
+            const abertura = inputs[0].value.trim();
+            const fechamento = inputs[1].value.trim();
+
+            if (abertura && fechamento) {
+                hasValid = true;
+            }
+        });
+
+        if (!hasValid) {
+            if (errorMsg) {
+                errorMsg.textContent = "Preencha pelo menos um horário";
+                errorMsg.classList.add("show");
+            }
+            valid = false;
+        } else {
+            if (errorMsg) {
+                errorMsg.textContent = "";
+                errorMsg.classList.remove("show");
+            }
+        }
+    }
+
+    /* ═══════════════════════
+       STEP 3 — TAGS
+    ════════════════════════ */
+    if (step === 3) {
+        if (!validateTags("tags-pill", "tags-error")) valid = false;
+    }
+
+    /* ═══════════════════════
+       STEP 4 — PREÇO
+    ════════════════════════ */
+    if (step === 4) {
+        const selected = document.querySelector(".price-opt.selected");
+        const errorMsg = document.getElementById("price-error");
+
+        if (!selected) {
+            if (errorMsg) {
+                errorMsg.textContent = "Selecione se é grátis ou pago";
+                errorMsg.classList.add("show");
+            }
+            valid = false;
+        } else {
+            const isPago = selected.textContent.trim() === "Pago";
+
+            if (isPago) {
+                const value = document.getElementById("price-value").value;
+
+                if (!value || Number(value) <= 0) {
+                    if (errorMsg) {
+                        errorMsg.textContent = "Informe um valor válido";
+                        errorMsg.classList.add("show");
+                    }
+                    valid = false;
+                } else {
+                    if (errorMsg) {
+                        errorMsg.textContent = "";
+                        errorMsg.classList.remove("show");
+                    }
+                }
+            } else {
+                if (errorMsg) {
+                    errorMsg.textContent = "";
+                    errorMsg.classList.remove("show");
+                }
+            }
+        }
+    }
+
+    /* ═══════════════════════ */
+
+    if (!valid) {
+        const first = panel.querySelector(".input-error");
+        if (first) {
+            first.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+
+    return valid;
+}
+/* ═══════════════════════
+   TAGS
+═══════════════════════ */
+function validateTags(containerId, errorId) {
+    const container = document.getElementById(containerId);
+    if (!container) return true;
+
+    const selected = container.querySelectorAll(".tag.selected");
+    const errorMsg = document.getElementById(errorId);
+
+    if (selected.length === 0) {
+        if (errorMsg) {
+            errorMsg.textContent = "Selecione pelo menos uma tag";
+            errorMsg.classList.add("show"); // 🔥 ESSENCIAL
+        }
+        return false;
+    } else {
+        if (errorMsg) {
+            errorMsg.textContent = "";
+            errorMsg.classList.remove("show"); // 🔥 ESSENCIAL
+        }
+        return true;
+    }
+}
+
+window.toggleTag = function(el) {
+    el.classList.toggle("selected");
+
+    // remove erro se tiver pelo menos 1 selecionada
+    const container = document.getElementById("tags-pill");
+    const selected = container.querySelectorAll(".tag.selected");
+    const errorMsg = document.getElementById("tags-error");
+
+    if (selected.length > 0 && errorMsg) {
+        errorMsg.textContent = "";
+        errorMsg.classList.remove("show");
     }
 };
 
 /* ═══════════════════════
-   MAPA (CORRIGE ERRO)
+   PRICE
 ═══════════════════════ */
-window.handleMapClick = function() {
-
-    const cidade = document.getElementById("cidade").value;
-    const rua = document.getElementById("rua").value;
-
-    const query = encodeURIComponent(
-        [rua, cidade].filter(Boolean).join(", ") || "Brasil"
-    );
-
-    window.open(`https://maps.google.com/?q=${query}`, "_blank");
-};
-
-/* ═══════════════════════
-   HORÁRIOS
-═══════════════════════ */
-window.addHourRow = function() {
-
-    const list = document.getElementById("hours-list");
-
-    const row = document.createElement("div");
-    row.className = "hours-grid";
-
-    row.innerHTML = `
-        <span class="day-label">Outro dia</span>
-        <input type="text" placeholder="Abertura">
-        <input type="text" placeholder="Fechamento">
-    `;
-
-    list.appendChild(row);
-};
-
-/* ═══════════════════════
-   TAGS
-═══════════════════════ */
-window.addTag = function() {
-
-    const input = document.getElementById("tag-input");
-    const val = input.value.trim();
-
-    if (!val) return;
-
-    tags.push(val);
-    renderTags();
-    input.value = "";
-};
-
-function renderTags() {
-
-    document.getElementById("tags-preview").innerHTML =
-        tags.map((t, i) =>
-            `<span class="tag-pill">${t}
-                <button onclick="removeTag(${i})">×</button>
-            </span>`
-        ).join("");
-}
-
-window.removeTag = function(i) {
-    tags.splice(i, 1);
-    renderTags();
-};
-
-/* ═══════════════════════
-   UI HELPERS
-═══════════════════════ */
-window.toggleTag = el => el.classList.toggle("selected");
-
 window.selectPrice = function(el, isPago) {
-  document.querySelectorAll('.price-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  const box = document.getElementById('price-value-box');
-  if (isPago) {
-    box.classList.add('visible');
-  } else {
-    box.classList.remove('visible');
-    document.getElementById('price-value').value = '';
-    clearQuickBtns();
-  }
+    document.querySelectorAll('.price-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    const box = document.getElementById('price-value-box');
+
+    if (isPago) {
+        box.classList.add('visible');
+    } else {
+        box.classList.remove('visible');
+        document.getElementById('price-value').value = '';
+        clearQuickBtns();
+    }
 };
 
 window.setQuick = function(btn, val) {
-  document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('price-value').value = val.toFixed(2);
+    document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('price-value').value = val.toFixed(2);
 };
 
 window.clearQuickBtns = function() {
-  document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
 };
 
 /* ═══════════════════════
-   PREVIEW IMAGENS (OPCIONAL)
+   CEP (ViaCEP)
 ═══════════════════════ */
-window.previewImages = function(e) {
+document.getElementById("cep")?.addEventListener("blur", async function() {
+    const cep = this.value.replace(/\D/g, "");
+    if (cep.length !== 8) return;
 
-    const preview = document.getElementById("image-preview");
-    preview.innerHTML = "";
+    try {
+        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await res.json();
 
-    Array.from(e.target.files).forEach(file => {
+        if (data.erro) return;
 
-        const img = document.createElement("img");
+        document.getElementById("rua").value    = data.logradouro || "";
+        document.getElementById("bairro").value = data.bairro     || "";
+        document.getElementById("cidade").value = data.localidade || "";
+        document.getElementById("uf").value     = data.uf         || "";
 
-        img.src = URL.createObjectURL(file);
-        img.style = "width:80px;height:80px;object-fit:cover;border-radius:10px";
+    } catch (e) {
+        console.error("Erro CEP:", e);
+    }
+});
+window.goToStepSafe = function(step) {
 
-        preview.appendChild(img);
-    });
+    // se está tentando avançar
+    if (step > currentStep) {
+
+        const valid = validateStep(currentStep);
+
+        if (!valid) {
+            console.log("❌ bloqueado pelo stepper");
+            return;
+        }
+    }
+
+    // pode ir (voltar ou avançar validado)
+    goToStep(step);
 };
 
+window.nextStep = function(step) {
+    if (validateStep(step)) {
+        goToStep(step + 1);
+    }
+};
 /* ═══════════════════════
-   PUBLICAR (SEM IMAGEM POR ENQUANTO)
+   PUBLICAR
 ═══════════════════════ */
 window.publishLocal = async function() {
 
+    // 🔴 PRIMEIRO valida o último step
+    const valid = validateStep(4);
+
+    if (!valid) {
+        console.log("❌ formulário inválido");
+        return;
+    }
+
+    // 🔐 DEPOIS verifica login
     if (!currentUser) {
         alert("Você precisa estar logado.");
         return;
@@ -185,7 +317,7 @@ window.publishLocal = async function() {
 
     try {
 
-        const orgData = {
+        const data = {
             nome: document.getElementById("nome-local").value,
             descricao: document.getElementById("descricao-local").value,
             cidade: document.getElementById("cidade").value,
@@ -194,70 +326,11 @@ window.publishLocal = async function() {
             createdBy: currentUser.uid
         };
 
-        await addDoc(collection(db, "organizations"), orgData);
+        await addDoc(collection(db, "organizations"), data);
 
-        alert("✅ Local publicado com sucesso!");
+        alert("✅ Publicado!");
 
     } catch (e) {
         alert("Erro: " + e.message);
     }
 };
-
-/* ═══════════════════════
-   INIT
-═══════════════════════ */
-document.addEventListener("DOMContentLoaded", () => {
-
-    document.getElementById("tag-input")
-        ?.addEventListener("keydown", e => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                addTag();
-            }
-        });
-
-    document.getElementById("file-upload")
-        ?.addEventListener("change", previewImages);
-});
-// ⭐ Clique (seleciona nota)
-window.setStars = function(tipo, valor) {
-
-    const container = document.getElementById(`stars-${tipo}`);
-    const stars = container.querySelectorAll(".star");
-
-    // salva valor
-    container.dataset.val = valor;
-
-    // pinta estrelas fixas
-    stars.forEach((star, index) => {
-        star.classList.toggle("lit", index < valor);
-    });
-};
-
-
-// ⭐ Hover (efeito visual bonito)
-document.querySelectorAll(".stars").forEach(container => {
-
-    const stars = container.querySelectorAll(".star");
-
-    stars.forEach((star, i) => {
-
-        // passa o mouse
-        star.addEventListener("mouseover", () => {
-            stars.forEach((s, j) => {
-                s.classList.toggle("lit", j <= i);
-            });
-        });
-
-        // tira o mouse
-        star.addEventListener("mouseout", () => {
-            const val = container.dataset.val || 0;
-
-            stars.forEach((s, j) => {
-                s.classList.toggle("lit", j < val);
-            });
-        });
-
-    });
-
-});

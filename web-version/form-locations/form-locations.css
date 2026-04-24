@@ -1,4 +1,5 @@
-
+/* MODO EDIÇÃO — apaga essa linha quando terminar */
+/*.panel { display: block !important; }*/
 
 .name-admin{
     padding-top:5px;
@@ -165,7 +166,7 @@ body {
 input,
 textarea,
 select {
-    border-radius: 40px  !important;
+    border-radius: 20px  !important;
 }
 
 /* ══════════════════════════════
@@ -307,7 +308,6 @@ textarea {
     height: 6vh;
     padding: 10px 14px;
     border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
     font-family: var(--font-main);
     font-size: 0.9rem;
     color: var(--color-dark-gray);
@@ -322,8 +322,18 @@ input:focus, select:focus, textarea:focus {
 textarea { resize: vertical; min-height: 150px; }
 select   { appearance: none; cursor: pointer; }
 
-.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.row-3 { display: grid; grid-template-columns: 130px 90px 1fr; gap: 14px; }
+.address-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 14px;
+}
+
+.address-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr 150px;
+    gap: 14px;
+}
+
 
 /* ── Section heading ── */
 .section-heading {
@@ -601,7 +611,7 @@ select   { appearance: none; cursor: pointer; }
 
 
 /* ── Tags pill ── */
-.tag-pill { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; justify-content: center;}
+.tags-pill { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; justify-content: center;}
 .tag {
     padding: 6px 14px;
     border-radius: 20px;
@@ -616,8 +626,13 @@ select   { appearance: none; cursor: pointer; }
 }
 .tag:hover { border-color: var(--color-blue); color: var(--color-blue); }
 .tag.selected {    
-    background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+    background: linear-gradient(135deg, var(--color-blue), var(--color-blue-secondary));
     border-color: var(--color-blue);
+    color: white;
+}
+.tag.pill:hover {color: var(--color-purple); }
+.tag.pill.selected {    
+    background: linear-gradient(135deg, var(--color-purple), var(--color-light-purple));
     color: white;
 }
 
@@ -686,12 +701,25 @@ select   { appearance: none; cursor: pointer; }
 .btn-danger:hover { background: #fff0f0; }
 
 /* ── Divider ── */
-.divider { height: 1px; background: var(--border); margin: 24px 0; }
+.divider { height: 5px; margin: 24px 0; }
+.divider-2 { height: 20px; }
 
 /* ── Error ── */
-.message-error { font-size: 0.7rem; color: #e05c5c; margin-top: 4px; display: none; }
-.message-error.show { display: block; }
+.input-error {
+    border-color: #ef4444 !important;
+}
 
+.error-msg {
+    color: #ef4444;
+    font-size: 12px;
+    margin: 4px;
+    margin-bottom: 8px;
+    display: none; /* 🔥 escondido por padrão */
+}
+
+.error-msg.show {
+    display: block; /* 🔥 só aparece quando tiver erro */
+}
 /* ── Success screen ── */
 .success-screen {
     display: none;

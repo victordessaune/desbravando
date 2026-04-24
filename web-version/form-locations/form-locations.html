@@ -34,27 +34,27 @@
  <!-- Stepper horizontal -->
     <div class="stepper-total">
         <div class="stepper" id="stepper">
-            <div class="step-item active" data-step="1" onclick="goToStep(1)">
+            <div class="step-item active" data-step="1" onclick="goToStepSafe(1)">
                 <div class="step-dot">1</div>
                 <div class="step-info">
                     <span class="step-label">Info Básicas</span>
                    
                 </div>
             </div>
-            <div class="step-item" data-step="2" onclick="goToStep(2)">
+            <div class="step-item" data-step="2" onclick="goToStepSafe(2)">
                 <div class="step-dot">2</div>
                 <div class="step-info">
                     <span class="step-label">Estrutura</span>
 
                 </div>
             </div>
-            <div class="step-item" data-step="3" onclick="goToStep(3)">
+            <div class="step-item" data-step="3" onclick="goToStepSafe(3)">
                 <div class="step-dot">3</div>
                 <div class="step-info">
                     <span class="step-label">Detalhes</span>
                 </div>
             </div>
-            <div class="step-item" data-step="4" onclick="goToStep(4)">
+            <div class="step-item" data-step="4" onclick="goToStepSafe(4)">
                 <div class="step-dot">4</div>
                 <div class="step-info">
                     <span class="step-label">Publicação</span>
@@ -73,8 +73,8 @@
             <div class="row-2 box-input">
                 <div style="grid-column: span 2">
                     <label class="field-label">Nome do Local <span class="req">*</span></label>
-                    <input type="text" id="nome-local" placeholder="Ex: Praça das Artes">
-                    <span class="message-error" id="err-nome">Campo obrigatório.</span>
+                    <input type="text" id="nome-local" required placeholder="Ex: Praça das Artes">
+                    <span class="error-msg"></span>
                 </div>
             </div>
 
@@ -82,17 +82,51 @@
                 <label class="field-label">Descrição do Local</label>
                 <textarea id="descricao-local" placeholder="Descreva brevemente o local..."></textarea>
             </div>
-
+            <div class="divider"></div>
             <div class="section-heading">Endereço</div>
 
-            <div class="row-3 box-input">
+            <!-- CEP sozinho -->
+            <div class="box-input">
+                <label class="field-label">CEP <span class="req">*</span></label>
+                <input type="text" id="cep" required placeholder="00000-000" maxlength="9" oninput="this.value = this.value.replace(/\D/g,'').replace(/(\d{5})(\d)/,'$1-$2')">
+                <span class="error-msg"></span>
+            </div>
+
+            <!-- Rua + Número -->
+            <div class="address-row-2 box-input">
                 <div>
-                    <label class="field-label">CEP <span class="req">*</span></label>
-                    <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+                    <label class="field-label">Rua <span class="req">*</span></label>
+                    <input type="text" id="rua" required placeholder="Rua">
+                    <span class="error-msg"></span>
                 </div>
                 <div>
-                    <label class="field-label">UF</label>
-                    <select id="uf">
+                    <label class="field-label">Número</label>
+                    <input type="text" id="numero" placeholder="Nº">
+                    
+                </div>
+            </div>
+
+            <!-- Complemento sozinho -->
+            <div class="box-input">
+                <label class="field-label">Complemento</label>
+                <input type="text" id="complemento" placeholder="Complemento">
+            </div>
+
+            <!-- Bairro + Cidade + UF -->
+            <div class="address-row-3 box-input">
+                <div>
+                    <label class="field-label">Bairro <span class="req">*</span></label>
+                    <input type="text" id="bairro" required placeholder="Bairro">
+                    <span class="error-msg"></span>
+                </div>
+                <div>
+                    <label class="field-label">Cidade <span class="req">*</span></label>
+                    <input type="text" id="cidade" required placeholder="Cidade">
+                    <span class="error-msg"></span>
+                </div>
+                <div>
+                    <label class="field-label">UF <span class="req">*</span></label>
+                    <select id="uf" required>
                         <option value="">UF</option>
                         <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
                         <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
@@ -102,24 +136,9 @@
                         <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
                         <option>SP</option><option>SE</option><option>TO</option>
                     </select>
-                </div>
-                <div>
-                    <label class="field-label">Número</label>
-                    <input type="text" id="numero" placeholder="Nº">
+                    <span class="error-msg"></span>
                 </div>
             </div>
-
-            <div class="row-2 box-input">
-                <div>
-                    <label class="field-label">Cidade <span class="req">*</span></label>
-                    <input type="text" id="cidade" placeholder="Cidade">
-                </div>
-                <div>
-                    <label class="field-label">Rua / Bairro</label>
-                    <input type="text" id="rua" placeholder="Rua ou bairro">
-                </div>
-            </div>
-
 
 
             <div class="divider"></div>
@@ -127,12 +146,15 @@
 
             <div class="row-2 box-input">
                 <div>
-                    <label class="field-label">Telefone</label>
-                    <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                    <label class="field-label">Telefone <span class="req">*</span></label>
+                    <input type="tel" id="telefone" required placeholder="(00) 00000-0000">
+                    <span class="error-msg"></span>
                 </div>
+                <div class="divider-2"></div>
                 <div>
-                    <label class="field-label">E-mail</label>
-                    <input type="email" id="email" placeholder="contato@local.com">
+                    <label class="field-label">E-mail <span class="req">*</span></label>
+                    <input type="email" id="email" required placeholder="contato@local.com">
+                    <span class="error-msg"></span>
                 </div>
             </div>
 
@@ -148,7 +170,8 @@
         <div class="panel" id="panel-2">
 
             <div class="section-heading">Infraestrutura</div>
-            <div class="check-grid">
+            <div class="check-grid" id="infraestrutura">
+
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Estacionamento</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Lanchonete</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Playground</span></label>
@@ -162,8 +185,9 @@
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Iluminação</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Acessível</span></label>
             </div>
-
-            <div class="section-heading">Horários de Funcionamento</div>
+            <div class="divider"></div>
+            <div class="section-heading">Horários de Funcionamento <span class="req">*</span></div>
+            <span id="hours-error" class="error-msg"></span>
             <div id="hours-list">
                 <div class="hours-grid">
                     <span class="day-label">Segunda-feira</span>
@@ -213,6 +237,18 @@
             </div>
 
             <div class="divider"></div>
+              <div class="section-heading">Tags <span class="req">* </span></div>
+              
+            <div class="tags-pill" id="tags-pill">
+                <span class="tag pill" onclick="toggleTag(this)"># Praia</span>
+                <span class="tag pill" onclick="toggleTag(this)"># ECO</span>
+                <span class="tag pill" onclick="toggleTag(this)"># Parques</span>
+                <span class="tag pill" onclick="toggleTag(this)"># Religioso</span>
+                <span class="tag pill" onclick="toggleTag(this)"># GastroBar</span>
+                <span class="tag pill" onclick="toggleTag(this)"># Histórico</span>
+            </div>
+            <span id="tags-error" class="error-msg"></span>
+             <div class="divider"></div>
             <div class="section-heading">Informações Adicionais</div>
             <div class="box-input">
                 <label class="field-label">Observações</label>
@@ -238,15 +274,16 @@
                 <label class="field-label">Website</label>
                 <input type="url" id="website" placeholder="https://sitedomeulocal.com.br">
             </div>
-
-            <div class="section-heading">Faixa de Preço</div>
+            <div class="divider"></div>
+            <div class="section-heading">Faixa de Preço <span class="req">*</span></div>
             <div class="price-options box-input">
                 <div class="price-opt" onclick="selectPrice(this,false)">Grátis</div>
                 <div class="price-opt" onclick="selectPrice(this,true)">Pago</div>
             </div>
+            <span id="price-error" class="error-msg"></span>
             <div class="price-value-box" id="price-value-box">
 
-    <div class="price-value-label">Valor cobrado <p>Informe o valor médio cobrado no local.</p></div>
+    <div class="price-value-label">Valor cobrado <p>Informe o valor médio cobrado no local.</p>  <span id="price-error" class="error-msg"></span></div>
 
     <div class="price-quick-btns">
         <button class="price-quick-btn" onclick="setQuick(this, 5)">R$ 5</button>
@@ -275,15 +312,7 @@
 
 </div>
 
-            <div class="section-heading">Tags</div>
-            <div class="tag-pill" id="tag-pill">
-                <span class="tag" onclick="toggleTag(this)"># Praia</span>
-                <span class="tag" onclick="toggleTag(this)"># ECO</span>
-                <span class="tag" onclick="toggleTag(this)"># Parques</span>
-                <span class="tag" onclick="toggleTag(this)"># Religioso</span>
-                <span class="tag" onclick="toggleTag(this)"># GastroBar</span>
-                <span class="tag" onclick="toggleTag(this)"># Histórico</span>
-            </div>
+          
 
             <div class="divider"></div>
             <div class="section-heading">Imagens</div>

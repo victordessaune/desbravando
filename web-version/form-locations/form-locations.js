@@ -276,9 +276,13 @@ document.getElementById("cep")?.addEventListener("blur", async function() {
 });
 window.goToStepSafe = function(step) {
 
-    // se está tentando avançar
-    if (step > currentStep) {
+    // 🔒 NÃO deixa pular etapas
+    if (step > currentStep + 1) {
+        return;
+    }
 
+    // 🔒 se está tentando avançar, valida antes
+    if (step > currentStep) {
         const valid = validateStep(currentStep);
 
         if (!valid) {
@@ -287,10 +291,9 @@ window.goToStepSafe = function(step) {
         }
     }
 
-    // pode ir (voltar ou avançar validado)
+    // ✅ pode ir
     goToStep(step);
 };
-
 window.nextStep = function(step) {
     if (validateStep(step)) {
         goToStep(step + 1);

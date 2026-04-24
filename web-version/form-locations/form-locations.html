@@ -34,27 +34,27 @@
  <!-- Stepper horizontal -->
     <div class="stepper-total">
         <div class="stepper" id="stepper">
-            <div class="step-item active" data-step="1">
+            <div class="step-item active" data-step="1" onclick="goToStep(1)">
                 <div class="step-dot">1</div>
                 <div class="step-info">
                     <span class="step-label">Info Básicas</span>
                    
                 </div>
             </div>
-            <div class="step-item" data-step="2">
+            <div class="step-item" data-step="2" onclick="goToStep(2)">
                 <div class="step-dot">2</div>
                 <div class="step-info">
                     <span class="step-label">Estrutura</span>
 
                 </div>
             </div>
-            <div class="step-item" data-step="3">
+            <div class="step-item" data-step="3" onclick="goToStep(3)">
                 <div class="step-dot">3</div>
                 <div class="step-info">
                     <span class="step-label">Detalhes</span>
                 </div>
             </div>
-            <div class="step-item" data-step="4">
+            <div class="step-item" data-step="4" onclick="goToStep(4)">
                 <div class="step-dot">4</div>
                 <div class="step-info">
                     <span class="step-label">Publicação</span>
@@ -157,6 +157,9 @@
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Toaletes</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Monitoramento</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Na Sombra</span></label>
+                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Familiar</span></label>
+                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Climatizado</span></label>
+                <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Iluminação</span></label>
                 <label class="check-item"><input type="checkbox"><span class="checkmark"></span><span>Acessível</span></label>
             </div>
 
@@ -164,18 +167,18 @@
             <div id="hours-list">
                 <div class="hours-grid">
                     <span class="day-label">Segunda-feira</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
+                    <input type="text" placeholder="Abertura"   style="font-size:15px;">
+                    <input type="text" placeholder="Fechamento" style="font-size:15px;">
                 </div>
                 <div class="hours-grid">
                     <span class="day-label">Sábado</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
+                    <input type="text" placeholder="Abertura"   style="font-size:15px;">
+                    <input type="text" placeholder="Fechamento" style="font-size:15px;">
                 </div>
                 <div class="hours-grid">
                     <span class="day-label">Domingo</span>
-                    <input type="text" placeholder="Abertura"   style="font-size:12px;">
-                    <input type="text" placeholder="Fechamento" style="font-size:12px;">
+                    <input type="text" placeholder="Abertura"   style="font-size:15px;">
+                    <input type="text" placeholder="Fechamento" style="font-size:15px;">
                 </div>
             </div>
             <button class="add-day-btn" onclick="addHourRow()">+ Adicionar dia</button>
@@ -195,10 +198,8 @@
         <!-- ─── PANEL 3 — Detalhes ─── -->
         <div class="panel" id="panel-3">
 
-            <div class="section-heading">Avaliação do Local</div>
+        <!--<div class="section-heading">Avaliação do Local</div>-->
 
-
-            <div class="divider"></div>
             <div class="section-heading">Serviços / Facilidades</div>
             <div class="tag-group" id="services-tags">
                 <span class="tag" onclick="toggleTag(this)">Wi-Fi</span>
@@ -240,17 +241,48 @@
 
             <div class="section-heading">Faixa de Preço</div>
             <div class="price-options box-input">
-                <div class="price-opt" onclick="selectPrice(this)">Grátis</div>
-                <div class="price-opt" onclick="selectPrice(this)">$</div>
-                <div class="price-opt" onclick="selectPrice(this)">$$</div>
-                <div class="price-opt" onclick="selectPrice(this)">$$$</div>
+                <div class="price-opt" onclick="selectPrice(this,false)">Grátis</div>
+                <div class="price-opt" onclick="selectPrice(this,true)">Pago</div>
             </div>
+            <div class="price-value-box" id="price-value-box">
+
+    <div class="price-value-label">Valor cobrado <p>Informe o valor médio cobrado no local.</p></div>
+
+    <div class="price-quick-btns">
+        <button class="price-quick-btn" onclick="setQuick(this, 5)">R$ 5</button>
+        <button class="price-quick-btn" onclick="setQuick(this, 10)">R$ 10</button>
+        <button class="price-quick-btn" onclick="setQuick(this, 20)">R$ 20</button>
+        <button class="price-quick-btn" onclick="setQuick(this, 50)">R$ 50</button>
+         <button class="price-quick-btn" onclick="setQuick(this, 100)">R$ 100</button>
+        <button class="price-quick-btn" onclick="setQuick(this, 120)">R$ 120</button>
+        <button class="price-quick-btn" onclick="setQuick(this, 150)">R$ 150</button>
+    </div>
+
+    <!-- essa div aqui é a que tá faltando -->
+    <div class="price-input-wrapper">
+        <div class="price-input-row">
+            <span class="price-prefix">R$</span>
+            <input type="number" id="price-value" placeholder="Ex: 15,00" min="0" step="0.01" oninput="clearQuickBtns()">
+        </div>
+        <span class="price-microcopy">por</span>
+        <select id="price-per">
+            <option>Pessoa</option>
+            <option>Hora</option>
+            <option>Dia</option>
+            <option>Entrada única</option>
+        </select>
+    </div>
+
+</div>
 
             <div class="section-heading">Tags</div>
-            <div class="tags-preview" id="tags-preview"></div>
-            <div class="box-input" style="display:flex; gap:10px">
-                <input type="text" id="tag-input" placeholder="Adicionar tag..." style="flex:1">
-                <button class="btn-primary" style="padding:10px 18px; font-size:0.8rem; border-radius:10px" onclick="addTag()">+ Tag</button>
+            <div class="tag-pill" id="tag-pill">
+                <span class="tag" onclick="toggleTag(this)"># Praia</span>
+                <span class="tag" onclick="toggleTag(this)"># ECO</span>
+                <span class="tag" onclick="toggleTag(this)"># Parques</span>
+                <span class="tag" onclick="toggleTag(this)"># Religioso</span>
+                <span class="tag" onclick="toggleTag(this)"># GastroBar</span>
+                <span class="tag" onclick="toggleTag(this)"># Histórico</span>
             </div>
 
             <div class="divider"></div>
@@ -262,7 +294,7 @@
                     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
                 </div>
                 <p><strong>Clique para enviar</strong> ou arraste as imagens</p>
-                <p style="font-size:0.7rem; margin-top:6px">PNG, JPG — máx 5MB cada</p>
+                <p style="font-size:0.9rem; margin-top:6px">PNG, JPG — máx 5MB cada</p>
             </label>
 
             <div id="image-preview" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;"></div>
@@ -290,6 +322,7 @@
 </div>
 
     </main>
+    <!---->
 <script type="module" src="form-locations.js"></script>
 </body>
   

@@ -1,3 +1,5 @@
+
+
 .name-admin{
     padding-top:5px;
     padding-left:50px;
@@ -163,7 +165,7 @@ body {
 input,
 textarea,
 select {
-    border-radius: 30px  !important;
+    border-radius: 40px  !important;
 }
 
 /* ══════════════════════════════
@@ -212,14 +214,14 @@ select {
     transition:  0.3s;
     flex-shrink: 0;
 }
-.step-item.done:not(:last-child)::after { background: rgba(255,255,255,0.85); }
+.step-item.done:not(:last-child)::after { background: var(--color-purple) }
 
 .step-dot {
     width: 30px; height: 30px;
     border-radius: 50%;
     background: #6b728018;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
+    font-size: 0.9rem; font-weight: 600;
     color: var(--color-gray);
     flex-shrink: 0;
     transition: all 0.3s;
@@ -238,7 +240,7 @@ select {
 
 .step-info { display: flex; flex-direction: column; }
 .step-label {
-    font-size: 0.75rem; font-weight: 600;
+    font-size: 0.9rem; font-weight: 600;
     color: var(--color-gray);
     line-height: 1; margin-bottom: 2px;
     transition: color 0.3s;
@@ -285,7 +287,7 @@ select {
 ══════════════════════════════ */
 .field-label {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--color-dark-blue);
     margin-bottom: 5px;
@@ -325,7 +327,7 @@ select   { appearance: none; cursor: pointer; }
 
 /* ── Section heading ── */
 .section-heading {
-    font-size: 0.65rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -430,7 +432,7 @@ select   { appearance: none; cursor: pointer; }
     padding: 6px 14px;
     border-radius: 20px;
     border: 1.5px solid var(--border);
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-dark-gray);
     cursor: pointer;
@@ -443,8 +445,11 @@ select   { appearance: none; cursor: pointer; }
 
 /* ── Image upload ── */
 .upload-area {
+      display: flex;              /* adiciona isso */
+    flex-direction: column;     /* e isso */
+    align-items: center;        /* e isso */
     border: 2px dashed var(--border);
-    border-radius: var(--radius);
+    border-radius: 30px;
     padding: 40px;
     text-align: center;
     cursor: pointer;
@@ -454,9 +459,20 @@ select   { appearance: none; cursor: pointer; }
 .upload-area:hover { border-color: var(--color-blue); background: rgba(81,112,255,0.04); }
 .upload-area input[type="file"] { display: none; }
 .upload-icon { margin-bottom: 10px; color: var(--color-blue); opacity: 0.5; }
-.upload-area p { font-size: 0.8rem; color: var(--color-gray); }
+.upload-area p { font-size: 0.9rem; color: var(--color-gray); }
 .upload-area strong { color: var(--color-blue); font-weight: 600; }
 
+#image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+    min-height: 0;      /* evita espaço fantasma */
+}
+
+#image-preview:empty {
+    display: none;      /* esconde quando não tem imagem */
+}
 /* ── Price range ── */
 .price-options { display: flex; gap: 10px; }
 .price-opt {
@@ -464,8 +480,8 @@ select   { appearance: none; cursor: pointer; }
     padding: 12px 6px;
     border: 1.5px solid var(--border);
     border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: var(--color-dark-gray);
     text-align: center;
     cursor: pointer;
@@ -475,23 +491,134 @@ select   { appearance: none; cursor: pointer; }
 }
 .price-opt:hover { border-color: var(--color-blue); color: var(--color-blue); }
 .price-opt.selected { background: var(--color-blue); border-color: var(--color-blue); color: white; }
+.price-value-label{
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    margin-bottom: 14px;
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+}
+.price-value-label p{
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--color-dark-gray);
+    
+}
+
+
+
+.price-value-box {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.price-value-box.visible {
+    display: flex;
+}
+
+
+.price-quick-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.price-quick-btn {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: var(--color-white);
+    font-family: inherit;
+    transition: all .15s;
+}
+
+.price-quick-btn:hover,
+.price-quick-btn.active {
+    border-color: var(--color-purple);
+    color: var(--color-white);
+    background: var(--color-blue);
+}
+
+.price-input-wrapper {
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 2fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-input-wrapper select {
+    border-radius: 10px;
+    padding: 9px 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    background: var(--color-white);
+}
+.price-input-row {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-white);
+    transition: border-color .15s;
+}
+
+
+
+.price-prefix {
+    background: var(--color-purple);
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    border-right: 2px solid var(--cinza-borda);
+}
+
+.price-input-row input {
+    border: none;
+    outline: none;
+    padding: 10px 14px;
+    font-family: inherit;
+    width: 100%;
+    background: var(--color-white);
+    cursor: text;
+}
+
 
 /* ── Tags pill ── */
-.tags-preview { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-.tag-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 12px;
+.tag-pill { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; justify-content: center;}
+.tag {
+    padding: 6px 14px;
     border-radius: 20px;
-    background: var(--color-blue);
-    color: var(--color-white);
-    font-size: 0.7rem;
-    font-weight: 500;
+    border: 1.5px solid var(--border);
+    font-size: 0.9rem;
+    font-weight: 00;
+    color: var(--color-dark-gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    background: var(--color-white);
 }
-.tag-pill button {
-    background: none; border: none; color: var(--color-white);
-    cursor: pointer; font-size: 0.85rem; line-height: 1; padding: 0;
+.tag:hover { border-color: var(--color-blue); color: var(--color-blue); }
+.tag.selected {    
+    background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+    border-color: var(--color-blue);
+    color: white;
 }
 
 /* ── Buttons ── */
@@ -510,7 +637,7 @@ select   { appearance: none; cursor: pointer; }
     background: linear-gradient(90deg, var(--color-purple), var(--color-blue));
     color:var(--color-white);
     font-family: var(--font-main);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -536,7 +663,7 @@ select   { appearance: none; cursor: pointer; }
     background: white;
     color: var(--color-dark-gray);
     font-family: var(--font-main);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
@@ -551,7 +678,7 @@ select   { appearance: none; cursor: pointer; }
     background: transparent;
     color: #ff6b6b;
     font-family: var(--font-main);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;

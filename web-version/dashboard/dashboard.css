@@ -194,8 +194,9 @@ main{
 .cards{ 
     padding-top: 30px;
     display: flex;
-    padding-left: 20px;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
+    margin-left: 30px;
+    gap: 20px;
     
 }
 .cards .card{
@@ -328,55 +329,70 @@ button.btn-primary p{
   width: 200px;
 }
 .grid-2{
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    /*grid-template-columns: 3fr 1fr;*/
     margin-top: 20px;
-    padding-left: 20px;
-    padding-right: 15px;
+    margin-left: 30px;
+    gap: 25px;
 }
 .table{
     background-color: var(--color-white);
     border-radius: 25px;
     margin-right: 10px;
+    width: 70%;
 }
 .table-head{
    display: flex;
    justify-content: space-between;
    align-items: center;
    padding: 20px;
+   border-bottom:2px solid var(--color-light-gray);
 }
-.divide-table{
+.header-divide-table{
+    border-bottom:1px solid var(--color-light-gray);
+    padding: 20px;
+    width: 100%;
+
+}
+.content-divide-table{
     display: grid;
     justify-items: center;
-    background-color: rgba(var(--color-dark-gray), 0.17);
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
-    height: 30px;
-    border-top:1px solid rgba(var(--color-dark-gray), 0.28);
-    border-bottom:1px solid rgba(var(--color-dark-gray), 0.28);
-}
-.divide-table p{
-    padding-right: 15px;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--color-dark-gray);
+
 }
 .table-body{
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr ;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    align-items: center;
+    justify-items: center;
+    padding: 18px;
+    border-bottom:1px solid var(--color-light-gray);
 }
-
 .table-org{
     display: flex;
-    padding-left: 20px;
-    gap:15px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 80px;
 }
 .icon-name{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  height: 40px;
-  width: 40px;
-  color: var(--color-white);
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    margin-right: 10px;
+    font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        var(--color-blue) 45%,
+        var(--color-purple) 100% 
+    );
 }
 .icon-name.N{
     background: linear-gradient(135deg, #00c896, var(--color-light-purple));
@@ -384,7 +400,12 @@ button.btn-primary p{
 .icon-name.M{
     background: linear-gradient(135deg, var(--color-blue), #83d449);
 }
-
+.box-name{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
 .name-org{
     font-size: 15px;
     font-weight: 600;
@@ -397,16 +418,15 @@ button.btn-primary p{
 }
 
 .type-org{
-    margin-top: 15px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
-    padding: 4px 10px;
     border-radius: 15px;
     height: 30px;
     width: 90px;
     font-size: 12px;
     font-weight: 500;
+    justify-content: center;
 }
 .type-org.pub{
     background-color: rgba(81,112,255,0.15);
@@ -421,7 +441,6 @@ button.btn-primary p{
 }
 
 .mood-org{
-    margin-top: 10px;
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -439,7 +458,6 @@ button.btn-primary p{
 }
 
 .date-org{
-    margin-top: 20px;
     display: inline-flex;
     font-size: 13px;
     font-weight: 500;
@@ -447,7 +465,6 @@ button.btn-primary p{
 }
 
 .actions-org button{
-    margin-top: 15px;
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
@@ -493,11 +510,11 @@ button.btn-primary p{
 }
 
 p.title-table{
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
 }
 p.subtitle-table{
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-gray);
 }
 
@@ -505,6 +522,7 @@ p.subtitle-table{
     background-color: var(--color-white);
     border-radius: 25px;
     margin-left: 10px;
+    width: 22%;
 }
 
 .graphic-head{
@@ -515,9 +533,8 @@ p.subtitle-table{
 .graphic {
   background: var(--color-white);
   border: 1px solid var(--color-light-gray);
-  border-radius: 16px;
+  border-radius: 25px;
   padding: 1.25rem;
-  max-width: 320px;
 }
 
 .graphic-head { margin-bottom: 1.25rem; }

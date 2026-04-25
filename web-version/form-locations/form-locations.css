@@ -408,6 +408,7 @@ select   { appearance: none; cursor: pointer; }
     margin-bottom: 8px;
 }
 .hours-grid .day-label { font-size: 0.9rem; font-weight: 500; color: var(--color-dark-blue); }
+.hours-grid .day-input { font-size: 0.9rem; font-weight: 500; color: var(--color-dark-blue); }
 
 .add-day-btn {
     border: 1.5px dashed var(--border);

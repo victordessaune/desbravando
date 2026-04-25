@@ -1,7 +1,14 @@
 // 🔥 IMPORTS
-import { db, auth } from "../js/api/firebase.js";
-import { collection, addDoc, serverTimestamp } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { db, auth } from "/web-version/js/api/firebase.js";
+import {
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    where,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -11,19 +18,36 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 let currentStep = 1;
 const totalSteps = 4;
 let currentUser = null;
+let currentOrgId = null;
 
 /* ═══════════════════════
    AUTH
 ═══════════════════════ */
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     currentUser = user || null;
+
+    if (user) {
+        try {
+            const userSnap = await getDocs(query(
+                collection(db, "users"),
+                where("uid", "==", user.uid)
+            ));
+
+            if (!userSnap.empty) {
+                const userData = userSnap.docs[0].data();
+                currentOrgId = userData.orgId;
+                console.log("✅ OrgId:", currentOrgId);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 });
 
 /* ═══════════════════════
    STEPS
 ═══════════════════════ */
 window.goToStep = function(step) {
-
     document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
 
     const painel = document.getElementById(`panel-${step}`);
@@ -39,18 +63,26 @@ window.goToStep = function(step) {
 };
 
 window.goToStepSafe = function(step) {
-    if (step <= currentStep + 1) window.goToStep(step);
+    if (step > currentStep + 1) return;
+
+    if (step > currentStep && !validateStep(currentStep)) {
+        console.log("❌ bloqueado");
+        return;
+    }
+
+    goToStep(step);
+};
+
+window.nextStep = function(step) {
+    if (validateStep(step)) goToStep(step + 1);
 };
 
 window.prevStep = function(from) {
-    if (from > 1) window.goToStep(from - 1);
+    if (from > 1) goToStep(from - 1);
 };
 
 /* ═══════════════════════
-   VALIDAÇÃO GERAL
-═══════════════════════ */
-/* ═══════════════════════
-   VALIDAÇÃO GERAL
+   VALIDAÇÃO
 ═══════════════════════ */
 function validateStep(step) {
     const panel = document.getElementById(`panel-${step}`);
@@ -252,8 +284,99 @@ window.clearQuickBtns = function() {
     document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
 };
 
+window.clearQuickBtns = function() {
+    document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
+};
+
+// ===============================
+// ⏰ HORÁRIOS - SISTEMA COMPLETO
+// ===============================
+
+// ===============================
+// ➕ ADICIONAR DIA (EDITÁVEL)
+// ===============================
+window.addHourRow = function () {
+    const list = document.getElementById("hours-list");
+
+    const row = document.createElement("div");
+    row.className = "hours-grid dynamic";
+
+    row.innerHTML = `
+        <input type="text" class="day-input" placeholder="Nome do dia">
+
+        <input type="text" class="hour-input" maxlength="5" placeholder="Abertura">
+        <input type="text" class="hour-input" maxlength="5" placeholder="Fechamento">
+
+        <button type="button" onclick="removeHourRow(this)">✕</button>
+    `;
+
+    list.appendChild(row);
+};
+
+// ===============================
+// ❌ REMOVER (só dinâmicos)
+// ===============================
+window.removeHourRow = function (btn) {
+    const row = btn.closest(".hours-grid");
+
+    if (row.classList.contains("fixed")) return;
+
+    row.remove();
+};
+
+// ===============================
+// 🧠 MÁSCARA TIPO CEP (HH:MM)
+// ===============================
+document.addEventListener("input", function (e) {
+    if (!e.target.classList.contains("hour-input")) return;
+
+    let value = e.target.value.replace(/\D/g, "");
+
+    if (value.length > 4) value = value.slice(0, 4);
+
+    if (value.length >= 3) {
+        value = value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    }
+
+    e.target.value = value;
+});
+
+// ===============================
+// 📦 PEGAR HORÁRIOS (FIREBASE)
+// ===============================
+window.getHorarios = function () {
+    const horarios = {};
+
+    document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
+
+        const inputs = row.querySelectorAll(".hour-input");
+        const open = inputs[0]?.value;
+        const close = inputs[1]?.value;
+
+        // 🔵 FIXOS (não editáveis)
+        if (row.classList.contains("fixed")) {
+            const label = row.querySelector(".day-label")?.textContent;
+
+            if (label && open && close) {
+                horarios[label] = { abertura: open, fechamento: close };
+            }
+        }
+
+        // 🟡 DINÂMICOS (editáveis)
+        if (row.classList.contains("dynamic")) {
+            const label = row.querySelector(".day-input")?.value?.trim();
+
+            if (label && open && close) {
+                horarios[label] = { abertura: open, fechamento: close };
+            }
+        }
+    });
+
+    return horarios;
+};
+
 /* ═══════════════════════
-   CEP (ViaCEP)
+   CEP
 ═══════════════════════ */
 document.getElementById("cep")?.addEventListener("blur", async function() {
     const cep = this.value.replace(/\D/g, "");
@@ -274,37 +397,15 @@ document.getElementById("cep")?.addEventListener("blur", async function() {
         console.error("Erro CEP:", e);
     }
 });
-window.goToStepSafe = function(step) {
 
-    // 🔒 NÃO deixa pular etapas
-    if (step > currentStep + 1) {
-        return;
-    }
 
-    // 🔒 se está tentando avançar, valida antes
-    if (step > currentStep) {
-        const valid = validateStep(currentStep);
-
-        if (!valid) {
-            console.log("❌ bloqueado pelo stepper");
-            return;
-        }
-    }
-
-    // ✅ pode ir
-    goToStep(step);
-};
-window.nextStep = function(step) {
-    if (validateStep(step)) {
-        goToStep(step + 1);
-    }
-};
 /* ═══════════════════════
    PUBLICAR
 ═══════════════════════ */
-window.publishLocal = async function() {
 
-    // 🔴 PRIMEIRO valida o último step
+window.publishLocal = async function () {
+
+    // 🔴 1. validar STEP 4 primeiro
     const valid = validateStep(4);
 
     if (!valid) {
@@ -312,26 +413,82 @@ window.publishLocal = async function() {
         return;
     }
 
-    // 🔐 DEPOIS verifica login
+    // 🔐 2. checar login
     if (!currentUser) {
         alert("Você precisa estar logado.");
         return;
     }
 
+    if (!currentOrgId) {
+        alert("Nenhuma organização encontrada.");
+        return;
+    }
+
     try {
 
+        // ⏰ HORÁRIOS
+        const horarios = {};
+
+        document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
+
+            const labelEl = row.querySelector(".day-label");
+            const label = labelEl ? labelEl.textContent : null;
+
+            const inputs = row.querySelectorAll("input");
+
+            const open = inputs[0]?.value;
+            const close = inputs[1]?.value;
+
+            if (label && open && close) {
+                horarios[label] = {
+                    abertura: open,
+                    fechamento: close
+                };
+            }
+        });
+
+        // 📦 DADOS COMPLETOS
         const data = {
-            nome: document.getElementById("nome-local").value,
-            descricao: document.getElementById("descricao-local").value,
-            cidade: document.getElementById("cidade").value,
-            rua: document.getElementById("rua").value,
+            orgId: currentOrgId,
+            createdBy: currentUser.uid,
             createdAt: serverTimestamp(),
-            createdBy: currentUser.uid
+
+            nome: document.getElementById("nome-local")?.value || "",
+            descricao: document.getElementById("descricao-local")?.value || "",
+
+            cep: document.getElementById("cep")?.value || "",
+            rua: document.getElementById("rua")?.value || "",
+            bairro: document.getElementById("bairro")?.value || "",
+            cidade: document.getElementById("cidade")?.value || "",
+            uf: document.getElementById("uf")?.value || "",
+
+            // ⏰ horários
+            horarios,
+
+            // 💰 preço (IMPORTANTE)
+            preco: {
+                tipo: document.querySelector(".price-opt.selected")?.textContent || "",
+                valor: document.getElementById("price-value")?.value || null,
+                por: document.getElementById("price-per")?.value || ""
+            },
+
+            // 🏷️ tags
+            tags: [...document.querySelectorAll("#tags-pill .tag.selected")]
+                .map(t => t.textContent.replace("#", "").trim()),
+
+            // 🎯 serviços
+            servicos: [...document.querySelectorAll("#services-tags .tag.selected")]
+                .map(t => t.textContent.trim()),
+
+            // 🏗️ infraestrutura
+            infraestrutura: [...document.querySelectorAll("#infraestrutura input:checked")]
+                .map(i => i.closest(".check-item")?.textContent?.trim())
         };
 
-        await addDoc(collection(db, "organizations"), data);
+        // 💾 SALVAR
+        await addDoc(collection(db, "locals"), data);
 
-        alert("✅ Publicado!");
+        alert("✅ Publicado com sucesso!");
 
     } catch (e) {
         alert("Erro: " + e.message);

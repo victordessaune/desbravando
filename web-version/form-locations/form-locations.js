@@ -345,7 +345,26 @@ document.addEventListener("input", function (e) {
 // 📦 PEGAR HORÁRIOS (FIREBASE)
 // ===============================
 window.getHorarios = function () {
+        
     const horarios = {};
+
+    document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
+
+        const inputs = row.querySelectorAll(".hour-input");
+        const open = inputs[0]?.value;
+        const close = inputs[1]?.value;
+
+        const fixedLabel = row.querySelector(".day-label")?.textContent;
+        const dynamicLabel = row.querySelector(".day-input")?.value;
+
+        if (fixedLabel && open && close) {
+            horarios[fixedLabel] = { abertura: open, fechamento: close };
+        }
+
+        if (dynamicLabel && open && close) {
+            horarios[dynamicLabel] = { abertura: open, fechamento: close };
+        }
+    });
 
     document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
 
@@ -427,25 +446,28 @@ window.publishLocal = async function () {
     try {
 
         // ⏰ HORÁRIOS
-        const horarios = {};
+        
+            const horarios = {};
 
-        document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
+            document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
 
-            const labelEl = row.querySelector(".day-label");
-            const label = labelEl ? labelEl.textContent : null;
+                const open = row.querySelectorAll(".hour-input")[0]?.value;
+                const close = row.querySelectorAll(".hour-input")[1]?.value;
 
-            const inputs = row.querySelectorAll("input");
+                // 🔵 FIXOS
+                const fixed = row.querySelector(".day-label")?.textContent?.trim();
 
-            const open = inputs[0]?.value;
-            const close = inputs[1]?.value;
+                if (fixed && open && close) {
+                    horarios[fixed] = { abertura: open, fechamento: close };
+                }
 
-            if (label && open && close) {
-                horarios[label] = {
-                    abertura: open,
-                    fechamento: close
-                };
-            }
-        });
+                // 🟡 DINÂMICOS
+                const dynamic = row.querySelector(".day-input")?.value?.trim();
+
+                if (dynamic && open && close) {
+                    horarios[dynamic] = { abertura: open, fechamento: close };
+                }
+            });
 
         // 📦 DADOS COMPLETOS
         const data = {

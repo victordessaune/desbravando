@@ -1,0 +1,189 @@
+
+body {
+    font-family: var(--font-main);
+    background: var(--color-off-white);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    min-height: 100vh;
+}
+
+/* ── Banner ── */
+.banner-place {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: var(--color-dark-blue);
+    background-image: url(../assets/images/convento.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.45));
+}
+.banner-actions {
+    position: relative;
+    z-index: 1;
+}
+.btn-back {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border-radius: 80px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: white;
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-back:hover { background: rgba(255,255,255,0.28); }
+
+/* ── Identity ── */
+.identity-place-section {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 40px;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.place-info { display: flex; flex-direction: column; gap: 6px; }
+.org-type {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 99px;
+    background: rgba(81,112,255,0.1);
+    color: var(--color-blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: fit-content;
+}
+.org-name { font-size: 1.8rem; font-weight: 700; color: var(--color-dark-blue); margin: 0; }
+.org-details { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.org-item { display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--color-gray); }
+.org-item i { color: var(--color-blue); font-size: 0.8rem; }
+.price-badge { padding: 3px 12px; border-radius: 99px; background: rgba(110,231,183,0.15); color: #059669; font-weight: 600; font-size: 0.8rem; }
+.price-badge.pago { background: rgba(251,191,36,0.15); color: #b45309; }
+.buttons-identity { display: flex; gap: 10px; flex-shrink: 0; }
+.btn-edit {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 22px; border-radius: 80px;
+    background: linear-gradient(90deg, var(--color-purple), var(--color-blue));
+    color: white; font-size: 0.875rem; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+}
+.btn-edit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(81,112,255,0.3); }
+
+/* ── Grid ── */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    padding: 30px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.box-left, .box-right { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Box template ── */
+.box-template {
+    background: var(--color-white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+.box-template:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.box-header { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.box-header-content { display: flex; align-items: center; gap: 10px; }
+.box-header-content > i {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: rgba(81,112,255,0.1); color: var(--color-blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; flex-shrink: 0;
+}
+.box-title { font-size: 0.85rem; font-weight: 700; color: var(--color-dark-blue); }
+.box-content { padding: 20px; font-size: 0.9rem; color: var(--color-dark-gray); line-height: 1.7; }
+
+/* ── Infraestrutura ── */
+.box-structure { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.box-tag {
+    display: flex; align-items: center; gap: 10px;
+    background-color: var(--color-off-white);
+    border: 1px solid var(--border);
+    padding: 12px; border-radius: 10px; transition: all 0.2s;
+}
+.box-tag:hover { border-color: var(--color-blue); background: rgba(81,112,255,0.04); }
+.box-tag i {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: rgba(103,103,232,0.12); color: var(--color-blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; flex-shrink: 0; padding: 0;
+}
+.tag-text { font-weight: 500; font-size: 0.8rem; color: var(--color-dark-blue); }
+
+/* ── Tags ── */
+.tags-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag-chip { padding: 5px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 500; border: 1.5px solid var(--border); color: var(--color-dark-gray); background: var(--color-white); }
+.tag-chip.pill { background: rgba(76,60,195,0.08); border-color: rgba(76,60,195,0.2); color: var(--color-purple); }
+.tag-chip.service { background: rgba(81,112,255,0.07); border-color: rgba(81,112,255,0.2); color: var(--color-blue); }
+
+/* ── Horários ── */
+.horario-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+.horario-row:last-child { border-bottom: none; }
+.horario-dia { font-weight: 600; color: var(--color-dark-blue); }
+.horario-time { color: var(--color-gray); display: flex; align-items: center; gap: 6px; }
+.horario-time i { color: var(--color-blue); font-size: 0.75rem; }
+
+/* ── Info list ── */
+.info-list { display: flex; flex-direction: column; gap: 0; }
+.info-space { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.info-space:last-child { border-bottom: none; }
+.bg-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+.bg-icon.purple { background: rgba(76,60,195,0.1); color: var(--color-purple); }
+.bg-icon.blue   { background: rgba(81,112,255,0.1); color: var(--color-blue); }
+.bg-icon.green  { background: rgba(16,185,129,0.1); color: #059669; }
+.info-content { display: flex; flex-direction: column; gap: 2px; }
+.info-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--color-gray); }
+.info-value { font-size: 0.875rem; font-weight: 500; color: var(--color-dark-blue); word-break: break-all; }
+
+/* ── Endereço ── */
+.address-block { font-size: 0.9rem; line-height: 1.8; color: var(--color-dark-gray); }
+
+/* ── Preço ── */
+.preco-gratis { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #059669; font-size: 1rem; }
+.preco-pago { display: flex; flex-direction: column; gap: 4px; }
+.preco-valor { font-size: 1.6rem; font-weight: 700; color: var(--color-dark-blue); }
+.preco-por { font-size: 0.8rem; color: var(--color-gray); }
+
+/* ── Empty / Loading / Error ── */
+.empty-msg { color: var(--color-gray); font-size: 0.85rem; font-style: italic; }
+.loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 80px; color: var(--color-gray); font-size: 0.9rem; min-height: 60vh; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--color-blue); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 80px; color: var(--color-gray); text-align: center; min-height: 60vh; }
+.error-screen i { font-size: 2.5rem; color: #ef4444; opacity: 0.6; }
+
+@media (max-width: 1100px) { .main-content { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { main { margin-left: 0; width: 100%; } .main-content { padding: 16px; } .identity-place-section { padding: 16px; } .box-structure { grid-template-columns: 1fr 1fr; } }
+

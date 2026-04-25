@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desbravando — Local</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="place.css">
+    <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+    <script src="../js/sidebar.js"></script>
+</head>
+<body>
+    <app-sidebar page="locais"></app-sidebar>
+
+    <main>
+
+        <!-- LOADING -->
+        <div class="loading-screen" id="loading-screen">
+            <div class="spinner"></div>
+            <p>Carregando local...</p>
+        </div>
+
+        <!-- CONTEÚDO (escondido até carregar) -->
+        <div id="place-content" style="display:none">
+
+            <!-- BANNER -->
+            <div class="banner-place" id="banner-place">
+                <div class="banner-overlay"></div>
+                <div class="banner-actions">
+                    <button class="btn-back" onclick="history.back()">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+                </div>
+            </div>
+
+            <!-- IDENTITY -->
+            <div class="identity-place-section">
+                <div class="place-info">
+                    <div class="org-type" id="place-tipo">—</div>
+                    <h1 class="org-name" id="place-nome">—</h1>
+                    <div class="org-details">
+                        <span class="org-item"><i class="fa-solid fa-location-dot"></i> <span id="place-cidade">—</span></span>
+                        <span class="org-item"><i class="fa-solid fa-road"></i> <span id="place-rua">—</span></span>
+                        <span class="org-item price-badge" id="place-preco-badge"></span>
+                    </div>
+                </div>
+                <div class="buttons-identity">
+                    <a href="../form-locations/form-locations.html" class="btn-edit">
+                        <i class="fa-solid fa-plus"></i> Novo Local
+                    </a>
+                </div>
+            </div>
+
+            <!-- GRID PRINCIPAL -->
+            <div class="main-content">
+
+                <!-- COLUNA ESQUERDA -->
+                <div class="box-left">
+
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <div class="box-title">Sobre o local</div>
+                            </div>
+                        </div>
+                        <div class="box-content" id="place-descricao">—</div>
+                    </div>
+
+                    <div class="box-template" id="box-infraestrutura">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-building"></i>
+                                <div class="box-title">Infraestrutura</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="box-structure" id="infra-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="box-template" id="box-servicos">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-concierge-bell"></i>
+                                <div class="box-title">Serviços / Facilidades</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="tags-row" id="servicos-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-address-card"></i>
+                                <div class="box-title">Informações Gerais</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="info-list" id="info-list"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- COLUNA DIREITA -->
+                <div class="box-right">
+
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-clock"></i>
+                                <div class="box-title">Horário de Funcionamento</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div id="horarios-list"><span class="empty-msg">Nenhum horário cadastrado.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-template" id="box-tags">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-tags"></i>
+                                <div class="box-title">Tags</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="tags-row" id="tags-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="box-template">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-map-pin"></i>
+                                <div class="box-title">Endereço Completo</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="address-block" id="address-block">—</div>
+                        </div>
+                    </div>
+
+                    <div class="box-template" id="box-preco">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-ticket"></i>
+                                <div class="box-title">Ingresso / Preço</div>
+                            </div>
+                        </div>
+                        <div class="box-content" id="preco-content">—</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ERROR -->
+        <div class="error-screen" id="error-screen" style="display:none">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p>Local não encontrado.</p>
+            <a href="../dashboard/dashboard.html" class="btn-edit">Voltar ao dashboard</a>
+        </div>
+
+    </main>
+
+    <script type="module" src="place.js"></script>
+</body>
+</html>

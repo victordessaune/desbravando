@@ -3,14 +3,18 @@ import { db, auth } from "/web-version/js/api/firebase.js";
 import {
     collection,
     addDoc,
-    getDocs,
-    query,
-    where,
+    doc,
+    setDoc,
+    getDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// ☁️ CLOUDINARY
+const CLOUDINARY_CLOUD_NAME = "dopr7jbfd";
+const CLOUDINARY_UPLOAD_PRESET = "locations_upload";
 
 /* ═══════════════════════
    ESTADO
@@ -28,14 +32,10 @@ onAuthStateChanged(auth, async (user) => {
 
     if (user) {
         try {
-            const userSnap = await getDocs(query(
-                collection(db, "users"),
-                where("uid", "==", user.uid)
-            ));
+            const userSnap = await getDoc(doc(db, "users", user.uid));
 
-            if (!userSnap.empty) {
-                const userData = userSnap.docs[0].data();
-                currentOrgId = userData.orgId;
+            if (userSnap.exists()) {
+                currentOrgId = userSnap.data().orgId;
                 console.log("✅ OrgId:", currentOrgId);
             }
         } catch (error) {
@@ -43,6 +43,61 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 });
+
+/* ═══════════════════════
+   IMAGENS
+═══════════════════════ */
+let selectedFiles = [];
+
+window.previewImages = function(event) {
+    const files = Array.from(event.target.files);
+    const preview = document.getElementById("image-preview");
+
+    files.forEach(file => {
+        if (selectedFiles.length >= 5) return; // máx 5 imagens
+        selectedFiles.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const wrapper = document.createElement("div");
+            wrapper.style.cssText = "position:relative; width:100px; height:100px;";
+
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.cssText = "width:100px; height:100px; object-fit:cover; border-radius:8px;";
+
+            const btn = document.createElement("button");
+            btn.textContent = "✕";
+            btn.type = "button";
+            btn.style.cssText = "position:absolute; top:4px; right:4px; background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-size:12px;";
+            btn.onclick = () => {
+                const idx = selectedFiles.indexOf(file);
+                if (idx > -1) selectedFiles.splice(idx, 1);
+                wrapper.remove();
+            };
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(btn);
+            preview.appendChild(wrapper);
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
+async function uploadToCloudinary(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    formData.append("folder", `locations/${currentOrgId}`);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    return data.secure_url;
+}
 
 /* ═══════════════════════
    STEPS
@@ -469,26 +524,36 @@ window.publishLocal = async function () {
                 }
             });
 
+        // 🖼️ UPLOAD DAS IMAGENS PRO CLOUDINARY
+        let imageUrls = [];
+        if (selectedFiles.length > 0) {
+            const uploadPromises = selectedFiles.map(file => uploadToCloudinary(file));
+            imageUrls = await Promise.all(uploadPromises);
+        }
+
         // 📦 DADOS COMPLETOS
         const data = {
             orgId: currentOrgId,
             createdBy: currentUser.uid,
             createdAt: serverTimestamp(),
 
-            nome: document.getElementById("nome-local")?.value || "",
-            descricao: document.getElementById("descricao-local")?.value || "",
+            name: document.getElementById("nome-local")?.value || "",
+            description: document.getElementById("descricao-local")?.value || "",
 
             cep: document.getElementById("cep")?.value || "",
-            rua: document.getElementById("rua")?.value || "",
-            bairro: document.getElementById("bairro")?.value || "",
-            cidade: document.getElementById("cidade")?.value || "",
+            street: document.getElementById("rua")?.value || "",
+            neighborhood: document.getElementById("bairro")?.value || "",
+            city: document.getElementById("cidade")?.value || "",
             uf: document.getElementById("uf")?.value || "",
 
             // ⏰ horários
             horarios,
 
+            // 🖼️ imagens
+            images: imageUrls,
+
             // 💰 preço (IMPORTANTE)
-            preco: {
+            price: {
                 tipo: document.querySelector(".price-opt.selected")?.textContent || "",
                 valor: document.getElementById("price-value")?.value || null,
                 por: document.getElementById("price-per")?.value || ""
@@ -499,16 +564,16 @@ window.publishLocal = async function () {
                 .map(t => t.textContent.replace("#", "").trim()),
 
             // 🎯 serviços
-            servicos: [...document.querySelectorAll("#services-tags .tag.selected")]
+            services: [...document.querySelectorAll("#services-tags .tag.selected")]
                 .map(t => t.textContent.trim()),
 
             // 🏗️ infraestrutura
-            infraestrutura: [...document.querySelectorAll("#infraestrutura input:checked")]
+            infrastructure: [...document.querySelectorAll("#infraestrutura input:checked")]
                 .map(i => i.closest(".check-item")?.textContent?.trim())
         };
 
         // 💾 SALVAR
-        await addDoc(collection(db, "locals"), data);
+        await addDoc(collection(db, "locations"), data);
 
         alert("✅ Publicado com sucesso!");
 

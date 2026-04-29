@@ -56,6 +56,31 @@ async function loadData(uid){
       document.getElementById("user-icon").textContent = userLetters;
 
     }
+    const placeRef = doc(db, "locals", orgId);
+    const placeSnap = await getDoc(placeRef);
+
+    if (placeSnap.exists()){
+      const placeData = placeSnap.data();
+      /*const userLetters = getInitials(orgData.orgName);*/
+      /*const createdDate = orgData.createdAt.toDate();*/
+      /*const signinDate = createdDate.toLocaleDateString("pt-BR");*/
+
+      console.log("Nome:", placeData.nome);
+      
+      /*document.getElementById("org-name").textContent = orgData.orgName;
+      document.getElementById("org-type").textContent = orgData.orgType;
+      document.getElementById("signin-date").textContent = signinDate;
+      document.getElementById("org-city").textContent = orgData.city;      
+      document.getElementById("org-email").textContent = orgData.orgEmail;
+      document.getElementById("website").textContent = orgData.website;
+      document.getElementById("cnpj").textContent = orgData.cnpj;
+      document.getElementById("address").textContent = address;
+      document.getElementById("user-icon").textContent = userLetters;*/
+
+    }
+
+
+
   } else{
     console.log("Documento não encontrado");
   }

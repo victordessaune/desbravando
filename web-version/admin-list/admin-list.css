@@ -1,5 +1,9 @@
 .body-admin{
     background-color: var(--color-off-white);
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .cards-row{
     display: flex;
@@ -63,6 +67,10 @@
     font-size: clamp(0.7rem, 1vh, 1.5rem);
     color: var(--color-white);
     font-weight: 600;
+}
+
+.btn-add-admin a{
+    color: var(--color-white);
 }
 /*ESTILO TABELA DE ADMINISTRADORES*/
 .table-admin{

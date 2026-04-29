@@ -24,8 +24,8 @@
                     <p id="data-atual">Gerencie acessos, permissões e perfis da equipe</p>
             </div>
             <div class="top-right">
-                <button class="btn-add-admin">
-                    <a href="./new-admin.html"><p>+ Novo Administrador</p></a>
+                <button class="btn-add-admin" onclick="openPopup()">
+                    + Novo Administrador
                 </button>
             </div>
         </div>
@@ -82,6 +82,87 @@
                 </div>
             </div>
         </div>
-    </main>      
+    </main> 
+    <!-- Cola antes do </body> -->
+<div class="popup-overlay" id="popup-responsavel" onclick="closeOnBg(event)">
+    <div class="popup-box">
+
+        <div class="popup-header">
+            <div class="popup-header-text">
+                <p class="popup-eyebrow">Cadastro · Passo 3 de 3</p>
+                <h2>Dados do <span>Responsável</span></h2>
+            </div>
+            <button class="close-btn" onclick="closePopup()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="section-heading">Identificação</div>
+
+        <div class="row-2">
+            <div>
+                <label class="field-label">Nome <span class="req">*</span></label>
+                <input type="text" id="nome" placeholder="Seu nome">
+                <span class="error-msg" id="err-nome"></span>
+            </div>
+            <div>
+                <label class="field-label">Sobrenome <span class="req">*</span></label>
+                <input type="text" id="sobrenome" placeholder="Sobrenome">
+                <span class="error-msg" id="err-sobrenome"></span>
+            </div>
+        </div>
+
+        <div class="row-2">
+            <div>
+                <label class="field-label">CPF <span class="req">*</span></label>
+                <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+                <span class="error-msg" id="err-cpf"></span>
+            </div>
+            <div>
+                <label class="field-label">Ocupação</label>
+                <input type="text" id="ocupacao" placeholder="Ex: Diretor">
+            </div>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">E-mail Institucional <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="voce@organizacao.com">
+            <span class="error-msg" id="err-email"></span>
+        </div>
+
+        <div class="section-heading">Acesso</div>
+
+        <div class="box-input">
+            <label class="field-label">Crie uma Senha <span class="req">*</span></label>
+            <div class="input-wrap">
+                <input type="password" id="senha" placeholder="Mínimo 6 caracteres">
+                <button class="eye-btn" type="button" onclick="toggleVis('senha', this)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+            <span class="error-msg" id="err-senha"></span>
+        </div>
+
+        <div class="box-input">
+            <label class="field-label">Digite a Senha Novamente <span class="req">*</span></label>
+            <div class="input-wrap">
+                <input type="password" id="confirmar" placeholder="Repita a senha">
+                <button class="eye-btn" type="button" onclick="toggleVis('confirmar', this)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+            <span class="error-msg" id="err-confirmar"></span>
+        </div>
+
+        <div class="button-line">
+            <button class="btn-secondary" onclick="closePopup()">Cancelar</button>
+            <button class="btn-primary" onclick="validarPopup()">
+                <i class="fa-solid fa-check"></i> Salvar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="admin-list.js"></script>     
 </body>
 </html>

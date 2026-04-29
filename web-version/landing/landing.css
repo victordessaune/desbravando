@@ -1,4 +1,3 @@
-
 html{
     scroll-behavior: smooth;
     font-size: 12px;
@@ -61,6 +60,39 @@ body{
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-16px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(36px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroSlideRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes shapeReveal {
+    from {
+        opacity: 0;
+        transform: translateX(80px) scale(0.93);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
 }
 
 
@@ -218,6 +250,18 @@ body{
     max-width: 720px;
 }
 
+.hero-title {
+    animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.hero-description {
+    animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.hero-buttons {
+    animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
 .hero-title{
     font-size: clamp(2rem, 5vw, 4rem);
     color: var(--color-purple);
@@ -288,6 +332,7 @@ body{
     z-index: 1;
     max-height: 100vh;
     object-fit: contain;
+    animation: shapeReveal 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
 .woman {
@@ -300,7 +345,9 @@ body{
     z-index: 2;
     height: auto;
     object-fit: contain;
-    animation: floating 5s ease-in-out infinite;
+    animation:
+        heroSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both,
+        floating 5s ease-in-out 1.3s infinite;
 }
 
 /* APP FEATURES */
@@ -605,6 +652,16 @@ body{
     grid-template-rows: 60% 40%;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
+
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.final-section.revealed {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .box-img-final {

@@ -34,13 +34,12 @@
                         <div class="item-detail">
                             <i class="fa-solid fa-calendar"></i>
                             <span class="org-item">
-                            Membro desde <p id="signin-date">23/02/2025</p></span>
+                            Membro desde <p class="signin-date" id="signin-date">23/02/2025</p></span>
                         </div>
                     </div>
                 </div>
                 <div class="buttons-identity">
-                    <a href="#" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</a>
-                    <a href="#" class="btn-edit"> + Novo Local</a>
+                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</a>
                 </div>
             </div>
             <div class="cards-row">
@@ -84,9 +83,7 @@
                             </div>
                         </div>
                         <div class="box-content">
-                        A Prefeitura de Vitória é o Poder Executivo do município de Vitória, capital do Espírito Santo, responsável pela administração pública local. 
-                        <br>
-                        Ela gerencia serviços essenciais (saúde, educação, trânsito, obras), planeja o desenvolvimento urbano e econômico, e cuida das pessoas por meio de secretarias setoriais.
+                        Descrição do Local
                         </div>
                     </div>
 
@@ -102,13 +99,13 @@
                                 <div class="places-area">
                                     <div class="place-card">
                                         <div class="banner-place"></div>
-                                        <div class="place-name">Praça do Papa</div>
-                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Centro, Vitória</div>
+                                        <div class="place-name">Nome do Lugar</div>
+                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Endereço do lugar</div>
                                     </div>
                                     <div class="place-card">
                                         <div class="banner-place"></div>
-                                        <div class="place-name">Praia de Camburi</div>
-                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Vitória</div>
+                                        <div class="place-name">Nome do Lugar</div>
+                                        <div class="place-location"><i class="fa-solid fa-location-dot"></i>Endereço do lugar</div>
                                     </div>
                                 </div>
                             </div>
@@ -121,9 +118,6 @@
                         <div class="box-header">
                             <div class="box-header-content">
                                 <div class="box-title"><i class="fa-solid fa-address-card"></i>Informações</div>
-                                <div class="edit-description">
-                                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar</button>
-                                </div>
                             </div>
                         </div>
                         <div class="box-content">
@@ -131,7 +125,7 @@
                                 <div class="bg-icon purple"><i class="fa-solid fa-envelope"></i></div>
                                 <div class="info-content">
                                     <div class="info-label">EMAIL</div>
-                                    <div class="info-value" id="org-email"></div>
+                                    <div class="info-value" id="org-email">emailorganização@gmail.com</div>
                                     <input id="org-email-input" style="display: none;" />
                                 </div>
                             </div>
@@ -140,7 +134,7 @@
                                 <div class="bg-icon purple"><i class="fa-solid fa-link"></i></div>
                                 <div class="info-content">
                                     <div class="info-label">WEBSITE</div>
-                                    <div class="info-value" id="website">https://www.vitoria.es.gov.br/</div>
+                                    <div class="info-value" id="website">https://www.organização/</div>
                                     <input id="website-input" style="display: none;" />
                                 </div>
                             </div>
@@ -149,7 +143,7 @@
                                 <div class="bg-icon purple"><i class="fa-solid fa-map"></i></div>
                                 <div class="info-content">
                                     <div class="info-label">ENDEREÇO</div>
-                                    <div class="info-value" id="address">Av. Marechal Mascarenhas de Moraes, 1927, Bento Ferreira, Vitória - ES, CEP 29050-625</div>
+                                    <div class="info-value" id="address">Avenida/Rua, Número, Bairro, Cidade - Estado</div>
                                 </div>
                             </div>
 
@@ -157,14 +151,9 @@
                                 <div class="bg-icon purple"><i class="fa-solid fa-id-card-clip"></i></div>
                                 <div class="info-content">
                                     <div class="info-label">CNPJ</div>
-                                    <div class="info-value" id="cnpj">27.142.058/0001-26</div>
+                                    <div class="info-value" id="cnpj">00.000.000/0000-00</div>
                                     <input id="cnpj-input" style="display: none;" />
                                 </div>
-                            </div>
-
-                            <div class="buttons-edit">
-                                <button id="btn-save" class="btn-edit" onclick="save()" style="display: none;">Salvar</button>
-                                <button id="btn-cancel" class="btn-edit" onclick="cancel()" style="display: none;">Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -179,16 +168,21 @@
                             <div class="info-space">
                                 <div class="bg-icon pink-blue" id="person-user">AC</div>
                                 <div class="info-content">
-                                    <div class="name-value" id="person-name">Amanda Carvalho</div>
+                                    <div class="name-value" id="person-name">Nome da Pessoa</div>
                                     <input id="person-name-input" style="display: none;" />
-                                    <div class="occupation-value" id="occupation">Diretora de Marketing</div>
+                                    <div class="occupation-value" id="occupation">Cargo da Pessoa</div>
                                     <input id="occupation-input" style="display: none;" />
-                                    <div class="email-resp-value" id="email-resp">teste@gmail.com</div>
+                                    <div class="email-resp-value" id="email-resp">emailpessoa@gmail.com</div>
                                     <input id="email-resp-input" style="display: none;" />
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
+                    <div class="buttons-edit">
+                            <button id="btn-save" class="btn-edit" onclick="save()" style="display: none;">Salvar</button>
+                            <button id="btn-cancel" class="btn-edit" onclick="cancel()" style="display: none;">Cancelar</button>
+                        </div>
                 </div>
             </div>
         </section>

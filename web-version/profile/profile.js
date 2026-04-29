@@ -25,7 +25,7 @@ async function loadData(uid){
     const personName = `${data.firstName || ""} ${data.lastName || ""}`;
     const userLetters = getInitials(personName);
 
-    document.getElementById("email-resp-value").textContent = data.email;
+    document.getElementById("email-resp").textContent = data.email;
     document.getElementById("occupation").textContent = data.occupation;
     document.getElementById("person-name").textContent = personName;
     document.getElementById("person-user").textContent = userLetters;
@@ -108,16 +108,17 @@ function edit(){
   /*Ocupação*/
   document.getElementById("occupation").style.display = "none";
   document.getElementById("occupation-input").style.display = "block";
-  document.getElementById("occupation").innerText;
+  document.getElementById("occupation-input").value =
+    document.getElementById("occupation").innerText;
 
-  /*Email do Responsável*/
+  /*Email do Responsável*/ 
   document.getElementById("email-resp").style.display = "none";
   document.getElementById("email-resp-input").style.display = "block";
   document.getElementById("email-resp-input").value =
     document.getElementById("email-resp").innerText;
 
   document.getElementById("btn-save").style.display = "inline-block";
-  document.getElementById("btn-cancel").style.display = "inline-block";
+  document.getElementById("btn-cancel").style.display = "inline-block"; 
 }
 
 function cancel(){
@@ -150,13 +151,17 @@ async function save(){
   const newOrgEmail = document.getElementById("org-email-input").value;
   const newWebsite = document.getElementById("website-input").value;
   const newCnpj = document.getElementById("cnpj-input").value;
-  /*const newCnpj = document.getElementById("person-name-input").value;
-  const newCnpj = document.getElementById("occupation-input").value;
-  const newCnpj = document.getElementById("email-resp-input").value;*/
+  /*const newCnpj = document.getElementById("person-name-input").value;*/
+  const newOccupation = document.getElementById("occupation-input").value;
+  const newPersonEmail = document.getElementById("email-resp-input").value;
 
   try{
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
+    await updateDoc(userRef, {
+      occupation: newOccupation,
+      email: newPersonEmail
+    });
     const orgId = userSnap.data().orgId;
 
     const orgRef = doc(db, "organizations", orgId);
@@ -171,6 +176,10 @@ async function save(){
     document.getElementById("org-email").innerText = newOrgEmail;
     document.getElementById("website").innerText = newWebsite;
     document.getElementById("cnpj").innerText = newCnpj;
+
+    document.getElementById("occupation").innerText = newOccupation;
+    document.getElementById("email-resp").innerText = newPersonEmail;
+
 
     cancel();
     alert("Atualizado");

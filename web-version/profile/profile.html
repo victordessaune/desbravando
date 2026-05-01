@@ -6,7 +6,7 @@
     <title>Perfil</title>
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <script src="../js/sidebar.js"></script>
@@ -39,15 +39,17 @@
                     </div>
                 </div>
                 <div class="buttons-identity">
-                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</a>
+                    <button onclick="edit()" class="btn-edit"><i class="fa-solid fa-pen"></i>Editar Perfil</button>
                 </div>
             </div>
             <div class="cards-row">
                 <div class="card">
                     <div class="bg-icon blue"><i class="fa-solid fa-map-pin"></i></div>
                     <div class="card-info">
-                        <div class="card-value">X</div>
-                        <div class="card-text">Locais Cadastrados</div>
+                        <div class="card-value">
+                            <div class="value-total-places" id="value-total-places">X</div>
+                        </div>
+                        <div class="card-text" id="card-text">Locais Cadastrados</div>
                     </div>
                 </div>
                 <div class="card">
@@ -79,11 +81,16 @@
                             <div class="box-header-content">
                                 <i class="fa-solid fa-building-columns"></i>
                                 <div class="box-title">Sobre a organização</div>
-                                <a href="#" class="edit-description">Editar</a>
+                                <button onclick="editDescription()" class="edit-description" id="edit-description">Editar descrição</button>
                             </div>
                         </div>
                         <div class="box-content">
-                        Descrição do Local
+                            <div class="description-text" id="description-text">Descrição do Local</div>
+                            <textarea id="input-description-text" style="display: none; width: 100%;"></textarea>
+                        </div>
+                        <div class="buttons-edit">
+                            <button id="btn-save-description" class="btn-edit" onclick="saveDescription()" style="display: none;">Salvar</button>
+                            <button id="btn-cancel-description" class="btn-edit" onclick="cancelDescription()" style="display: none;">Cancelar</button>
                         </div>
                     </div>
 
@@ -126,7 +133,7 @@
                                 <div class="info-content">
                                     <div class="info-label">EMAIL</div>
                                     <div class="info-value" id="org-email">emailorganização@gmail.com</div>
-                                    <input id="org-email-input" style="display: none;" />
+                                    <input class="input-style" id="org-email-input" style="display: none;" />
                                 </div>
                             </div>
 
@@ -135,7 +142,7 @@
                                 <div class="info-content">
                                     <div class="info-label">WEBSITE</div>
                                     <div class="info-value" id="website">https://www.organização/</div>
-                                    <input id="website-input" style="display: none;" />
+                                    <input class="input-style" id="website-input" style="display: none;" />
                                 </div>
                             </div>
 
@@ -144,6 +151,14 @@
                                 <div class="info-content">
                                     <div class="info-label">ENDEREÇO</div>
                                     <div class="info-value" id="address">Avenida/Rua, Número, Bairro, Cidade - Estado</div>
+                                    <div id="address-inputs" style="display: none;" class="address-inputs-grid">
+                                        <input class="input-style" id="street-input" placeholder="Rua/Avenida" />
+                                        <input class="input-style" id="number-input" placeholder="Número" />
+                                        <input class="input-style" id="neighborhood-input" placeholder="Bairro" />
+                                        <input class="input-style" id="city-input" placeholder="Cidade" />
+                                        <input class="input-style" id="uf-input" placeholder="UF" maxlength="2" />
+                                        <input class="input-style" id="cep-input" placeholder="CEP" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -152,7 +167,7 @@
                                 <div class="info-content">
                                     <div class="info-label">CNPJ</div>
                                     <div class="info-value" id="cnpj">00.000.000/0000-00</div>
-                                    <input id="cnpj-input" style="display: none;" />
+                                    <input class="input-style" id="cnpj-input" style="display: none;" />
                                 </div>
                             </div>
                             <div class="buttons-edit">
@@ -181,7 +196,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>

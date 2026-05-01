@@ -20,10 +20,10 @@ class AppSidebar extends HTMLElement {
       {
         section: 'Principal',
         items: [
-          { id: 'dashboard',      icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
-          { id: 'organizacao',    icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
-          { id: 'administradores',icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
-          { id: 'locais',         icon: 'fa-map-pin',      label: 'Locais',          href: '../form-locations/form-locations.html' },
+          { id: 'dashboard',       icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
+          { id: 'organizacao',     icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
+          { id: 'administradores', icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
+          { id: 'locais',          icon: 'fa-map-pin',      label: 'Locais',          href: '../form-locations/form-locations.html' },
         ],
       },
       {
@@ -41,7 +41,7 @@ class AppSidebar extends HTMLElement {
         const cls = isActive ? 'principal-icon-page active' : 'principal-icons';
         return `
           <div class="${cls}">
-            <a href="${href}" style="text-decoration:none;color:#FFFFFF;">
+            <a href="${href}" style="text-decoration:none; color:#FFFFFF;">
               <p><i class="fa-solid ${icon}"></i> ${label}</p>
             </a>
           </div>`;
@@ -54,21 +54,37 @@ class AppSidebar extends HTMLElement {
 
     this.innerHTML = `
       <aside class="sidebar">
+
         <div class="sidebar-logo">
           <div class="first-text">
             <div class="logo-text">Desbravando</div>
             <span class="logo-text-two">Admin Painel</span>
           </div>
         </div>
+
         <div class="sidebar-rest">
           ${sectionsHTML}
         </div>
+
         <div class="admin">
           <div class="box-admin">
-            <p class="name-admin">Victor Ramos</p>
-            <p class="class-admin">Super admin</p>
+            <div class="admin-informations">
+
+              <div class="icon-admin">
+                <span class="text-icon-admin">IC</span>
+              </div>
+
+              <div class="info-admin">
+                <div class="text-admin-info">
+                  <div class="name-admin">Nome Admin</div>
+                  <div class="class-admin">Cargo</div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
+
       </aside>`;
   }
 }

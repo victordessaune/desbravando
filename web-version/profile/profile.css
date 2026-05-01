@@ -194,7 +194,7 @@ main .fa-user{
     transform: translateY(-5px);
 }
 .bg-icon{
-    width: 50px;
+    width: 60px;
     height: 50px;
     padding: 10px;
     border-radius: 10px;
@@ -284,6 +284,11 @@ main .fa-user{
     text-align: justify;
     font-size: 15px;
 }
+.description-text{
+    text-align: justify;
+    font-size: 15px;
+    white-space: pre-line;
+}
 /*Estilo do box de "Locais Cadastrados"*/
 .places-area{
     display: grid;
@@ -307,7 +312,7 @@ main .fa-user{
         var(--color-light-purple) 100%
     );
     border-radius: 16px 16px 0 0;
-    height: 110px;
+    height: 150px;
 }
 .place-name{
     margin-left: 15px;
@@ -332,12 +337,14 @@ main .fa-user{
     background-color: var(--color-off-white);
     margin-bottom: 15px;
     transition: all 0.25s;
+    width: 100%;
 }
 .info-space:hover{
     transform: translateY(-5px);
 }
 .info-content{
     margin-left: 15px;
+    width: 100%;
 }
 .info-label{
     color: var(--color-dark-gray);
@@ -370,4 +377,34 @@ main .fa-user{
 .btn-edit:hover{
     background-color: var(--color-gray);
     border: none;
+}
+.edit-description{
+    color: var(--color-gray);
+    font-weight: 750;
+    border: 1px solid var(--color-light-gray);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.edit-description:hover{
+    color: var(--color-purple);
+    border: 1px solid var(--color-purple);
+}
+#input-description-text {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--color-gray);
+    resize: none;
+    font-family: inherit;
+}
+.input-style{
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid var(--color-gray);
+    font-family: inherit;
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
 }

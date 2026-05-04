@@ -83,14 +83,14 @@ async function loadData(uid){
     console.log("Nome:", data.firstName);
     const personName = `${data.firstName || ""} ${data.lastName || ""}`;
     const userLetters = getInitials(personName);
-    /*const createdDate = data.createdAt.toDate();
-    const signinDate = createdDate.toLocaleDateString("pt-BR");*/
+    /*const admingSignIn = data.createdAt.toDate();
+    const admingSignInDate = admingSignIn.toLocaleDateString("pt-BR");*/
 
     document.getElementById("admin-email").textContent = data.email;
     document.getElementById("admin-occupation").textContent = data.occupation;
     document.getElementById("admin-name").textContent = personName;
     document.getElementById("icon-user").textContent = userLetters;
-    /*document.getElementById("admin-date").textContent = signinDate;*/
+    /*document.getElementById("admin-date").textContent = AdminSignInDate;*/
   
   function getInitials(name) {
   const ignore = ["de", "da", "do", "dos", "das"];

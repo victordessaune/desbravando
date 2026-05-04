@@ -3,7 +3,6 @@ import { collection, doc, getDoc, getDocs, query, where } from "https://www.gsta
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Variável global para guardar os dados do endereço
 let orgAddress = {};
 
 onAuthStateChanged(auth, async (user) => {
@@ -37,7 +36,6 @@ async function loadData(uid) {
     if (orgSnap.exists()) {
       const orgData = orgSnap.data();
 
-      // Guarda os campos do endereço na variável global
       orgAddress = {
         street: orgData.street || "",
         number: orgData.number || "",
@@ -256,3 +254,4 @@ async function saveDescription() {
 window.editDescription = editDescription;
 window.saveDescription = saveDescription;
 window.cancelDescription = cancelDescription;
+

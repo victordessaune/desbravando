@@ -187,6 +187,7 @@ aside{
 }
 body{
     display: flex;
+    flex-direction: column;
 }
 .content{
     background: linear-gradient(to top, var(--color-white), var(--color-light-gray), var(--color-medium-gray));

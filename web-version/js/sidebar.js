@@ -69,18 +69,15 @@ class AppSidebar extends HTMLElement {
         <div class="admin">
           <div class="box-admin">
             <div class="admin-informations">
-
-              <div class="icon-admin">
-                <span class="text-icon-admin">IC</span>
-              </div>
-
               <div class="info-admin">
+                <div class="icon-admin">
+                  <span class="text-icon-admin">IC</span>
+                </div>
                 <div class="text-admin-info">
                   <div class="name-admin">Nome Admin</div>
                   <div class="class-admin">Cargo</div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

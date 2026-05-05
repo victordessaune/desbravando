@@ -59,19 +59,14 @@ aside{
     padding: 15px;
     font-size: 20px;
 }
-.admin-informations {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  overflow: hidden;
-}
+
 .text-admin-info {
   width: 100%;
   text-align: left;
 }
 .info-admin {
-  flex: 1;
+    display: flex;
+    align-items: center;
   min-width: 0;
   overflow: hidden;
 }

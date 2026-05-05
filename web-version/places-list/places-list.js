@@ -159,6 +159,7 @@ onAuthStateChanged(auth, async (user) => {
                 id: docSnap.id,
                 name: data.name || "Sem nome",
                 city: data.city || "",
+                uf: data.uf || "XX",
                 tags: Array.isArray(data.tags) ? data.tags : [data.tags].filter(Boolean),
                 status: data.status || "active",
                 createdAt: data.createdAt,

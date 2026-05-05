@@ -1,3 +1,7 @@
+import { auth, db } from "./api/firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 class AppSidebar extends HTMLElement {
   static get observedAttributes() {
     return ['page'];
@@ -5,6 +9,7 @@ class AppSidebar extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    this._loadUser();
   }
 
   attributeChangedCallback() {
@@ -36,7 +41,6 @@ class AppSidebar extends HTMLElement {
     ];
 
     const sectionsHTML = navItems.map(({ section, items }) => {
-      
       const itemsHTML = items.map(({ id, icon, label, href }) => {
         const isActive = id === this.currentPage;
         const cls = isActive ? 'principal-icon-page active' : 'principal-icons';
@@ -55,7 +59,6 @@ class AppSidebar extends HTMLElement {
 
     this.innerHTML = `
       <aside class="sidebar">
-
         <div class="sidebar-logo">
           <div class="first-text">
             <div class="logo-text">Desbravando</div>
@@ -69,19 +72,55 @@ class AppSidebar extends HTMLElement {
 
         <div class="admin">
           <div class="box-admin">
-              <div class="info-admin">
-                <div class="icon-admin">
-                  <span class="text-icon-admin">IC</span>
-                </div>
-                <div class="text-admin-info">
-                  <div class="name-admin">Nome Admin</div>
-                  <div class="class-admin">Cargo</div>
-                </div>
+            <div class="info-admin">
+              <div class="icon-admin">
+                <span class="text-icon-admin" id="sidebar-initials">--</span>
               </div>
+              <div class="text-admin-info">
+                <div class="name-admin" id="sidebar-name">Carregando...</div>
+                <div class="class-admin" id="sidebar-occupation">—</div>
+              </div>
+            </div>
           </div>
         </div>
-
       </aside>`;
+  }
+
+  async _loadUser() {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "../login/login.html";
+        return;
+      }
+
+      try {
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        const usuario = userSnap.data();
+
+        // Atualiza sidebar
+        const firstName = usuario.firstName || "";
+        const lastName  = usuario.lastName  || "";
+        const fullName  = [firstName, lastName].filter(Boolean).join(" ") || "Admin";
+        const initials  = [firstName[0], lastName[0]].filter(Boolean).join("").toUpperCase() || "AD";
+
+        const elName       = this.querySelector("#sidebar-name");
+        const elOccupation = this.querySelector("#sidebar-occupation");
+        const elInitials   = this.querySelector("#sidebar-initials");
+
+        if (elName)       elName.textContent       = fullName;
+        if (elOccupation) elOccupation.textContent = usuario.occupation || "Administrador";
+        if (elInitials)   elInitials.textContent   = initials;
+
+        // Dispara evento global com os dados do usuário
+        // Outras telas podem escutar: window.addEventListener('userLoaded', e => { ... e.detail ... })
+        window.dispatchEvent(new CustomEvent("userLoaded", {
+          detail: { user, usuario }
+        }));
+
+      } catch (err) {
+        console.error("Erro ao carregar usuário na sidebar:", err);
+      }
+    });
   }
 }
 

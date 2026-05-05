@@ -92,7 +92,7 @@ function populate(id, data) {
     // ── Cidade e Rua ────────────────────────────
     const cidade = [data.city, data.uf].filter(Boolean).join(" / ");
     document.getElementById("place-cidade").textContent = cidade || "—";
-    document.getElementById("place-rua").textContent    = data.street || "—";
+    document.getElementById("place-rua").textContent    = data.neighborhood || "—";
 
     // ── Badge de preço ──────────────────────────
     const badge = document.getElementById("place-preco-badge");

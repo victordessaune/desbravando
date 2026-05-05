@@ -298,19 +298,29 @@ function validateTags(containerId, errorId) {
 }
 
 window.toggleTag = function(el) {
-    el.classList.toggle("selected");
+    const container = el.parentElement;
 
-    // remove erro se tiver pelo menos 1 selecionada
-    const container = document.getElementById("tags-pill");
-    const selected = container.querySelectorAll(".tag.selected");
+    // só o tags-pill é single select
+    if (container.id === "tags-pill") {
+        if (el.classList.contains("selected")) {
+            el.classList.remove("selected");
+        } else {
+            container.querySelectorAll(".tag.selected").forEach(t => t.classList.remove("selected"));
+            el.classList.add("selected");
+        }
+    } else {
+        // services — multi select normal
+        el.classList.toggle("selected");
+    }
+
+    // remove erro do tags-pill
     const errorMsg = document.getElementById("tags-error");
-
+    const selected = document.querySelectorAll("#tags-pill .tag.selected");
     if (selected.length > 0 && errorMsg) {
         errorMsg.textContent = "";
         errorMsg.classList.remove("show");
     }
 };
-
 /* ═══════════════════════
    PRICE
 ═══════════════════════ */

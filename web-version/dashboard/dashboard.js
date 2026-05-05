@@ -85,21 +85,23 @@ async function loadLocations(orgId) {
     const placeType = placeData.tags;
     const placeSignIn = placeData.createdAt.toDate();
     const placeSignInDate = placeSignIn.toLocaleDateString("pt-BR");
+    const placeId = doc.id;
+    const firstTag = Array.isArray(placeData.tags) ? placeData.tags[0] || "—" : placeData.tags || "—";
     const placeCard = `
     <div class="body">
-        <div class="table-body">
+        <div class="table-body" style="cursor:pointer" onclick="window.location.href='../place-teste-ruim/place.html?id=${placeId}'">
             <div class="box-name">
                 <div class="table-org">
                     <div class="icon-name">${iconLetters}</div>
                         <div class="informations">
                             <p class="name-org">${placeName}</p>
-                            <p class="email-org"></p>
+                            <p class="email-org">${placeData.city || ""}</p>
                         </div>
                     </div>
                 </div>
                 <div class="type-org priv">
                     <div class="icon-type priv"><i class="fa-solid fa-building"></i></div>
-                    <p>${placeType}</p>
+                    <p>${firstTag}</p>
                 </div>
                 <div class="mood-org active">
                     <i class="fa-solid fa-circle"></i>
@@ -109,7 +111,7 @@ async function loadLocations(orgId) {
                     <p>${placeSignInDate}</p>
                 </div>
                 <div class="actions-org aprove">
-                    <button>Aprovar</button>
+                    <button onclick="event.stopPropagation(); window.location.href='../place-teste-ruim/place.html?id=${placeId}'">Ver Local</button>
                 </div>
             </div>
         </div>

@@ -12,12 +12,12 @@
     <script src="../js/sidebar.js"></script>
 </head>
 <body>
-    <app-sidebar page="locais"></app-sidebar>
+    <app-sidebar></app-sidebar>
 
     <main>
 
         <!-- LOADING -->
-        <div class="loading-screen" id="loading-screen">
+        <div class="loading-screen" id="loading-screen" >
             <div class="spinner"></div>
             <p>Carregando local...</p>
         </div>
@@ -27,12 +27,17 @@
 
             <!-- BANNER -->
             <div class="banner-place" id="banner-place">
-                <div class="banner-overlay"></div>
                 <div class="banner-actions">
                     <button class="btn-back" onclick="history.back()">
                         <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
                 </div>
+                <div class="banner-overlay"></div>
+                <div class="no-photo-msg" id="no-photo-msg">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Sem fotos cadastradas</span>
+                </div>
+                
             </div>
 
             <!-- IDENTITY -->
@@ -46,11 +51,7 @@
                         <span class="org-item price-badge" id="place-preco-badge"></span>
                     </div>
                 </div>
-                <div class="buttons-identity">
-                    <a href="../form-locations/form-locations.html" class="btn-edit">
-                        <i class="fa-solid fa-plus"></i> Novo Local
-                    </a>
-                </div>
+                
             </div>
 
             <!-- GRID PRINCIPAL -->

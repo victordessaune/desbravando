@@ -19,8 +19,12 @@ main {
     display: flex;
     align-items: flex-start;
     padding: 20px;
-    background-color: var(--color-dark-blue);
-    background-image: url(../assets/images/convento.png);
+    background: linear-gradient(
+        70deg,
+        var(--color-blue) 0%,
+        var(--color-light-blue) 60%,
+        var(--color-light-purple) 100%
+    );
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -29,8 +33,21 @@ main {
 .banner-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.45));
+   
 }
+.no-photo-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--color-white);
+    width: 100%;
+    height: 100%;
+}
+
+.no-photo-msg i { font-size: 2rem; }
+.no-photo-msg span { font-size: 0.95rem; font-weight: 500; }
 .banner-actions {
     position: relative;
     z-index: 1;

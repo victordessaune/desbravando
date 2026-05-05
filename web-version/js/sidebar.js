@@ -36,6 +36,7 @@ class AppSidebar extends HTMLElement {
     ];
 
     const sectionsHTML = navItems.map(({ section, items }) => {
+      
       const itemsHTML = items.map(({ id, icon, label, href }) => {
         const isActive = id === this.currentPage;
         const cls = isActive ? 'principal-icon-page active' : 'principal-icons';
@@ -68,7 +69,6 @@ class AppSidebar extends HTMLElement {
 
         <div class="admin">
           <div class="box-admin">
-            <div class="admin-informations">
               <div class="info-admin">
                 <div class="icon-admin">
                   <span class="text-icon-admin">IC</span>
@@ -78,7 +78,6 @@ class AppSidebar extends HTMLElement {
                   <div class="class-admin">Cargo</div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
 

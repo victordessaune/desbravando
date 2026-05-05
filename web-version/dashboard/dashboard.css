@@ -16,6 +16,7 @@ aside{
     margin-top: 10px;
     
 }
+/*
 .admin {
   display: flex;
   justify-content: center;
@@ -90,7 +91,7 @@ aside{
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 0;
-}
+}*/
 .first-text{
     margin-top: 17px;
     display: grid;

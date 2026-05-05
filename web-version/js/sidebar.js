@@ -23,14 +23,14 @@ class AppSidebar extends HTMLElement {
           { id: 'dashboard',       icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
           { id: 'organizacao',     icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
           { id: 'administradores', icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
-          { id: 'locais',          icon: 'fa-map-pin',      label: 'Locais',          href: '../form-locations/form-locations.html' },
+          { id: 'locais',          icon: 'fa-map-pin',      label: 'Locais',          href: '../places-list/places-list.html' },
         ],
       },
       {
         section: 'Sistema',
         items: [
-          { id: 'configuracoes', icon: 'fa-gear', label: 'Configurações', href: '../configuracoes/configuracoes.html' },
-          { id: 'seguranca',     icon: 'fa-lock', label: 'Segurança',     href: '../seguranca/seguranca.html' },
+          { id: 'configuracoes', icon: 'fa-gear', label: 'Configurações', href: '#' },
+          { id: 'seguranca',     icon: 'fa-lock', label: 'Segurança',     href: '#' },
         ],
       },
     ];

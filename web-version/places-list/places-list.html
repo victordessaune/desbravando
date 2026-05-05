@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locais Cadastrados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../dashboard/dashboard.css">
+    <link rel="stylesheet" href="places-list.css">
+    <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
+    <script src="../js/sidebar.js" defer></script>
+</head>
+<body>
+    <app-sidebar page="locais"></app-sidebar>
+
+    <main class="body-places">
+        <div class="top-bar">
+            <div class="top-left">
+                <div class="top-first">
+                    <h1>Locais Cadastrados</h1>
+                </div>
+                <p id="data-atual">Gerencie e visualize todos os locais da plataforma</p>
+            </div>
+            <div class="top-right">
+                <button class="btn-add-place" id="btn-new-local">+ Novo Local</button>
+            </div>
+        </div>
+
+        <div class="cards-row">
+            <div class="search-space">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input class="search-input" id="search-input" type="text" placeholder="Buscar por nome, cidade ou categoria...">
+            </div>
+            <div class="card-total">
+                <div class="card-info">
+                    <div class="card-title">TOTAL:</div>
+                    <div class="card-value-places" id="places-count">—</div>
+                    <div class="card-text" id="places-label">locais</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-row" id="filter-row">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+        </div>
+
+        <div class="table-places">
+            <div class="table-head-places">
+                <div class="table-head-content">
+                    <p>LOCAL</p>
+                    <p>CATEGORIA</p>
+                    <p>STATUS</p>
+                    <p>CADASTRO</p>
+                    <p>AÇÕES</p>
+                </div>
+            </div>
+            <div id="loading-state" class="empty-state">
+                <div class="spinner"></div>
+                <p>Carregando locais...</p>
+            </div>
+            <div id="empty-state" class="empty-state" style="display:none">
+                <i class="fa-solid fa-map-pin empty-icon"></i>
+                <p class="empty-title">Nenhum local encontrado</p>
+                <p class="empty-sub">Tente ajustar os filtros ou adicione um novo local</p>
+            </div>
+            <div id="places-table-body"></div>
+        </div>
+    </main>
+
+    <script type="module" src="places-list.js"></script>
+</body>
+</html>

@@ -122,16 +122,18 @@ aside {
 
 .box-admin {
     width: 185px;
-    height: 56px;
+    min-height: 56px;
+    height: auto;
     display: flex;
     align-items: center;
     border-radius: 15px;
     margin-top: 20px;
     border: 1px solid rgba(var(--color-white-rgb), 0.25);
     background-color: rgba(var(--color-white-rgb), 0.09);
-    padding:20px;
-    overflow: hidden;
+    padding: 8px 10px;       /* era 20px em tudo, agora bem menor */
+    overflow: visible;
 }
+
 .box-admin:hover{
     background-color: rgba(var(--color-white-rgb), 0.16);
     box-shadow: 0 0 10px rgba(75, 60, 195, 0.6);
@@ -161,10 +163,10 @@ aside {
     width: 100%;
     text-align: left;
     margin-left: 4px;
-    white-space: nowrap;
     padding: 10px;
     min-width: 0;
     flex: 1;
+    /* remover: white-space: nowrap; */
 }
 .name-admin {
     white-space: normal;
@@ -178,14 +180,15 @@ aside {
     
 }
 .class-admin {
-    font-size: 11px;
-    font-weight: 300;
-    color: var(--color-white);
-    opacity: 45%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 0;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--color-white);
+  opacity: 45%;
+  /* Remover essas três linhas: */
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  word-break: break-word;
 }
 
 .principal-icon-page .fa-solid {

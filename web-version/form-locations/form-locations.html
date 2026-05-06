@@ -375,20 +375,33 @@
 
           
 
-            <div class="divider"></div>
-            <div class="section-heading">Imagens</div>
+<div class="divider"></div>
 
-            <label class="upload-area" for="file-upload">
-                <input type="file" id="file-upload" accept="image/*" multiple onchange="previewImages(event)">
-                <div class="upload-icon">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
-                </div>
-                <p><strong>Clique para enviar</strong> ou arraste as imagens</p>
-                <p style="font-size:0.9rem; margin-top:6px">PNG, JPG — máx 5MB cada</p>
+            <!-- CAPA -->
+            <div class="section-heading">Foto de Capa <span class="req">*</span></div>
+            <p class="upload-hint">Imagem principal exibida como banner do local.</p>
+            <label class="upload-area" for="cover-upload" id="cover-upload-area">
+                <input type="file" id="cover-upload" accept="image/*" onchange="previewCover(event)">
+                <div class="upload-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></div>
+                <p><strong>Clique para enviar</strong> a foto de capa</p>
+                <p style="font-size:0.9rem;margin-top:6px">PNG, JPG — máx 5MB</p>
             </label>
+            <div id="cover-preview"></div>
+            <span id="cover-error" class="error-msg"></span>
 
-            <div id="image-preview" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;"></div>
+            <div class="divider"></div>
 
+            <!-- GALERIA -->
+            <div class="section-heading">Galeria de Fotos</div>
+            <p class="upload-hint">Mínimo 1 e máximo 10 imagens.</p>
+            <label class="upload-area" for="gallery-upload">
+                <input type="file" id="gallery-upload" accept="image/*" multiple onchange="previewGallery(event)">
+                <div class="upload-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></div>
+                <p><strong>Clique para enviar</strong> as fotos da galeria</p>
+                <p style="font-size:0.9rem;margin-top:6px">PNG, JPG — máx 5MB cada · <span id="gallery-count">0</span>/10</p>
+            </label>
+            <span id="gallery-error" class="error-msg"></span>
+            <div id="gallery-preview"></div>
             <div class="button-line">
                 <button class="btn-danger"    onclick="prevStep(4)">✕ Cancelar</button>
                 <button class="btn-primary"   onclick="publishLocal()">

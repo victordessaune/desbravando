@@ -26,12 +26,12 @@ const INFRA_ICONS = {
 
 // ── Mapa de tags → tipo de local ───────────────
 const TAG_TIPO = {
-    "Praia":      "Praia",
-    "ECO":        "ECO",
-    "Parques":    "Parque",
-    "Religioso":  "Religioso",
-    "GastroBar":  "GastroBar",
-    "Histórico":  "Histórico"
+    "Praia":     "Praia",
+    "ECO":       "ECO",
+    "Parques":   "Parque",
+    "Religioso": "Religioso",
+    "GastroBar": "GastroBar",
+    "Histórico": "Histórico"
 };
 
 // ── Helpers ────────────────────────────────────
@@ -41,12 +41,12 @@ function getParam(key) {
 
 function showError() {
     document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("error-screen").style.display = "flex";
+    document.getElementById("error-screen").style.display   = "flex";
 }
 
 function showContent() {
-    document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("place-content").style.display = "block";
+    document.getElementById("loading-screen").style.display  = "none";
+    document.getElementById("place-content").style.display   = "block";
 }
 
 // ── Info list helper ───────────────────────────
@@ -69,29 +69,28 @@ function addInfoRow(container, iconClass, colorClass, label, value) {
 // ── Populate ───────────────────────────────────
 function populate(id, data) {
 
-    // ── Banner ──────────────────────────────────
+    // ── Banner (capa) ────────────────────────────
     const banner = document.getElementById("banner-place");
-    if (data.images && data.images.length > 0) {
-        banner.style.backgroundImage = `url('${data.images[0]}')`;
+    if (data.cover) {
+        banner.style.backgroundImage = `url('${data.cover}')`;
         document.querySelector(".banner-overlay").style.background =
-            "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.45))";
+            "linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.55))";
         document.getElementById("no-photo-msg").style.display = "none";
     }
 
     // ── Tipo (derivado das tags) ─────────────────
-    const tipoEl = document.getElementById("place-tipo");
     const tipoTexto = data.tags && data.tags.length > 0
         ? (TAG_TIPO[data.tags[0]] || data.tags[0])
         : "Local";
-    tipoEl.textContent = tipoTexto;
+    document.getElementById("place-tipo").textContent = tipoTexto;
 
     // ── Nome ────────────────────────────────────
     document.getElementById("place-nome").textContent = data.name || "—";
     document.title = `Desbravando — ${data.name || "Local"}`;
 
-    // ── Cidade e Rua ────────────────────────────
+    // ── Cidade e Bairro ─────────────────────────
     const cidade = [data.city, data.uf].filter(Boolean).join(" / ");
-    document.getElementById("place-cidade").textContent = cidade || "—";
+    document.getElementById("place-cidade").textContent = cidade            || "—";
     document.getElementById("place-rua").textContent    = data.neighborhood || "—";
 
     // ── Badge de preço ──────────────────────────
@@ -106,9 +105,25 @@ function populate(id, data) {
 
     // ── Descrição ───────────────────────────────
     const descEl = document.getElementById("place-descricao");
-    descEl.textContent = data.description
-        ? data.description
-        : "Nenhuma descrição cadastrada.";
+    descEl.textContent = data.description || "Nenhuma descrição cadastrada.";
+
+    // ── Galeria ──────────────────────────────────
+    const galleryGrid = document.getElementById("gallery-grid");
+    const boxGaleria  = document.getElementById("box-galeria");
+
+    if (data.images && data.images.length > 0) {
+        boxGaleria.style.display = "block";
+        data.images.forEach(url => {
+            const item = document.createElement("div");
+            item.className = "gallery-item";
+            item.innerHTML = `<img src="${url}" alt="Foto do local" loading="lazy">`;
+            item.onclick   = () => openModal(url);
+            galleryGrid.appendChild(item);
+        });
+    } else {
+        galleryGrid.innerHTML = `<span class="empty-msg">Nenhuma foto cadastrada.</span>`;
+        boxGaleria.style.display = "block";
+    }
 
     // ── Infraestrutura ──────────────────────────
     const infraList = document.getElementById("infra-list");
@@ -116,7 +131,7 @@ function populate(id, data) {
         data.infrastructure.forEach(item => {
             if (!item) return;
             const icon = INFRA_ICONS[item] || "fa-circle-check";
-            const tag = document.createElement("div");
+            const tag  = document.createElement("div");
             tag.className = "box-tag";
             tag.innerHTML = `
                 <i class="fa-solid ${icon}"></i>
@@ -134,7 +149,7 @@ function populate(id, data) {
         data.services.forEach(s => {
             if (!s) return;
             const chip = document.createElement("span");
-            chip.className = "tag-chip service";
+            chip.className   = "tag-chip service";
             chip.textContent = s;
             servicosList.appendChild(chip);
         });
@@ -144,9 +159,8 @@ function populate(id, data) {
 
     // ── Info Geral ──────────────────────────────
     const infoList = document.getElementById("info-list");
-    addInfoRow(infoList, "fa-phone",   "purple", "Telefone", data.telefone || data.phone || null);
-    addInfoRow(infoList, "fa-globe",   "blue",   "Website",  data.website  || null);
-    addInfoRow(infoList, "fa-building","green",  "Organização", data.orgId || null);
+    addInfoRow(infoList, "fa-phone",    "purple", "Telefone",     data.telefone || data.phone || null);
+    addInfoRow(infoList, "fa-globe",    "blue",   "Website",      data.website  || null);
 
     if (infoList.children.length === 0) {
         infoList.innerHTML = `<span class="empty-msg">Nenhuma informação adicional.</span>`;
@@ -156,16 +170,19 @@ function populate(id, data) {
     const horariosEl = document.getElementById("horarios-list");
     if (data.horarios && Object.keys(data.horarios).length > 0) {
         horariosEl.innerHTML = "";
+
         Object.entries(data.horarios).forEach(([dia, horas]) => {
             const row = document.createElement("div");
             row.className = "horario-row";
-            row.innerHTML = `
-                <span class="horario-dia">${dia}</span>
-                <span class="horario-time">
-                    <i class="fa-solid fa-clock"></i>
-                    ${horas.abertura} – ${horas.fechamento}
-                </span>
-            `;
+
+            const timeHtml = horas.fechado
+                ? `<span class="horario-fechado">Fechado</span>`
+                : `<span class="horario-time">
+                       <i class="fa-solid fa-clock"></i>
+                       ${horas.abertura} – ${horas.fechamento}
+                   </span>`;
+
+            row.innerHTML = `<span class="horario-dia">${dia}</span>${timeHtml}`;
             horariosEl.appendChild(row);
         });
     }
@@ -175,7 +192,7 @@ function populate(id, data) {
     if (data.tags && data.tags.length > 0) {
         data.tags.forEach(t => {
             const chip = document.createElement("span");
-            chip.className = "tag-chip pill";
+            chip.className   = "tag-chip pill";
             chip.textContent = `# ${t}`;
             tagsList.appendChild(chip);
         });
@@ -186,7 +203,9 @@ function populate(id, data) {
     // ── Endereço completo ───────────────────────
     const addressEl = document.getElementById("address-block");
     const partes = [
-        data.street && data.numero ? `${data.street}, ${data.numero}` : data.street,
+        data.street && data.numero
+            ? `${data.street}, ${data.numero}`
+            : data.street,
         data.complemento,
         data.neighborhood,
         cidade,
@@ -197,8 +216,7 @@ function populate(id, data) {
     // ── Preço ───────────────────────────────────
     const precoContent = document.getElementById("preco-content");
     if (data.price) {
-        const tipo = (data.price.tipo || "").toLowerCase();
-        const isGratis = tipo.includes("grát");
+        const isGratis = (data.price.tipo || "").toLowerCase().includes("grát");
 
         if (isGratis) {
             precoContent.innerHTML = `
@@ -224,22 +242,35 @@ function populate(id, data) {
     }
 }
 
+// ── Modal ──────────────────────────────────────
+window.openModal = function(src) {
+    document.getElementById("modal-img").src = src;
+    document.getElementById("photo-modal").classList.add("active");
+    document.body.style.overflow = "hidden";
+};
+
+window.closeModal = function(e) {
+    // fecha só se clicar no fundo ou no botão, não na imagem
+    if (e && e.target === document.getElementById("modal-img")) return;
+    document.getElementById("photo-modal").classList.remove("active");
+    document.getElementById("modal-img").src = "";
+    document.body.style.overflow = "";
+};
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+});
+
 // ── Init ───────────────────────────────────────
 (async function init() {
     const placeId = getParam("id");
 
-    if (!placeId) {
-        showError();
-        return;
-    }
+    if (!placeId) { showError(); return; }
 
     try {
         const snap = await getDoc(doc(db, "locations", placeId));
 
-        if (!snap.exists()) {
-            showError();
-            return;
-        }
+        if (!snap.exists()) { showError(); return; }
 
         populate(placeId, snap.data());
         showContent();

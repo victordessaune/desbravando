@@ -47,43 +47,96 @@ onAuthStateChanged(auth, async (user) => {
 /* ═══════════════════════
    IMAGENS
 ═══════════════════════ */
-let selectedFiles = [];
+let selectedCoverFile    = null;
+let selectedGalleryFiles = [];
 
-window.previewImages = function(event) {
+// ── CAPA ──
+window.previewCover = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    selectedCoverFile = file;
+
+    const preview = document.getElementById("cover-preview");
+    preview.innerHTML = "";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "cover-preview-wrapper";
+
+    const img = document.createElement("img");
+    img.className = "cover-preview-img";
+
+    const reader = new FileReader();
+    reader.onload = (e) => { img.src = e.target.result; };
+    reader.readAsDataURL(file);
+
+    const btn = document.createElement("button");
+    btn.textContent = "✕ Remover capa";
+    btn.type = "button";
+    btn.className = "remove-cover-btn";
+    btn.onclick = () => {
+        selectedCoverFile = null;
+        preview.innerHTML = "";
+        document.getElementById("cover-upload").value = "";
+    };
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(btn);
+    preview.appendChild(wrapper);
+
+    const err = document.getElementById("cover-error");
+    if (err) { err.textContent = ""; err.classList.remove("show"); }
+};
+
+// ── GALERIA ──
+window.previewGallery = function(event) {
     const files = Array.from(event.target.files);
-    const preview = document.getElementById("image-preview");
+    const preview  = document.getElementById("gallery-preview");
+    const countEl  = document.getElementById("gallery-count");
+    const errorEl  = document.getElementById("gallery-error");
 
     files.forEach(file => {
-        if (selectedFiles.length >= 5) return; // máx 5 imagens
-        selectedFiles.push(file);
+        if (selectedGalleryFiles.length >= 10) return;
+        selectedGalleryFiles.push(file);
 
         const reader = new FileReader();
         reader.onload = (e) => {
             const wrapper = document.createElement("div");
-            wrapper.style.cssText = "position:relative; width:100px; height:100px;";
+            wrapper.className = "gallery-thumb";
 
             const img = document.createElement("img");
             img.src = e.target.result;
-            img.style.cssText = "width:100px; height:100px; object-fit:cover; border-radius:8px;";
 
             const btn = document.createElement("button");
             btn.textContent = "✕";
             btn.type = "button";
-            btn.style.cssText = "position:absolute; top:4px; right:4px; background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-size:12px;";
+            btn.className = "gallery-thumb-remove";
             btn.onclick = () => {
-                const idx = selectedFiles.indexOf(file);
-                if (idx > -1) selectedFiles.splice(idx, 1);
+                const idx = selectedGalleryFiles.indexOf(file);
+                if (idx > -1) selectedGalleryFiles.splice(idx, 1);
                 wrapper.remove();
+                countEl.textContent = selectedGalleryFiles.length;
             };
 
             wrapper.appendChild(img);
             wrapper.appendChild(btn);
             preview.appendChild(wrapper);
+            countEl.textContent = selectedGalleryFiles.length;
+
+            // limpa erro se já tiver 5+
+            if (selectedGalleryFiles.length >= 5 && errorEl) {
+                errorEl.textContent = "";
+                errorEl.classList.remove("show");
+            }
         };
         reader.readAsDataURL(file);
     });
+
+    // reset input para permitir re-upload
+    event.target.value = "";
 };
 
+// ── CLOUDINARY ──
 async function uploadToCloudinary(file) {
     const formData = new FormData();
     formData.append("file", file);
@@ -142,7 +195,7 @@ window.prevStep = function(from) {
 function validateStep(step) {
     const panel = document.getElementById(`panel-${step}`);
     const required = panel.querySelectorAll("input[required], select[required], textarea[required]");
-    
+
     let valid = true;
 
     // 🔹 CAMPOS OBRIGATÓRIOS
@@ -151,30 +204,17 @@ function validateStep(step) {
 
         if (!field.value.trim()) {
             field.classList.add("input-error");
-
-            if (errorMsg) {
-                errorMsg.textContent = "Campo obrigatório";
-                errorMsg.classList.add("show");
-            }
-
+            if (errorMsg) { errorMsg.textContent = "Campo obrigatório"; errorMsg.classList.add("show"); }
             valid = false;
         } else {
             field.classList.remove("input-error");
-
-            if (errorMsg) {
-                errorMsg.textContent = "";
-                errorMsg.classList.remove("show");
-            }
+            if (errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
         }
 
-        // evita duplicar listener
         if (!field.dataset.listener) {
             field.addEventListener("input", () => {
                 field.classList.remove("input-error");
-                if (errorMsg) {
-                    errorMsg.textContent = "";
-                    errorMsg.classList.remove("show");
-                }
+                if (errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
             });
             field.dataset.listener = "true";
         }
@@ -184,33 +224,25 @@ function validateStep(step) {
        STEP 2 — HORÁRIO
     ════════════════════════ */
     if (step === 2) {
-        const rows = document.querySelectorAll("#hours-list .hours-grid");
+        const rows     = document.querySelectorAll("#hours-list .hours-grid[data-day]");
         const errorMsg = document.getElementById("hours-error");
-
-        let hasValid = false;
+        let hasValid   = false;
 
         rows.forEach(row => {
-            const inputs = row.querySelectorAll("input");
+            const isClosed = row.querySelector("input[type=checkbox]")?.checked;
+            if (isClosed) { hasValid = true; return; }
 
-            const abertura = inputs[0].value.trim();
-            const fechamento = inputs[1].value.trim();
-
-            if (abertura && fechamento) {
-                hasValid = true;
-            }
+            const inputs    = row.querySelectorAll(".hour-input");
+            const abertura  = inputs[0]?.value.trim();
+            const fechamento = inputs[1]?.value.trim();
+            if (abertura && fechamento) hasValid = true;
         });
 
         if (!hasValid) {
-            if (errorMsg) {
-                errorMsg.textContent = "Preencha pelo menos um horário";
-                errorMsg.classList.add("show");
-            }
+            if (errorMsg) { errorMsg.textContent = "Preencha pelo menos um horário ou marque como fechado"; errorMsg.classList.add("show"); }
             valid = false;
         } else {
-            if (errorMsg) {
-                errorMsg.textContent = "";
-                errorMsg.classList.remove("show");
-            }
+            if (errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
         }
     }
 
@@ -222,56 +254,58 @@ function validateStep(step) {
     }
 
     /* ═══════════════════════
-       STEP 4 — PREÇO
+       STEP 4 — PREÇO + IMAGENS
     ════════════════════════ */
     if (step === 4) {
+        // preço
         const selected = document.querySelector(".price-opt.selected");
-        const errorMsg = document.getElementById("price-error");
+        const priceErr = document.getElementById("price-error");
 
         if (!selected) {
-            if (errorMsg) {
-                errorMsg.textContent = "Selecione se é grátis ou pago";
-                errorMsg.classList.add("show");
-            }
+            if (priceErr) { priceErr.textContent = "Selecione se é grátis ou pago"; priceErr.classList.add("show"); }
             valid = false;
         } else {
             const isPago = selected.textContent.trim() === "Pago";
-
             if (isPago) {
                 const value = document.getElementById("price-value").value;
-
                 if (!value || Number(value) <= 0) {
-                    if (errorMsg) {
-                        errorMsg.textContent = "Informe um valor válido";
-                        errorMsg.classList.add("show");
-                    }
+                    if (priceErr) { priceErr.textContent = "Informe um valor válido"; priceErr.classList.add("show"); }
                     valid = false;
                 } else {
-                    if (errorMsg) {
-                        errorMsg.textContent = "";
-                        errorMsg.classList.remove("show");
-                    }
+                    if (priceErr) { priceErr.textContent = ""; priceErr.classList.remove("show"); }
                 }
             } else {
-                if (errorMsg) {
-                    errorMsg.textContent = "";
-                    errorMsg.classList.remove("show");
-                }
+                if (priceErr) { priceErr.textContent = ""; priceErr.classList.remove("show"); }
             }
+        }
+
+        // capa obrigatória
+        const coverErr = document.getElementById("cover-error");
+        if (!selectedCoverFile) {
+            if (coverErr) { coverErr.textContent = "Adicione uma foto de capa"; coverErr.classList.add("show"); }
+            valid = false;
+        } else {
+            if (coverErr) { coverErr.textContent = ""; coverErr.classList.remove("show"); }
+        }
+
+        // galeria mínimo 1
+        const galleryErr = document.getElementById("gallery-error");
+        if (selectedGalleryFiles.length < 1) {
+            if (galleryErr) { galleryErr.textContent = `Adicione pelo menos 1 foto na galeria (${selectedGalleryFiles.length}/5)`; galleryErr.classList.add("show"); }
+            valid = false;
+        } else {
+            if (galleryErr) { galleryErr.textContent = ""; galleryErr.classList.remove("show"); }
         }
     }
 
-    /* ═══════════════════════ */
-
     if (!valid) {
         const first = panel.querySelector(".input-error");
-        if (first) {
-            first.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+        if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     return valid;
 }
+
 /* ═══════════════════════
    TAGS
 ═══════════════════════ */
@@ -283,16 +317,10 @@ function validateTags(containerId, errorId) {
     const errorMsg = document.getElementById(errorId);
 
     if (selected.length === 0) {
-        if (errorMsg) {
-            errorMsg.textContent = "Selecione pelo menos uma tag";
-            errorMsg.classList.add("show"); // 🔥 ESSENCIAL
-        }
+        if (errorMsg) { errorMsg.textContent = "Selecione pelo menos uma tag"; errorMsg.classList.add("show"); }
         return false;
     } else {
-        if (errorMsg) {
-            errorMsg.textContent = "";
-            errorMsg.classList.remove("show"); // 🔥 ESSENCIAL
-        }
+        if (errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
         return true;
     }
 }
@@ -300,7 +328,6 @@ function validateTags(containerId, errorId) {
 window.toggleTag = function(el) {
     const container = el.parentElement;
 
-    // só o tags-pill é single select
     if (container.id === "tags-pill") {
         if (el.classList.contains("selected")) {
             el.classList.remove("selected");
@@ -309,26 +336,25 @@ window.toggleTag = function(el) {
             el.classList.add("selected");
         }
     } else {
-        // services — multi select normal
         el.classList.toggle("selected");
     }
 
-    // remove erro do tags-pill
     const errorMsg = document.getElementById("tags-error");
     const selected = document.querySelectorAll("#tags-pill .tag.selected");
-    if (selected.length > 0 && errorMsg) {
-        errorMsg.textContent = "";
-        errorMsg.classList.remove("show");
-    }
+    if (selected.length > 0 && errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
 };
+
+/* ═══════════════════════
+   HORÁRIOS
+═══════════════════════ */
 window.toggleClosed = function(checkbox) {
-    const grid = checkbox.closest(".hours-grid");
+    const grid     = checkbox.closest(".hours-grid");
     const isClosed = checkbox.checked;
 
     grid.classList.toggle("is-closed", isClosed);
     grid.querySelectorAll(".hour-input").forEach(i => {
         i.disabled = isClosed;
-        i.value = "";
+        i.value    = "";
     });
 };
 
@@ -336,25 +362,31 @@ window.getHorarios = function() {
     const horarios = {};
 
     document.querySelectorAll("#hours-list .hours-grid[data-day]").forEach(row => {
-        const day = row.dataset.day;
+        const day      = row.dataset.day;
         const isClosed = row.querySelector("input[type=checkbox]")?.checked;
 
-        if (isClosed) {
-            horarios[day] = { fechado: true };
-            return;
-        }
+        if (isClosed) { horarios[day] = { fechado: true }; return; }
 
         const inputs = row.querySelectorAll(".hour-input");
-        const open  = inputs[0]?.value.trim();
-        const close = inputs[1]?.value.trim();
+        const open   = inputs[0]?.value.trim();
+        const close  = inputs[1]?.value.trim();
 
-        if (open && close) {
-            horarios[day] = { abertura: open, fechamento: close };
-        }
+        if (open && close) horarios[day] = { abertura: open, fechamento: close };
     });
 
     return horarios;
 };
+
+// máscara HH:MM
+document.addEventListener("input", function(e) {
+    if (!e.target.classList.contains("hour-input")) return;
+
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 4) value = value.slice(0, 4);
+    if (value.length >= 3) value = value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    e.target.value = value;
+});
+
 /* ═══════════════════════
    PRICE
 ═══════════════════════ */
@@ -363,7 +395,6 @@ window.selectPrice = function(el, isPago) {
     el.classList.add('selected');
 
     const box = document.getElementById('price-value-box');
-
     if (isPago) {
         box.classList.add('visible');
     } else {
@@ -383,85 +414,6 @@ window.clearQuickBtns = function() {
     document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
 };
 
-window.clearQuickBtns = function() {
-    document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
-};
-
-// ===============================
-// ⏰ HORÁRIOS - SISTEMA COMPLETO
-// ===============================
-
-
-// ===============================
-// 🧠 MÁSCARA TIPO CEP (HH:MM)
-// ===============================
-document.addEventListener("input", function (e) {
-    if (!e.target.classList.contains("hour-input")) return;
-
-    let value = e.target.value.replace(/\D/g, "");
-
-    if (value.length > 4) value = value.slice(0, 4);
-
-    if (value.length >= 3) {
-        value = value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
-    }
-
-    e.target.value = value;
-});
-
-// ===============================
-// 📦 PEGAR HORÁRIOS (FIREBASE)
-// ===============================
-window.getHorarios = function () {
-        
-    const horarios = {};
-
-    document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
-
-        const inputs = row.querySelectorAll(".hour-input");
-        const open = inputs[0]?.value;
-        const close = inputs[1]?.value;
-
-        const fixedLabel = row.querySelector(".day-label")?.textContent;
-        const dynamicLabel = row.querySelector(".day-input")?.value;
-
-        if (fixedLabel && open && close) {
-            horarios[fixedLabel] = { abertura: open, fechamento: close };
-        }
-
-        if (dynamicLabel && open && close) {
-            horarios[dynamicLabel] = { abertura: open, fechamento: close };
-        }
-    });
-
-    document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
-
-        const inputs = row.querySelectorAll(".hour-input");
-        const open = inputs[0]?.value;
-        const close = inputs[1]?.value;
-
-        // 🔵 FIXOS (não editáveis)
-        if (row.classList.contains("fixed")) {
-            const label = row.querySelector(".day-label")?.textContent;
-
-            if (label && open && close) {
-                horarios[label] = { abertura: open, fechamento: close };
-            }
-        }
-
-        // 🟡 DINÂMICOS (editáveis)
-        if (row.classList.contains("dynamic")) {
-            const label = row.querySelector(".day-input")?.value?.trim();
-
-            if (label && open && close) {
-                horarios[label] = { abertura: open, fechamento: close };
-            }
-        }
-    });
-
-    return horarios;
-};
-
 /* ═══════════════════════
    CEP
 ═══════════════════════ */
@@ -470,106 +422,75 @@ document.getElementById("cep")?.addEventListener("blur", async function() {
     if (cep.length !== 8) return;
 
     try {
-        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
         const data = await res.json();
-
         if (data.erro) return;
 
         document.getElementById("rua").value    = data.logradouro || "";
         document.getElementById("bairro").value = data.bairro     || "";
         document.getElementById("cidade").value = data.localidade || "";
         document.getElementById("uf").value     = data.uf         || "";
-
     } catch (e) {
         console.error("Erro CEP:", e);
     }
 });
 
-
 /* ═══════════════════════
    PUBLICAR
 ═══════════════════════ */
+window.publishLocal = async function() {
 
-window.publishLocal = async function () {
-
-    // 🔴 1. validar STEP 4 primeiro
-    const valid = validateStep(4);
-
-    if (!valid) {
+    // 1. validar step 4
+    if (!validateStep(4)) {
         console.log("❌ formulário inválido");
         return;
     }
 
-    // 🔐 2. checar login
-    if (!currentUser) {
-        alert("Você precisa estar logado.");
-        return;
-    }
-
-    if (!currentOrgId) {
-        alert("Nenhuma organização encontrada.");
-        return;
-    }
+    // 2. checar login
+    if (!currentUser) { alert("Você precisa estar logado."); return; }
+    if (!currentOrgId) { alert("Nenhuma organização encontrada."); return; }
 
     try {
+        // ⏰ horários
+        const horarios = getHorarios();
 
-        // ⏰ HORÁRIOS
-        
-            const horarios = {};
+        // 🖼️ upload capa
+        const coverUrl = await uploadToCloudinary(selectedCoverFile);
 
-            document.querySelectorAll("#hours-list .hours-grid").forEach(row => {
+        // 🖼️ upload galeria
+        const galleryUrls = await Promise.all(selectedGalleryFiles.map(f => uploadToCloudinary(f)));
 
-                const open = row.querySelectorAll(".hour-input")[0]?.value;
-                const close = row.querySelectorAll(".hour-input")[1]?.value;
-
-                // 🔵 FIXOS
-                const fixed = row.querySelector(".day-label")?.textContent?.trim();
-
-                if (fixed && open && close) {
-                    horarios[fixed] = { abertura: open, fechamento: close };
-                }
-
-                // 🟡 DINÂMICOS
-                const dynamic = row.querySelector(".day-input")?.value?.trim();
-
-                if (dynamic && open && close) {
-                    horarios[dynamic] = { abertura: open, fechamento: close };
-                }
-            });
-
-        // 🖼️ UPLOAD DAS IMAGENS PRO CLOUDINARY
-        let imageUrls = [];
-        if (selectedFiles.length > 0) {
-            const uploadPromises = selectedFiles.map(file => uploadToCloudinary(file));
-            imageUrls = await Promise.all(uploadPromises);
-        }
-
-        // 📦 DADOS COMPLETOS
+        // 📦 dados completos
         const data = {
-            orgId: currentOrgId,
+            orgId:     currentOrgId,
             createdBy: currentUser.uid,
             createdAt: serverTimestamp(),
 
-            name: document.getElementById("nome-local")?.value || "",
+            name:        document.getElementById("nome-local")?.value      || "",
             description: document.getElementById("descricao-local")?.value || "",
 
-            cep: document.getElementById("cep")?.value || "",
-            street: document.getElementById("rua")?.value || "",
-            neighborhood: document.getElementById("bairro")?.value || "",
-            city: document.getElementById("cidade")?.value || "",
-            uf: document.getElementById("uf")?.value || "",
+            cep:          document.getElementById("cep")?.value    || "",
+            street:       document.getElementById("rua")?.value    || "",
+            numero:       document.getElementById("numero")?.value || "",
+            complemento:  document.getElementById("complemento")?.value || "",
+            neighborhood: document.getElementById("bairro")?.value  || "",
+            city:         document.getElementById("cidade")?.value  || "",
+            uf:           document.getElementById("uf")?.value      || "",
+            telefone:     document.getElementById("telefone")?.value || "",
+            website:      document.getElementById("website")?.value  || "",
 
             // ⏰ horários
             horarios,
 
             // 🖼️ imagens
-            images: imageUrls,
+            cover:  coverUrl,
+            images: galleryUrls,
 
-            // 💰 preço (IMPORTANTE)
+            // 💰 preço
             price: {
-                tipo: document.querySelector(".price-opt.selected")?.textContent || "",
-                valor: document.getElementById("price-value")?.value || null,
-                por: document.getElementById("price-per")?.value || ""
+                tipo:  document.querySelector(".price-opt.selected")?.textContent || "",
+                valor: document.getElementById("price-value")?.value             || null,
+                por:   document.getElementById("price-per")?.value               || ""
             },
 
             // 🏷️ tags
@@ -585,12 +506,19 @@ window.publishLocal = async function () {
                 .map(i => i.closest(".check-item")?.textContent?.trim())
         };
 
-        // 💾 SALVAR
+        // 💾 salvar
         await addDoc(collection(db, "locations"), data);
 
-        alert("✅ Publicado com sucesso!");
+        // ✅ sucesso
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        const success = document.getElementById("success-screen");
+        if (success) success.style.display = "block";
 
     } catch (e) {
         alert("Erro: " + e.message);
     }
+};
+
+window.resetForm = function() {
+    location.reload();
 };

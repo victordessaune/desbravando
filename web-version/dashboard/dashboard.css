@@ -16,7 +16,6 @@ aside{
     margin-top: 10px;
     
 }
-/*
 .admin {
   display: flex;
   justify-content: center;
@@ -91,7 +90,7 @@ aside{
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 0;
-}*/
+}
 .first-text{
     margin-top: 17px;
     display: grid;
@@ -502,7 +501,7 @@ button.btn-primary p{
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
-    width: 75px; 
+    width: 100%; 
     font-weight: 600;
 }
 

@@ -321,6 +321,40 @@ window.toggleTag = function(el) {
         errorMsg.classList.remove("show");
     }
 };
+window.toggleClosed = function(checkbox) {
+    const grid = checkbox.closest(".hours-grid");
+    const isClosed = checkbox.checked;
+
+    grid.classList.toggle("is-closed", isClosed);
+    grid.querySelectorAll(".hour-input").forEach(i => {
+        i.disabled = isClosed;
+        i.value = "";
+    });
+};
+
+window.getHorarios = function() {
+    const horarios = {};
+
+    document.querySelectorAll("#hours-list .hours-grid[data-day]").forEach(row => {
+        const day = row.dataset.day;
+        const isClosed = row.querySelector("input[type=checkbox]")?.checked;
+
+        if (isClosed) {
+            horarios[day] = { fechado: true };
+            return;
+        }
+
+        const inputs = row.querySelectorAll(".hour-input");
+        const open  = inputs[0]?.value.trim();
+        const close = inputs[1]?.value.trim();
+
+        if (open && close) {
+            horarios[day] = { abertura: open, fechamento: close };
+        }
+    });
+
+    return horarios;
+};
 /* ═══════════════════════
    PRICE
 ═══════════════════════ */
@@ -357,37 +391,6 @@ window.clearQuickBtns = function() {
 // ⏰ HORÁRIOS - SISTEMA COMPLETO
 // ===============================
 
-// ===============================
-// ➕ ADICIONAR DIA (EDITÁVEL)
-// ===============================
-window.addHourRow = function () {
-    const list = document.getElementById("hours-list");
-
-    const row = document.createElement("div");
-    row.className = "hours-grid dynamic";
-
-    row.innerHTML = `
-        <input type="text" class="day-input" placeholder="Nome do dia">
-
-        <input type="text" class="hour-input" maxlength="5" placeholder="Abertura">
-        <input type="text" class="hour-input" maxlength="5" placeholder="Fechamento">
-
-        <button type="button" onclick="removeHourRow(this)">✕</button>
-    `;
-
-    list.appendChild(row);
-};
-
-// ===============================
-// ❌ REMOVER (só dinâmicos)
-// ===============================
-window.removeHourRow = function (btn) {
-    const row = btn.closest(".hours-grid");
-
-    if (row.classList.contains("fixed")) return;
-
-    row.remove();
-};
 
 // ===============================
 // 🧠 MÁSCARA TIPO CEP (HH:MM)

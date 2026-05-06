@@ -1,5 +1,5 @@
 /* MODO EDIÇÃO — apaga essa linha quando terminar */
-/*.panel { display: block !important; }*/
+.panel { display: block !important; }
 
 /*.name-admin{
     padding-top:5px;
@@ -399,17 +399,93 @@ select   { appearance: none; cursor: pointer; }
 }
 .check-item input:checked ~ span { color: var(--color-blue); font-weight: 600; }
 
-/* ── Hours ── */
-.hours-grid {
-    display: grid;
-    grid-template-columns: 130px 1fr 1fr;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 8px;
-}
-.hours-grid .day-label { font-size: 0.9rem; font-weight: 500; color: var(--color-dark-blue); }
-.hours-grid .day-input { font-size: 0.9rem; font-weight: 500; color: var(--color-dark-blue); }
 
+
+.hours-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.hours-grid {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.hours-grid .day-label {
+    width: 56px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.hours-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.hours-inputs .hour-input {
+    width: 150px;
+    text-align: center;
+    padding: 5px 6px;
+    font-size: 0.9rem;
+}
+
+.hour-sep {
+    font-size: 0.9rem;
+    color: var(--color-dark-blue);
+}
+
+.closed-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: var(--color-dark-gray);
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 75px;
+    white-space: nowrap;
+}
+.closed-toggle input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.closed-toggle input[type="checkbox"]:checked {
+    background-color: var(--color-blue-secondary);
+    border-color: var(--color-blue);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px;
+}
+
+.closed-toggle input[type="checkbox"]:hover {
+    border-color: var(--color-blue-secondary);
+}
+.hours-grid.is-closed .hour-input {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.hours-grid.is-closed .hour-sep {
+    opacity: 0.3;
+} 
 .add-day-btn {
     border: 1.5px dashed var(--border);
     background: transparent;

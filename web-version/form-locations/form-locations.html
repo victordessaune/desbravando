@@ -182,27 +182,92 @@
             <div class="section-heading">Horários de Funcionamento <span class="req">*</span></div>
             <span id="hours-error" class="error-msg"></span>
             <div id="hours-list">
-                <div class="hours-grid">
-                    <span class="day-label">Segunda-feira</span>
-                    <input type="text" class="hour-input" placeholder="Abertura" style="font-size:15px;">
-                    <input type="text" class="hour-input" placeholder="Fechamento" style="font-size:15px;">
-                </div>
 
-                <div class="hours-grid">
-                    <span class="day-label">Sábado</span>
-                    <input type="text" class="hour-input" placeholder="Abertura" style="font-size:15px;">
-                    <input type="text" class="hour-input" placeholder="Fechamento" style="font-size:15px;">
+            <div class="hours-pair">
+                <div class="hours-grid" data-day="Segunda">
+                    <span class="day-label">Segunda</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
                 </div>
-
-                <div class="hours-grid">
-                    <span class="day-label">Domingo</span>
-                    <input type="text" class="hour-input" placeholder="Abertura" style="font-size:15px;">
-                    <input type="text" class="hour-input" placeholder="Fechamento" style="font-size:15px;">
+                <div class="hours-grid" data-day="Sexta">
+                    <span class="day-label">Sexta</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
                 </div>
-
             </div>
-            <button class="add-day-btn" onclick="addHourRow()">+ Adicionar dia</button>
 
+            <div class="hours-pair">
+                <div class="hours-grid" data-day="Terça">
+                    <span class="day-label">Terça</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+                <div class="hours-grid" data-day="Sábado">
+                    <span class="day-label">Sábado</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hours-pair">
+                <div class="hours-grid" data-day="Quarta">
+                    <span class="day-label">Quarta</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+                <div class="hours-grid" data-day="Domingo">
+                    <span class="day-label">Domingo</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hours-pair">
+                <div class="hours-grid" data-day="Quinta">
+                    <span class="day-label">Quinta</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+                <div class="hours-grid" data-day="Feriado">
+                    <span class="day-label">Feriado</span>
+                    <div class="hours-inputs">
+                        <input type="text" class="hour-input" placeholder="Abertura" maxlength="5">
+                        <span class="hour-sep">–</span>
+                        <input type="text" class="hour-input" placeholder="Fechamento" maxlength="5">
+                        <label class="closed-toggle"><input type="checkbox" onchange="toggleClosed(this)"><span>Fechado</span></label>
+                    </div>
+                </div>
+            </div>
+
+</div>
             <div class="button-line">
                 <button class="btn-secondary" onclick="prevStep(2)">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>

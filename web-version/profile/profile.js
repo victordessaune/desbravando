@@ -96,15 +96,17 @@ async function loadLocations(orgId) {
 
   snapshot.forEach((doc) => {
     const placeData = doc.data();
+    const placeId = doc.id; // <- ID do documento
     const placeName = placeData.name;
     const placeAdress = `${placeData.neighborhood || ""}, ${placeData.city || ""}`;
     const placeImageUrl = placeData.images;
+
     const placeCard = `
-      <div class="place-card">
+      <a href="../place-teste-ruim/place.html?id=${placeId}" class="place-card">
         <div class="banner-place" style="background-image: url('${placeImageUrl}'); background-size: cover; background-position: center;"></div>
         <div class="place-name">${placeName}</div>
         <div class="place-location"><i class="fa-solid fa-location-dot"></i>${placeAdress}</div>
-      </div>
+      </a>
     `;
     container.innerHTML += placeCard;
   });
@@ -112,22 +114,18 @@ async function loadLocations(orgId) {
 
 /* Código para ativar o modo de edição */
 function edit() {
-  // Email
   document.getElementById("org-email").style.display = "none";
   document.getElementById("org-email-input").style.display = "block";
   document.getElementById("org-email-input").value = document.getElementById("org-email").innerText;
 
-  // Website
   document.getElementById("website").style.display = "none";
   document.getElementById("website-input").style.display = "block";
   document.getElementById("website-input").value = document.getElementById("website").innerText;
 
-  // CNPJ
   document.getElementById("cnpj").style.display = "none";
   document.getElementById("cnpj-input").style.display = "block";
   document.getElementById("cnpj-input").value = document.getElementById("cnpj").innerText;
 
-  // Endereço — esconde o texto e mostra os inputs com os valores já preenchidos
   document.getElementById("address").style.display = "none";
   document.getElementById("address-inputs").style.display = "grid";
   document.getElementById("street-input").value = orgAddress.street;
@@ -188,7 +186,6 @@ async function save() {
       cep: newCep,
     });
 
-    // Atualiza os textos exibidos
     document.getElementById("org-email").innerText = newOrgEmail;
     document.getElementById("website").innerText = newWebsite;
     document.getElementById("cnpj").innerText = newCnpj;
@@ -197,7 +194,6 @@ async function save() {
     document.getElementById("address").innerText = newAddress;
     document.getElementById("org-city").textContent = newCity;
 
-    // Atualiza a variável global para a próxima edição
     orgAddress = { street: newStreet, number: newNumber, neighborhood: newNeighborhood, city: newCity, uf: newUf, cep: newCep };
 
     cancel();
@@ -254,4 +250,3 @@ async function saveDescription() {
 window.editDescription = editDescription;
 window.saveDescription = saveDescription;
 window.cancelDescription = cancelDescription;
-

@@ -167,11 +167,20 @@ function populate(id, data) {
     }
 
     // ── Horários ────────────────────────────────
+    
     const horariosEl = document.getElementById("horarios-list");
     if (data.horarios && Object.keys(data.horarios).length > 0) {
-        horariosEl.innerHTML = "";
+    horariosEl.innerHTML = "";
 
-        Object.entries(data.horarios).forEach(([dia, horas]) => {
+    const ORDEM_DIAS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Feriado"];
+
+    Object.entries(data.horarios)
+        .sort(([a], [b]) => {
+            const oa = ORDEM_DIAS.indexOf(a) === -1 ? 999 : ORDEM_DIAS.indexOf(a);
+            const ob = ORDEM_DIAS.indexOf(b) === -1 ? 999 : ORDEM_DIAS.indexOf(b);
+            return oa - ob;
+        })
+        .forEach(([dia, horas]) => {
             const row = document.createElement("div");
             row.className = "horario-row";
 

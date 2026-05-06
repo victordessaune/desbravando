@@ -98,7 +98,7 @@ async function loadLocations(orgId) {
     const placeData = doc.data();
     const placeName = placeData.name;
     const placeAdress = `${placeData.neighborhood || ""}, ${placeData.city || ""}`;
-    const placeImageUrl = placeData.images;
+    const placeImageUrl = placeData.cover;
     const placeCard = `
       <div class="place-card">
         <div class="banner-place" style="background-image: url('${placeImageUrl}'); background-size: cover; background-position: center;"></div>

@@ -1,1 +1,7 @@
-study/
+# Android
+.gradle/
+local.properties
+*.iml
+/build
+/captures
+.externalNativeBuild

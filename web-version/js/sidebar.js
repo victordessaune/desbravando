@@ -1,3 +1,7 @@
+import { auth, db } from "./api/firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 class AppSidebar extends HTMLElement {
   static get observedAttributes() {
     return ['page'];
@@ -5,6 +9,7 @@ class AppSidebar extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    this._loadUser();
   }
 
   attributeChangedCallback() {
@@ -20,17 +25,17 @@ class AppSidebar extends HTMLElement {
       {
         section: 'Principal',
         items: [
-          { id: 'dashboard',      icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
-          { id: 'organizacao',    icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
-          { id: 'administradores',icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
-          { id: 'locais',         icon: 'fa-map-pin',      label: 'Locais',          href: '../form-locations/form-locations.html' },
+          { id: 'dashboard',       icon: 'fa-chart-column', label: 'Dashboard',       href: '../dashboard/dashboard.html' },
+          { id: 'organizacao',     icon: 'fa-building',     label: 'Organização',     href: '../profile/profile.html' },
+          { id: 'administradores', icon: 'fa-user',         label: 'Administradores', href: '../admin-list/admin-list.html' },
+          { id: 'locais',          icon: 'fa-map-pin',      label: 'Locais',          href: '../places-list/places-list.html' },
         ],
       },
       {
         section: 'Sistema',
         items: [
-          { id: 'configuracoes', icon: 'fa-gear', label: 'Configurações', href: '../configuracoes/configuracoes.html' },
-          { id: 'seguranca',     icon: 'fa-lock', label: 'Segurança',     href: '../seguranca/seguranca.html' },
+          { id: 'configuracoes', icon: 'fa-gear',  label: 'Configurações', href: '#' },
+          { id: 'seguranca',     icon: 'fa-lock',  label: 'Segurança',     href: '#' },
         ],
       },
     ];
@@ -41,7 +46,7 @@ class AppSidebar extends HTMLElement {
         const cls = isActive ? 'principal-icon-page active' : 'principal-icons';
         return `
           <div class="${cls}">
-            <a href="${href}" style="text-decoration:none;color:#FFFFFF;">
+            <a href="${href}" style="text-decoration:none; color:#FFFFFF;">
               <p><i class="fa-solid ${icon}"></i> ${label}</p>
             </a>
           </div>`;
@@ -60,16 +65,78 @@ class AppSidebar extends HTMLElement {
             <span class="logo-text-two">Admin Painel</span>
           </div>
         </div>
+
         <div class="sidebar-rest">
           ${sectionsHTML}
+
+          <!-- Logout logo abaixo de Segurança -->
+          <div class="principal-icons" id="btn-logout" style="cursor:pointer;">
+            <p>
+              <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </p>
+          </div>
         </div>
+
         <div class="admin">
           <div class="box-admin">
-            <p class="name-admin">Victor Ramos</p>
-            <p class="class-admin">Super admin</p>
+            <div class="info-admin">
+              <div class="icon-admin">
+                <span class="text-icon-admin" id="sidebar-initials">--</span>
+              </div>
+              <div class="text-admin-info">
+                <div class="name-admin" id="sidebar-name">Carregando...</div>
+                <div class="class-admin" id="sidebar-occupation">—</div>
+              </div>
+            </div>
           </div>
         </div>
       </aside>`;
+
+    // Listener do logout (após render)
+    this.querySelector('#btn-logout')?.addEventListener('click', () => this._logout());
+  }
+
+  async _logout() {
+    try {
+      await signOut(auth);
+      window.location.href = '../login/login.html';
+    } catch (err) {
+      console.error('Erro ao fazer logout:', err);
+    }
+  }
+
+  async _loadUser() {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = '../login/login.html';
+        return;
+      }
+
+      try {
+        const userSnap = await getDoc(doc(db, 'users', user.uid));
+        const usuario  = userSnap.data();
+
+        const firstName = usuario.firstName || '';
+        const lastName  = usuario.lastName  || '';
+        const fullName  = [firstName, lastName].filter(Boolean).join(' ') || 'Admin';
+        const initials  = [firstName[0], lastName[0]].filter(Boolean).join('').toUpperCase() || 'AD';
+
+        const elName       = this.querySelector('#sidebar-name');
+        const elOccupation = this.querySelector('#sidebar-occupation');
+        const elInitials   = this.querySelector('#sidebar-initials');
+
+        if (elName)       elName.textContent       = fullName;
+        if (elOccupation) elOccupation.textContent = usuario.occupation || 'Administrador';
+        if (elInitials)   elInitials.textContent   = initials;
+
+        window.dispatchEvent(new CustomEvent('userLoaded', {
+          detail: { user, usuario }
+        }));
+
+      } catch (err) {
+        console.error('Erro ao carregar usuário na sidebar:', err);
+      }
+    });
   }
 }
 

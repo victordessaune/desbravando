@@ -108,7 +108,8 @@ form.addEventListener("submit", async function (e) {
             cpf: fields.cpf.value,
             email: fields.email.value,
             occupation: fields.occupation.value,
-            orgId: orgRef.id
+            orgId: orgRef.id,
+            createdAt: new Date()
         });
 
         localStorage.removeItem("orgData");

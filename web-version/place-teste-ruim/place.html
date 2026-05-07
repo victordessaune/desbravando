@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,7 +8,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="place.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
-    <script src="../js/sidebar.js"></script>
+    <script type="module" src="../js/sidebar.js"></script>
 </head>
 <body>
     <app-sidebar page="locais"></app-sidebar>
@@ -27,11 +26,15 @@
 
             <!-- BANNER -->
             <div class="banner-place" id="banner-place">
-                <div class="banner-overlay"></div>
                 <div class="banner-actions">
                     <button class="btn-back" onclick="history.back()">
                         <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
+                </div>
+                <div class="banner-overlay"></div>
+                <div class="no-photo-msg" id="no-photo-msg">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Sem fotos cadastradas</span>
                 </div>
             </div>
 
@@ -45,11 +48,6 @@
                         <span class="org-item"><i class="fa-solid fa-road"></i> <span id="place-rua">—</span></span>
                         <span class="org-item price-badge" id="place-preco-badge"></span>
                     </div>
-                </div>
-                <div class="buttons-identity">
-                    <a href="../form-locations/form-locations.html" class="btn-edit">
-                        <i class="fa-solid fa-plus"></i> Novo Local
-                    </a>
                 </div>
             </div>
 
@@ -67,6 +65,19 @@
                             </div>
                         </div>
                         <div class="box-content" id="place-descricao">—</div>
+                    </div>
+
+                    <!-- GALERIA -->
+                    <div class="box-template" id="box-galeria" style="display:none">
+                        <div class="box-header">
+                            <div class="box-header-content">
+                                <i class="fa-solid fa-images"></i>
+                                <div class="box-title">Fotos do Local</div>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="gallery-grid" id="gallery-grid"></div>
+                        </div>
                     </div>
 
                     <div class="box-template" id="box-infraestrutura">
@@ -168,6 +179,12 @@
         </div>
 
     </main>
+
+    <!-- MODAL DE FOTO -->
+    <div class="photo-modal" id="photo-modal" onclick="closeModal(event)">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <img id="modal-img" src="" alt="Foto do local">
+    </div>
 
     <script type="module" src="place.js"></script>
 </body>

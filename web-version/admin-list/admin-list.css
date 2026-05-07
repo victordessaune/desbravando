@@ -1,9 +1,40 @@
 .body-admin{
     background-color: var(--color-off-white);
-    height: 100vh;
-    width: 100%;
+    min-height: 100vh;
+    width: calc(100% - 220px);
+    margin-left: 220px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* ── Top bar: título + botão lado a lado ── */
+.body-admin .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 25px 0 25px;
+    flex-shrink: 0;
+}
+.body-admin .top-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.body-admin .top-left h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+.body-admin .top-left p {
+    font-size: 14px;
+    color: var(--color-gray);
+    margin: 0;
+}
+.body-admin .top-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 .cards-row{
     display: flex;
@@ -13,7 +44,6 @@
     margin-right: 25px;
     margin-top: 30px;
     justify-content: space-between;
-
 }
 .search-space{
     display: flex;
@@ -67,21 +97,20 @@
     font-size: clamp(0.7rem, 1vh, 1.5rem);
     color: var(--color-white);
     font-weight: 600;
+    cursor: pointer;
 }
-
 .btn-add-admin a{
     color: var(--color-white);
 }
+
 /*ESTILO TABELA DE ADMINISTRADORES*/
 .table-admin{
     background-color: var(--color-white);
     border-radius: 25px;
     padding-bottom: 10px;
-  
     margin-top: 30px;
     margin-left: 20px;
     margin-right: 20px;
-
 }
 .table-head-admin{
    border-bottom:1px solid var(--color-light-gray);
@@ -99,12 +128,14 @@
     font-weight: 500;
     justify-items:flex-start;
     margin-left: 20px;
-    
 }
 .table-body-admin{
     border-bottom:1px solid var(--color-light-gray);
     padding: 20px;
     width: 100%;
+}
+.table-body-admin:last-child {
+    border-bottom: none;
 }
 .table-body-content{
     display: grid;
@@ -118,7 +149,6 @@
     display: flex;
     gap:15px;
 }
-
 .icon-user{
     width: 50px;
     height: 50px;
@@ -148,20 +178,42 @@
 .admin-date{
     font-size: 15px;   
 }
-.admin-action button{
+
+/* ── Botões de ação ── */
+.buttons-action{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-edit,
+.btn-remove {
     border-radius: 15px;
     height: 35px;
     width: 100px; 
     font-weight: 600;
-    justify-content: center;
-    color: var(--color-white);
-    background-color: rgba(81, 112, 255, 0.8);
-    gap: 20px;
-}
-.buttons-action{
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.2s, transform 0.15s;
+}
+.btn-edit {
+    color: var(--color-white);
+    background-color: rgba(81, 112, 255, 0.8);
+}
+.btn-edit:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+.btn-remove {
+    color: #fff;
+    background-color: rgba(239, 68, 68, 0.85);
+}
+.btn-remove:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
 }
 
 /* ── POPUP ── */
@@ -267,6 +319,7 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
     background: var(--color-white);
+    box-sizing: border-box;
 }
 .popup-box input:focus {
     border-color: var(--color-blue);
@@ -318,6 +371,7 @@
     transition: all 0.2s;
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(81,112,255,0.35); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .btn-secondary {
     padding: 10px 20px;

@@ -16,22 +16,24 @@ aside{
     margin-top: 10px;
     
 }
-.admin{
-    display:flex;
-    margin-top: auto;
-    padding-bottom: 20px;
-    border-top: 2px solid rgba(var(--color-white-rgb), 0.345) ;
+.admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  padding: 12px 0 20px;
+  border-top: 2px solid rgba(var(--color-white-rgb), 0.345);
 }
-.box-admin{
-    margin:20px;
-    width: 195px;
-    height: 55px;
-    justify-self: center;
-    align-self: center;
-    border-radius: 15px;
-    border:1px solid rgba(var(--color-white-rgb), 0.25);
-    background-color: rgba(var(--color-white-rgb), 0.09);
-    padding-left: 20px;
+
+.box-admin {
+  width: 185px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 15px;
+  border: 1px solid rgba(var(--color-white-rgb), 0.25);
+  background-color: rgba(var(--color-white-rgb), 0.09);
 }
 .box-admin:hover{
     background-color: rgba(var(--color-white-rgb), 0.16);
@@ -40,25 +42,55 @@ aside{
     transition: 0.3s ease;
 
 }
+.icon-admin{
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
 
-
-.name-admin{
-    padding-top:5px;
-    padding-left:50px;
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight:300;
-    color: var(--color-white) ;
+    
 }
-.class-admin{
-    padding-left:50px;
-    margin-right: 10px;
-    font-size: 13px;
-    font-weight:300;
-    color: var(--color-white) ;
-    opacity: 45%;
+.text-icon-admin{
+    color: var(--color-purple);
+    font-weight: 700;
+    padding: 15px;
+    font-size: 20px;
 }
 
+.text-admin-info {
+  width: 100%;
+  text-align: left;
+}
+.info-admin {
+    display: flex;
+    align-items: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.name-admin {
+  padding-top: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.class-admin {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--color-white);
+  opacity: 45%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 0;
+}
 .first-text{
     margin-top: 17px;
     display: grid;
@@ -150,6 +182,7 @@ aside{
 }
 body{
     display: flex;
+    flex-direction: column;
 }
 .content{
     background: linear-gradient(to top, var(--color-white), var(--color-light-gray), var(--color-medium-gray));
@@ -468,7 +501,7 @@ button.btn-primary p{
     border-radius: 15px;
     padding: 8px 12px;
     height: 35px;
-    width: 75px; 
+    width: 100%; 
     font-weight: 600;
 }
 

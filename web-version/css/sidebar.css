@@ -114,46 +114,81 @@ aside {
 /* --- Admin box --- */
 .admin {
     display: flex;
+    justify-content: center;
     margin-top: auto;
-    padding-bottom: 20px;
+    margin-bottom: 30px;
     border-top: 2px solid rgba(var(--color-white-rgb), 0.345);
 }
 
 .box-admin {
-    margin: 20px;
-    width: 195px;
-    height: 55px;
-    justify-self: center;
-    align-self: center;
+    width: 185px;
+    min-height: 56px;
+    height: auto;
+    display: flex;
+    align-items: center;
     border-radius: 15px;
+    margin-top: 20px;
     border: 1px solid rgba(var(--color-white-rgb), 0.25);
     background-color: rgba(var(--color-white-rgb), 0.09);
-    padding-left: 20px;
+    padding: 8px 10px;       /* era 20px em tudo, agora bem menor */
+    overflow: visible;
 }
 
-.box-admin:hover {
+.box-admin:hover{
     background-color: rgba(var(--color-white-rgb), 0.16);
     box-shadow: 0 0 10px rgba(75, 60, 195, 0.6);
     transform: translateY(-1px);
     transition: 0.3s ease;
 }
-
-.name-admin {
-    padding-top: 5px;
-    padding-left: 50px;
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--color-white);
+.info-admin{
+    display: flex;
+    align-items: center;
 }
-
-.class-admin {
-    padding-left: 50px;
-    margin-right: 10px;
+.icon-admin{
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;     
+}
+.text-icon-admin{
+    color: var(--color-purple);
+    font-weight: 700;
+    padding: 15px;
+    font-size: 20px;
+}
+.text-admin-info {
+    width: 100%;
+    text-align: left;
+    margin-left: 4px;
+    padding: 10px;
+    min-width: 0;
+    flex: 1;
+    /* remover: white-space: nowrap; */
+}
+.name-admin {
+    white-space: normal;
+    padding-top: 0;
     font-size: 13px;
     font-weight: 300;
     color: var(--color-white);
-    opacity: 45%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
+.class-admin {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--color-white);
+  opacity: 45%;
+  /* Remover essas três linhas: */
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  word-break: break-word;
 }
 
 .principal-icon-page .fa-solid {

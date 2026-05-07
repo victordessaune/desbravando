@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel ="stylesheet" href="dashboard.css">
     <link rel="icon" type="image/x-icon" href="../assets/logos/desbravando-logo.svg">
-    <script src="../js/sidebar.js" defer></script>
+    <script type="module" src="../js/sidebar.js"></script>
 </head>
 <body>
     <app-sidebar page="dashboard"></app-sidebar>
@@ -40,31 +40,23 @@
             <div class="cards">
                 <div class="card">
                     <div class="card-img"><i class="fa-solid fa-building"></i> </div>
-                    <div class="card-value">XX</div>
-                    <div class="card-label">Locais Cadastrados</div>
-                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 12% este mês</span>
-                    
+                    <div class="card-value" id="total-places-number">XX</div>
+                    <div class="card-label" id="total-places-text">Locais Cadastrados</div>                    
                 </div>
                 <div class="card">
                     <div class="card-img"><i class="fa-solid fa-users"></i> </div>
-                    <div class="card-value">XX</div>
-                    <div class="card-label">Usuários ativos</div>
-                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 8% este mês</span>
-                    
+                    <div class="card-value">X</div>
+                    <div class="card-label">Usuários ativos</div>                    
                 </div>
                 <div class="card">
                      <div class="card-img"><i class="fa-solid fa-eye"></i> </div>
-                    <div class="card-value">XX</div>
-                    <div class="card-label">Visualizações diárias</div>
-                    <span class="card-number down"><i class="fa-solid fa-arrow-down"></i> 10% este mês</span>
-                    
+                    <div class="card-value">X</div>
+                    <div class="card-label">Visualizações diárias</div>                    
                 </div>
                 <div class="card">
                      <div class="card-img"><i class="fa-solid fa-hourglass-half"></i> </div>
                     <div class="card-value">X</div>
-                    <div class="card-label">Aprovações pendentes</div>
-                    <span class="card-number up"><i class="fa-solid fa-arrow-up"></i> 2 novas</span>
-                    
+                    <div class="card-label">Aprovações pendentes</div>                    
                 </div>
             </div>
             <div class="grid-2">
@@ -72,7 +64,7 @@
                     <div class="table-head">
                         <div class="table-head-left">
                             <p class="title-table">Locais Recentes</p>
-                            <p class="subtitle-table">Últimas empresas cadastradas na plataforma</p>
+                            <p class="subtitle-table">Últimos locais cadastrados pela equipe</p>
                         </div>
                         <div class="table-head-right">
                         <button class="table-action">Ver todas <i class="fa-solid fa-arrow-right"></i></button>
@@ -94,26 +86,27 @@
                             <div class="table-org">
                                 <div class="icon-name">XX</div>
                                 <div class="informations">
-                                    <p class="name-org">Praia de Camburi</p>
+                                    <p class="name-org">Nome do Local</p>
                                     <p class="email-org"></p>
                                 </div>
                             </div>
                         </div>
                         <div class="type-org priv">
                             <div class="icon-type priv"><i class="fa-solid fa-building"></i></div>
-                            <p>Praia</p>
+                            <p>Tipo do local</p>
                         </div>
                          <div class="mood-org active">
                             <i class="fa-solid fa-circle"></i>
-                            <p>Publicado</p>
+                            <p>Status</p>
                         </div>
                         <div class="date-org">
-                            <p>23 de Março</p>
+                            <p>Data</p>
                         </div>
                         <div class="actions-org aprove">
                             <button>Aprovar</button>
                         </div>
                     </div>
+                    <!--
                     <div class="table-body">
                         <div class="box-name">
                             <div class="table-org">
@@ -139,6 +132,7 @@
                             <button>Ver</button>
                         </div>
                     </div>
+                -->
                 </div>
             
             </div>
@@ -189,6 +183,6 @@
     </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="dashboard.js" type="module"></script>
+<script type="module" src="dashboard.js"></script>
 </body>
 </html>

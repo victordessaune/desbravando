@@ -18,16 +18,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BrushPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +40,11 @@ import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.LightPurple
 import com.desbravando.app.ui.theme.Purple
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +62,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Login(modifier: Modifier = Modifier) {
     Column(
-        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
@@ -63,54 +72,63 @@ fun Login(modifier: Modifier = Modifier) {
                         0.48f to BlueSecondary
                     )
                 )
-            ),
-
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.white_logo_desbravando),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .width(120.dp)
-                    .height(60.dp)
-
             )
-        }
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp),
-            shape = RoundedCornerShape(
-                topStart = 32.dp,
-                topEnd = 32.dp
-            ),
-            color = Color.White
+                .weight(0.4f),
+            color = Color.Transparent
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(24.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.white_logo_desbravando),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(60.dp)
+                )
+            }
+        }
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.6f),
+            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+            color = Color.White
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
 
             ) {
-                Text(
-                    text = "Login",
-                    fontSize = 18.sp,
-                    color = Purple,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                var email by remember { mutableStateOf("") }
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                ) {
+                    Text(text = "Login", fontSize = 20.sp, color = Purple, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Usuário", fontSize = 20.sp, color = BlueSecondary, fontWeight = FontWeight.Bold)
+                }
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    placeholder = { Text("exemplo@email.com") },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
                 )
-                Spacer(
-                    modifier = Modifier.width(10.dp)
-                )
-                Text(
-                    text = "Usuário",
-                    fontSize = 18.sp,
-                    color = BlueSecondary,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+
             }
         }
     }

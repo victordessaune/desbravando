@@ -105,6 +105,7 @@ fun Login(modifier: Modifier = Modifier) {
             Column(
                 modifier = Modifier
                     .padding(24.dp)
+                    .fillMaxSize()
 
             ) {
                 var email by remember { mutableStateOf("") }
@@ -114,7 +115,7 @@ fun Login(modifier: Modifier = Modifier) {
                     modifier = Modifier
                 ) {
                     Text(text = "Login", fontSize = 20.sp, color = Purple, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(3.dp))
                     Text(text = "Usuário", fontSize = 20.sp, color = BlueSecondary, fontWeight = FontWeight.Bold)
                 }
                 OutlinedTextField(
@@ -125,8 +126,8 @@ fun Login(modifier: Modifier = Modifier) {
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email
                     ),
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(13.dp),
+                    shape = RoundedCornerShape(20.dp),
                 )
 
             }

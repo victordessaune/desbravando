@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -44,6 +46,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.desbravando.app.ui.theme.Poppins
+import androidx.compose.material3.ButtonDefaults
 
 
 class MainActivity : ComponentActivity() {
@@ -108,27 +113,85 @@ fun Login(modifier: Modifier = Modifier) {
                     .fillMaxSize()
 
             ) {
-                var email by remember { mutableStateOf("") }
+                var email by remember { mutableStateOf("")}
+                var password by remember { mutableStateOf("")}
 
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
+                        .fillMaxWidth()
                 ) {
-                    Text(text = "Login", fontSize = 20.sp, color = Purple, fontWeight = FontWeight.Bold)
+                    Text(text = "Login", fontFamily = Poppins, fontSize = 22.sp, color = Purple, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(3.dp))
-                    Text(text = "Usuário", fontSize = 20.sp, color = BlueSecondary, fontWeight = FontWeight.Bold)
+                    Text(text = "Usuário", fontFamily = Poppins, fontSize = 22.sp, color = BlueSecondary, fontWeight = FontWeight.Bold)
+
                 }
+                Spacer(modifier = Modifier.padding(top = 5.dp))
+                Text(text = "Email", fontSize = 18.sp, fontWeight = FontWeight.Light)
+
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("Email") },
-                    placeholder = { Text("exemplo@email.com") },
+                    placeholder = { Text("você@gmail.com") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email
                     ),
-                    modifier = Modifier.fillMaxWidth().padding(13.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     shape = RoundedCornerShape(20.dp),
                 )
+                Spacer(modifier = Modifier.padding(top = 5.dp))
+
+                Text(
+                    text = "Senha",
+                    fontSize = 18.sp,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Light,
+                    modifier = Modifier.padding(top = 12.dp))
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    placeholder = { Text("******") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password
+                    ),
+                    modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                    shape = RoundedCornerShape(20.dp),
+                )
+                Spacer(modifier = Modifier.padding(top = 5.dp))
+                Button(
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(82.dp)
+                        .padding(top = 25.dp, bottom = 10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Purple
+                    )
+                ) {
+                    Text(text = "Entrar",
+                        fontSize = 18.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.SemiBold)
+                }
+                Button(
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp)
+                        .padding(top = 12.dp, bottom = 10.dp),
+                    border = BorderStroke(1.dp, Purple),
+                    colors = ButtonDefaults.buttonColors(
+                        Color.Transparent
+                    )
+                ) {
+                    Text(text = "Criar Conta",
+                        fontSize = 18.sp,
+                        fontFamily = Poppins,
+                        color = Purple,
+                        fontWeight = FontWeight.SemiBold)
+                }
 
             }
         }

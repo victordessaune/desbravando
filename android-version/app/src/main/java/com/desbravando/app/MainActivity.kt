@@ -1,5 +1,6 @@
 package com.desbravando.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,6 +50,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.desbravando.app.ui.theme.Poppins
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.platform.LocalContext
+import com.desbravando.app.ui.theme.NavGraph
 
 
 class MainActivity : ComponentActivity() {
@@ -57,6 +60,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
+                NavGraph()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Login(modifier = Modifier.padding(innerPadding))
                 }
@@ -65,7 +69,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun Login(
+    modifier: Modifier = Modifier,
+    onNavigateToRegister:() -> Unit ={}
+) {
+    val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -176,7 +184,7 @@ fun Login(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.SemiBold)
                 }
                 Button(
-                    onClick = {},
+                    onClick = { onNavigateToRegister()},
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(70.dp)

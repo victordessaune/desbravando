@@ -1,5 +1,6 @@
 package com.desbravando.app
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,7 +52,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.desbravando.app.ui.theme.Poppins
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextAlign
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import com.desbravando.app.ui.theme.Blue
+import com.desbravando.app.ui.theme.Gray
+import com.desbravando.app.ui.theme.LightGray
+import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
 
 
@@ -65,6 +78,7 @@ class MainActivity : ComponentActivity() {
                     Login(modifier = Modifier.padding(innerPadding))
                 }
             }
+
         }
     }
 }
@@ -111,6 +125,7 @@ fun Login(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
+
                 .weight(0.6f),
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
             color = Color.White
@@ -128,32 +143,61 @@ fun Login(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 30.dp)
+
                 ) {
-                    Text(text = "Login", fontFamily = Poppins, fontSize = 22.sp, color = Purple, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.width(3.dp))
-                    Text(text = "Usuário", fontFamily = Poppins, fontSize = 22.sp, color = BlueSecondary, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Login",
+                        fontFamily = Poppins,
+                        fontSize = 22.sp,
+                        color = Blue,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.width(3.5.dp))
+
+                    Text(
+                        text = "Usuário",
+                        fontFamily = Poppins,
+                        fontSize = 22.sp,
+                        color = BlueSecondary,
+                        fontWeight = FontWeight.Bold
+                    )
 
                 }
-                Spacer(modifier = Modifier.padding(top = 5.dp))
-                Text(text = "Email", fontSize = 18.sp, fontWeight = FontWeight.Light)
+                Spacer(modifier = Modifier.padding(top = 25.dp))
+                Text(
+                    text = "Email",
+                    color = Blue,
+                    fontSize = 14.sp,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight(510))
 
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    placeholder = { Text("você@gmail.com") },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email
+                    placeholder = {
+                        Text(text = "você@gmail.com")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedBorderColor = MediumGray,
+                        focusedBorderColor = Blue,
                     ),
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    shape = RoundedCornerShape(20.dp),
+
+                    singleLine = true,
                 )
                 Spacer(modifier = Modifier.padding(top = 5.dp))
 
                 Text(
                     text = "Senha",
-                    fontSize = 18.sp,
+                    fontSize = 14.sp,
+                    color = Blue,
                     fontFamily = Poppins,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight(510),
                     modifier = Modifier.padding(top = 12.dp))
 
                 OutlinedTextField(
@@ -164,10 +208,25 @@ fun Login(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password
                     ),
-                    modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-                    shape = RoundedCornerShape(20.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedBorderColor = MediumGray,
+                        focusedBorderColor = Blue,
+                    ),
                 )
                 Spacer(modifier = Modifier.padding(top = 5.dp))
+
+                Text(
+                    text = "Esqueceu a senha",
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Right,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 10.dp, top = 2.dp)
+                )
                 Button(
                     onClick = {},
                     modifier = Modifier

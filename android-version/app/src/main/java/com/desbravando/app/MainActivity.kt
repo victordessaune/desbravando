@@ -66,11 +66,18 @@ import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
@@ -81,6 +88,18 @@ class MainActivity : ComponentActivity() {
             }
 
         }
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            TODO("ENVIAR PARA A TELA HOME")
+        }
+    }
+
+    private fun validateData(email: String, password: String) {
+
     }
 }
 @Composable

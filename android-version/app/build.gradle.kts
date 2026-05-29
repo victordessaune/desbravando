@@ -65,4 +65,6 @@ dependencies {
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.compose.material.icons.extended)
 }

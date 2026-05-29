@@ -61,6 +61,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.desbravando.app.ui.theme.Blue
+import com.desbravando.app.ui.theme.DarkGray
 import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.MediumGray
@@ -125,7 +126,6 @@ fun Login(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-
                 .weight(0.6f),
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
             color = Color.White
@@ -177,11 +177,13 @@ fun Login(
                     value = email,
                     onValueChange = { email = it },
                     placeholder = {
-                        Text(text = "você@gmail.com")
+                        Text(
+                            text = "você@gmail.com",
+                            fontSize = 13.sp)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp),
+                        .height(52.dp),
                     shape = RoundedCornerShape(30.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = MediumGray,
@@ -210,7 +212,7 @@ fun Login(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp),
+                        .height(52.dp),
                     shape = RoundedCornerShape(30.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedBorderColor = MediumGray,
@@ -220,9 +222,10 @@ fun Login(
                 Spacer(modifier = Modifier.padding(top = 5.dp))
 
                 Text(
-                    text = "Esqueceu a senha",
-                    fontSize = 12.sp,
+                    text = "Esqueceu a senha?",
+                    fontSize = 13.sp,
                     textAlign = TextAlign.Right,
+                    color = DarkGray,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(end = 10.dp, top = 2.dp)
@@ -231,22 +234,22 @@ fun Login(
                     onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(82.dp)
-                        .padding(top = 25.dp, bottom = 10.dp),
+                        .height(60.dp)
+                        .padding(top = 12.dp, bottom = 10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Purple
                     )
                 ) {
-                    Text(text = "Entrar",
-                        fontSize = 18.sp,
+                    Text(text = "Continuar",
+                        fontSize = 15.sp,
                         fontFamily = Poppins,
-                        fontWeight = FontWeight.SemiBold)
+                        fontWeight = FontWeight(500))
                 }
                 Button(
-                    onClick = { onNavigateToRegister()},
+                    onClick = {onNavigateToRegister()},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(70.dp)
+                        .height(60.dp)
                         .padding(top = 12.dp, bottom = 10.dp),
                     border = BorderStroke(1.dp, Purple),
                     colors = ButtonDefaults.buttonColors(
@@ -254,11 +257,20 @@ fun Login(
                     )
                 ) {
                     Text(text = "Criar Conta",
-                        fontSize = 18.sp,
+                        fontSize = 15.sp,
                         fontFamily = Poppins,
                         color = Purple,
-                        fontWeight = FontWeight.SemiBold)
+                        fontWeight = FontWeight(500))
                 }
+                Text(
+                    text = "Termos de Uso | Políticas de Privacidade",
+                    fontSize = 11.sp,
+                    textAlign = TextAlign.Center,
+                    color = DarkGray,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                )
 
             }
         }

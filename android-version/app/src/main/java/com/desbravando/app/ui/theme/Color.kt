@@ -28,3 +28,4 @@ val Gray = Color(0xFF9CA3AF)
 val MediumGray = Color(0xFFC4C9D4)
 
 val OffWhite = Color(0xFFF4F5FB)
+val BlueCustom = Color(0xFF2365BC)

@@ -52,7 +52,13 @@ import com.desbravando.app.ui.theme.Poppins
 import androidx.compose.material3.ButtonDefaults
 import android.content.Intent
 import android.os.Handler
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import com.desbravando.app.ui.theme.Blue
+import com.desbravando.app.ui.theme.BlueCustom
+import com.desbravando.app.ui.theme.DarkBlue
+import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
+import com.desbravando.app.ui.theme.OffWhite
 
 
 class RegisterAccountActivity : ComponentActivity(){
@@ -76,23 +82,186 @@ fun Register(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colorStops = arrayOf(
-                        0.0f to Purple,
-                        0.48f to BlueSecondary
-                    )
-                )
-            )
+            .background(color = OffWhite)
     ){
+        Column(
+            modifier = Modifier
+                .padding(24.dp)
+        ) {
+            var userName by remember { mutableStateOf("")}
+            var userNickname by remember { mutableStateOf("")}
+            var userEmail by remember { mutableStateOf("")}
+            var userBio by remember { mutableStateOf("")}
+            var userPassword by remember { mutableStateOf("")}
+            var userConfirmPassword by remember { mutableStateOf("")}
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp)
+
+            ) {
+                Text(
+                    text = "Informe",
+                    fontFamily = Poppins,
+                    fontSize = 22.sp,
+                    color = Blue,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text(
+                    text = "seus Dados",
+                    fontFamily = Poppins,
+                    fontSize = 22.sp,
+                    color = BlueSecondary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            //Campo do Nome do usuário
+            Text(
+                text = "Nome",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
+
+            OutlinedTextField(
+                value = userName,
+                onValueChange = { userName = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                ),
+
+                singleLine = true,
+            )
+
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            //Campo do apelido do usuário
+            Text(
+                text = "Nome de Usuário",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
+
+            OutlinedTextField(
+                value = userNickname,
+                onValueChange = { userNickname = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                ),
+
+                singleLine = true,
+            )
+
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            //Campo do email do usuário
+            Text(
+                text = "Email",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
+
+            OutlinedTextField(
+                value = userEmail,
+                onValueChange = { userEmail = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                ),
+
+                singleLine = true,
+            )
+
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            //Campo da senha do usuário
+            Text(
+                text = "Senha",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
+
+            OutlinedTextField(
+                value = userPassword,
+                onValueChange = { userPassword = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                ),
+
+                singleLine = true,
+            )
+
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            //Campo de confirmação de senha do usuário
+            Text(
+                text = "Confirme sua senha",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
+
+            OutlinedTextField(
+                value = userConfirmPassword,
+                onValueChange = { userConfirmPassword = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                ),
+
+                singleLine = true,
+            )
+
+
+
+        }
 
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun RegisterPreview() {
     DesbravandoTheme {
-        Login()
+        Register()
     }
 }

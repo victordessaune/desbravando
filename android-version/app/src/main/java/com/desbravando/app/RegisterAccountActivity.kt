@@ -56,6 +56,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.BlueCustom
 import com.desbravando.app.ui.theme.DarkBlue
+import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
 import com.desbravando.app.ui.theme.OffWhite
@@ -249,8 +250,70 @@ fun Register(modifier: Modifier = Modifier) {
 
                 singleLine = true,
             )
+            Spacer(modifier = Modifier.padding(top = 5.dp))
 
+            //Campo da biografia do usuário
+            Text(
+                text = "Biografia",
+                fontSize = 14.sp,
+                color = BlueCustom,
+                fontFamily = Poppins,
+                fontWeight = FontWeight(500),
+                modifier = Modifier.padding(top = 12.dp))
 
+            OutlinedTextField(
+                value = userBio,
+                onValueChange = { userBio = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = MediumGray,
+                    focusedBorderColor = Blue,
+                )
+            )
+
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(58.dp)
+                    .padding(top = 20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Purple
+                )
+            ){
+                Text(text = "Criar Conta",
+                    fontSize = 15.sp,
+                    fontFamily = Poppins,
+                    color = Color.White,
+                    fontWeight = FontWeight(500))
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+
+            ) {
+                Text(
+                    text = "Já tem uma conta?",
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    color = Gray,
+                )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text(
+                    text = "Conecte-se",
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    color = Blue,
+                )
+            }
 
         }
 

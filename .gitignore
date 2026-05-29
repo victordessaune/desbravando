@@ -1,8 +1,15 @@
-# Android
-.gradle/
-local.properties
-*.iml
-/build
-/captures
-.externalNativeBuild
-android-version/.idea
+# Android Studio
+android-version/.idea/
+android-version/*.iml
+
+android-version/.gradle/
+
+android-version/local.properties
+
+android-version/build/
+android-version/**/build/
+
+android-version/captures/
+
+android-version/.externalNativeBuild/
+android-version/.cxx/

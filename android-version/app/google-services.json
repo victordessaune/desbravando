@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "424189045363",
+    "firebase_url": "https://desbravando-3488c-default-rtdb.firebaseio.com",
+    "project_id": "desbravando-3488c",
+    "storage_bucket": "desbravando-3488c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424189045363:android:19f6d546f18e50cc5dd806",
+        "android_client_info": {
+          "package_name": "com.desbravando.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC45njf5esiM5lRK0bvE0nd3CAGG82ZHO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

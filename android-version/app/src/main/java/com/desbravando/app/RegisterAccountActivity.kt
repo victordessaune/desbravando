@@ -1,5 +1,6 @@
 package com.desbravando.app
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Looper
 import androidx.activity.ComponentActivity
@@ -51,6 +52,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.desbravando.app.ui.theme.Poppins
 import androidx.compose.material3.ButtonDefaults
 import android.content.Intent
+import android.net.Uri
 import android.os.Handler
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.desbravando.app.ui.theme.Blue
@@ -60,6 +62,23 @@ import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
 import com.desbravando.app.ui.theme.OffWhite
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import kotlin.contracts.contract
+
 
 
 class RegisterAccountActivity : ComponentActivity(){
@@ -122,6 +141,15 @@ fun Register(modifier: Modifier = Modifier) {
                 )
             }
             Spacer(modifier = Modifier.padding(top = 5.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+
+            ) {
+                ProfilePicture()
+            }
 
             //Campo do Nome do usuário
             Text(
@@ -280,15 +308,36 @@ fun Register(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .height(58.dp)
                     .padding(top = 20.dp),
+
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Purple
-                )
-            ){
-                Text(text = "Criar Conta",
-                    fontSize = 15.sp,
-                    fontFamily = Poppins,
-                    color = Color.White,
-                    fontWeight = FontWeight(500))
+                    containerColor = Color.Transparent
+                ),
+                contentPadding = PaddingValues(),
+
+
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colorStops = arrayOf(
+                                    0.0f to Purple,
+                                    1.0f to Blue
+                                )
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = "Criar Conta",
+                        fontSize = 15.sp,
+                        fontFamily = Poppins,
+                        color = Color.White,
+                        fontWeight = FontWeight(500)
+                    )
+                }
             }
 
             Row(
@@ -317,6 +366,56 @@ fun Register(modifier: Modifier = Modifier) {
 
         }
 
+    }
+}
+
+@Composable
+fun ProfilePicture(modifier: Modifier = Modifier){
+    var imageUri by remember { mutableStateOf <Uri?>(null) }
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
+
+    Box(contentAlignment = Alignment.BottomEnd){
+        if (imageUri != null){
+            AsyncImage(
+                model = imageUri,
+                contentDescription = "Foto de perfil",
+                modifier = Modifier
+                    .size(125.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+        }else{
+            Icon(
+                imageVector = Icons.Default.AccountCircle,
+                contentDescription = null,
+                modifier = Modifier.size(125.dp),
+                tint = Color.LightGray
+            )
+        }
+
+
+        IconButton(
+            onClick = { launcher.launch("image/*")},
+            modifier = Modifier
+                .offset(x=(-10).dp, y = (-15).dp)
+                .background(Color.Blue, CircleShape)
+                .size(25.dp)
+
+        ){
+            Icon(
+                imageVector = Icons.Default.CameraAlt,
+                contentDescription = "Alterar foto",
+                tint =  Color.White,
+                modifier = Modifier
+                    .size(15.dp)
+            )
+        }
     }
 }
 

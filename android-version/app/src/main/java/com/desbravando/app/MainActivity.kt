@@ -81,14 +81,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
+                // Deixe APENAS o NavGraph aqui dentro. Ele cuidará de carregar as telas!
                 NavGraph()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Login(modifier = Modifier.padding(innerPadding))
-                }
             }
-
         }
     }
+
 
     public override fun onStart() {
         super.onStart()

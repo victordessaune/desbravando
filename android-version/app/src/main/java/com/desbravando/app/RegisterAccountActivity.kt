@@ -154,10 +154,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo do Nome do usuário
             Text(
                 text = "Nome",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(
@@ -180,10 +180,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo do apelido do usuário
             Text(
                 text = "Nome de Usuário",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(
@@ -206,10 +206,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo do email do usuário
             Text(
                 text = "Email",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(
@@ -232,10 +232,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo da senha do usuário
             Text(
                 text = "Senha",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(
@@ -258,10 +258,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo de confirmação de senha do usuário
             Text(
                 text = "Confirme sua senha",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(
@@ -283,10 +283,10 @@ fun Register(modifier: Modifier = Modifier) {
             //Campo da biografia do usuário
             Text(
                 text = "Biografia",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(500),
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp))
 
             OutlinedTextField(

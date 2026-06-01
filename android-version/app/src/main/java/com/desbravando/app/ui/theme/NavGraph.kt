@@ -15,15 +15,16 @@ fun NavGraph(){
     NavHost(
         navController = navController,
         startDestination = "login"
-    )  {
-        composable("login"){
+    ) {
+        composable("login") {
+            // PASSANDO A AÇÃO: O segredo está aqui!
             Login(
                 onNavigateToRegister = {
                     navController.navigate("register")
                 }
             )
         }
-        composable("register"){
+        composable("register") {
             RegisterAccountActivity()
         }
     }

@@ -73,6 +73,8 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -170,7 +172,7 @@ fun Register(modifier: Modifier = Modifier) {
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
                 ),
-
+                textStyle = LocalTextStyle.current.copy(fontSize = 11.sp),
                 singleLine = true,
             )
 

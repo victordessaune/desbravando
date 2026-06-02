@@ -24,8 +24,5 @@ fun NavGraph(){
                 }
             )
         }
-        composable("register") {
-            RegisterAccountActivity()
-        }
     }
 }

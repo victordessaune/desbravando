@@ -263,7 +263,9 @@ fun Login(
                         fontWeight = FontWeight(500))
                 }
                 Button(
-                    onClick = {onNavigateToRegister()},
+                    onClick = {
+                        context.startActivity(Intent(context, RegisterAccountActivity::class.java))
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)

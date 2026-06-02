@@ -87,7 +87,6 @@ class RegisterAccountActivity : ComponentActivity(){
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
-                NavGraph()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Register(modifier = Modifier.padding(innerPadding))
                 }

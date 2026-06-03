@@ -70,6 +70,7 @@ import com.desbravando.app.ui.theme.NavGraph
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import kotlin.jvm.java
 
 
 class MainActivity : ComponentActivity() {
@@ -89,6 +90,9 @@ class MainActivity : ComponentActivity() {
                 NavGraph(
                     onLoginClick = { email, password ->
                         validateData(email, password)
+                    },
+                    onNavigateToRegister = {
+                        startActivity(Intent(this, RegisterAccountActivity::class.java))
                     }
                 )
             }
@@ -100,14 +104,19 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            TODO("ENVIAR PARA A TELA HOME")
+            val intent = Intent(this, HomeActivity::class.java)
+
+            // 2. Iniciamos a nova tela
+            startActivity(intent)
+
+            // 3. Fechamos a tela atual (Splash/Login) para o usuário não voltar para ela ao apertar o botão "Voltar"
+            finish()
         }
     }
 
     private fun validateData(email: String, password: String){
         if (email.isNotBlank()){
             if (password.isNotBlank()){
-                Toast.makeText(baseContext, "Tudo OK!", Toast.LENGTH_SHORT).show()
                 signIn(email, password)
             } else {
                 Toast.makeText(
@@ -139,12 +148,12 @@ class MainActivity : ComponentActivity() {
                             val role = document.getString("role")
 
                             if (role == "user") {
-                                Toast.makeText(
-                                    baseContext,
-                                    "Bem-vindo!",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                                TODO("ENVIAR PARA A TELA HOME")
+                                Toast.makeText(baseContext, "Bem-vindo!", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, HomeActivity::class.java) // Lembre de arrumar o import antes!
+                                startActivity(intent)
+                                finish()
+
+                                //ENVIAR PARA A TELA HOME
                             } else {
                                 Toast.makeText(
                                     baseContext,

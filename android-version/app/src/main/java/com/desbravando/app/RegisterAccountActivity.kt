@@ -69,7 +69,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CameraAlt
@@ -117,7 +119,6 @@ class RegisterAccountActivity : ComponentActivity(){
 
         if (userData["email"].toString().isNotBlank()){
             if (password.isNotBlank()){
-                Toast.makeText(baseContext, "Tudo OK!", Toast.LENGTH_SHORT).show()
                 createAccount(userData, password)
             } else {
                 Toast.makeText(
@@ -142,12 +143,17 @@ class RegisterAccountActivity : ComponentActivity(){
                     val user = auth.currentUser
                     val uid = user?.uid
                     saveData(uid, userData)
-                    TODO("Mandar usuário para tela home")
+                    // O método saveData já vai se encarregar de fazer o signOut() e o finish()
+                    // para voltar o usuário para a tela de login após salvar tudo!
                 } else {
+                    // Pega a mensagem de erro real enviada pelo Firebase
+                    val erroFirebase = task.exception?.message ?: "Erro desconhecido ao cadastrar."
+
+                    // Exibe o erro real na tela (ex: "The email address is already in use...")
                     Toast.makeText(
                         baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT,
+                        erroFirebase,
+                        Toast.LENGTH_LONG // Mudado para LONG para dar tempo de ler o erro completo
                     ).show()
                 }
             }
@@ -160,19 +166,25 @@ class RegisterAccountActivity : ComponentActivity(){
             .addOnSuccessListener {
                 Toast.makeText(
                     baseContext,
-                    "Dados salvos",
+                    "Cadastro realizado com sucesso!",
                     Toast.LENGTH_SHORT,
                 ).show()
+
+                // Desconecta o usuário recém-criado para que ele precise fazer login manualmente
+                auth.signOut()
+
+                // FECHA a tela de registro e volta automaticamente para a tela de Login (MainActivity)
+                finish()
             }
             .addOnFailureListener {
                 Toast.makeText(
                     baseContext,
-                    "Erro ao salvar dados",
+                    "Erro ao salvar dados do perfil",
                     Toast.LENGTH_SHORT,
                 ).show()
             }
     }
-}
+    }
 
 @Composable
 fun Register(
@@ -184,6 +196,7 @@ fun Register(
         modifier = modifier
             .fillMaxSize()
             .background(color = OffWhite)
+            .verticalScroll(rememberScrollState())
     ){
         Column(
             modifier = Modifier
@@ -246,13 +259,15 @@ fun Register(
                 onValueChange = { userName = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
                 ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 11.sp),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
                 singleLine = true,
             )
 
@@ -272,13 +287,15 @@ fun Register(
                 onValueChange = { userNickname = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
                 ),
-
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
                 singleLine = true,
             )
 
@@ -298,12 +315,15 @@ fun Register(
                 onValueChange = { userEmail = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
                 ),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
 
                 singleLine = true,
             )
@@ -324,12 +344,15 @@ fun Register(
                 onValueChange = { userPassword = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
                 ),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
 
                 singleLine = true,
             )
@@ -350,12 +373,15 @@ fun Register(
                 onValueChange = { userConfirmPassword = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
                 ),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
 
                 singleLine = true,
             )
@@ -380,7 +406,12 @@ fun Register(
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
-                )
+                    focusedTextColor = Blue,
+                    unfocusedTextColor = MediumGray,
+                ),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
+
+                singleLine = true,
             )
 
             Button(

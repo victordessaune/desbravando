@@ -68,7 +68,6 @@ class SplashActivity : ComponentActivity(){
         }, 2000)
         setContent {
             DesbravandoTheme {
-                NavGraph()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Splash(modifier = Modifier.padding(innerPadding))
                 }

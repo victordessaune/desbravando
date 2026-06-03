@@ -54,6 +54,8 @@ import androidx.compose.material3.ButtonDefaults
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.service.autofill.UserData
+import android.widget.Toast
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.BlueCustom
@@ -79,26 +81,104 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 import kotlin.contracts.contract
 
 
 
 class RegisterAccountActivity : ComponentActivity(){
+
+    private lateinit var auth: FirebaseAuth
+    val db = Firebase.firestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Register(modifier = Modifier.padding(innerPadding))
+                    Register(
+                        modifier = Modifier.padding(innerPadding),
+                        onRegisterClick = { userData, password ->
+                            validateData(userData, password)
+                        }
+                    )
                 }
             }
         }
     }
+
+    private fun validateData(userData: HashMap<String, String>, password: String){
+
+        if (userData["email"].toString().isNotBlank()){
+            if (password.isNotBlank()){
+                Toast.makeText(baseContext, "Tudo OK!", Toast.LENGTH_SHORT).show()
+                createAccount(userData, password)
+            } else {
+                Toast.makeText(
+                    baseContext,
+                    "Insira uma senha",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        } else {
+            Toast.makeText(
+                baseContext,
+                "Insira um email",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
+    private fun createAccount(userData: HashMap<String, String>, password: String) {
+        auth.createUserWithEmailAndPassword(userData["email"].toString(), password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val uid = user?.uid
+                    saveData(uid, userData)
+                    TODO("Mandar usuário para tela home")
+                } else {
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+    }
+
+    private fun saveData(uid: String?, userData: HashMap<String, String>) {
+        db.collection("users")
+            .document(uid.toString())
+            .set(userData)
+            .addOnSuccessListener {
+                Toast.makeText(
+                    baseContext,
+                    "Dados salvos",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    baseContext,
+                    "Erro ao salvar dados",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+    }
 }
 
 @Composable
-fun Register(modifier: Modifier = Modifier) {
+fun Register(
+    modifier: Modifier = Modifier,
+    onRegisterClick: (HashMap<String, String>, String) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -304,7 +384,18 @@ fun Register(modifier: Modifier = Modifier) {
             )
 
             Button(
-                onClick = {},
+                onClick = {
+                    val userData = hashMapOf(
+                        "name" to userName,
+                        "nickname" to userNickname,
+                        "email" to userEmail,
+                        "bio" to userBio,
+                        "role" to "user"
+                    )
+
+                    onRegisterClick(userData, userPassword)
+
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(58.dp)
@@ -425,6 +516,6 @@ fun ProfilePicture(modifier: Modifier = Modifier){
 @Composable
 fun RegisterPreview() {
     DesbravandoTheme {
-        Register()
+        Register(onRegisterClick = { _, _ -> })
     }
 }

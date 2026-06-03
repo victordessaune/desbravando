@@ -9,7 +9,9 @@ import com.desbravando.app.Login
 import com.desbravando.app.RegisterAccountActivity
 
 @Composable
-fun NavGraph(){
+fun NavGraph(
+    onLoginClick: (String, String) -> Unit
+){
     val navController = rememberNavController()
 
     NavHost(
@@ -19,6 +21,7 @@ fun NavGraph(){
         composable("login") {
             // PASSANDO A AÇÃO: O segredo está aqui!
             Login(
+                onLoginClick = onLoginClick,
                 onNavigateToRegister = {
                     navController.navigate("register")
                 }

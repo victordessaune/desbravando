@@ -3,6 +3,7 @@ package com.desbravando.app
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -66,12 +67,15 @@ import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.NavGraph
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +86,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             DesbravandoTheme {
                 // Deixe APENAS o NavGraph aqui dentro. Ele cuidará de carregar as telas!
-                NavGraph()
+                NavGraph(
+                    onLoginClick = { email, password ->
+                        validateData(email, password)
+                    }
+                )
             }
         }
     }
@@ -96,14 +104,67 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun validateData(email: String, password: String) {
+    private fun validateData(email: String, password: String){
+        if (email.isNotBlank()){
+            if (password.isNotBlank()){
+                Toast.makeText(baseContext, "Tudo OK!", Toast.LENGTH_SHORT).show()
+                signIn(email, password)
+            } else {
+                Toast.makeText(
+                    baseContext,
+                    "Insira uma senha",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        } else {
+            Toast.makeText(
+                baseContext,
+                "Insira um email",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
 
+    private fun signIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val uid = auth.currentUser?.uid.toString()
+
+                    db.collection("users")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            var role = document.getString("role")
+
+                            if (role == "user") {
+                                TODO("ENVIAR PARA A TELA HOME")
+                            } else {
+                                Toast.makeText(
+                                    baseContext,
+                                    "Use a versão de administrador na web!",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        }
+
+                } else {
+                    //
+                    Toast.makeText(
+                        baseContext,
+                        "Erro de autenticação",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
     }
 }
 @Composable
 fun Login(
     modifier: Modifier = Modifier,
-    onNavigateToRegister:() -> Unit ={}
+    onNavigateToRegister: () -> Unit = {},
+    onLoginClick: (String, String) -> Unit = { _, _ -> }
 ) {
     val context = LocalContext.current
     Column(
@@ -248,7 +309,7 @@ fun Login(
                         .padding(end = 10.dp, top = 2.dp)
                 )
                 Button(
-                    onClick = {},
+                    onClick = { onLoginClick(email, password) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)

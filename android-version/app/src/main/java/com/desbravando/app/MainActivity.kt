@@ -140,6 +140,11 @@ class MainActivity : ComponentActivity() {
 
                             if (role == "user") {
                                 TODO("ENVIAR PARA A TELA HOME")
+                                Toast.makeText(
+                                    baseContext,
+                                    "Bem-vindo!",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                             } else {
                                 Toast.makeText(
                                     baseContext,

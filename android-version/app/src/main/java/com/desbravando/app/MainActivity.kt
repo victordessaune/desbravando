@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    val uid = auth.currentUser?.uid.toString()
+                    val uid = user?.uid.toString()
 
                     db.collection("users")
                         .document(uid)

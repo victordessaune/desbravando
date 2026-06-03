@@ -136,15 +136,15 @@ class MainActivity : ComponentActivity() {
                         .document(uid)
                         .get()
                         .addOnSuccessListener { document ->
-                            var role = document.getString("role")
+                            val role = document.getString("role")
 
                             if (role == "user") {
-                                TODO("ENVIAR PARA A TELA HOME")
                                 Toast.makeText(
                                     baseContext,
                                     "Bem-vindo!",
                                     Toast.LENGTH_SHORT,
                                 ).show()
+                                TODO("ENVIAR PARA A TELA HOME")
                             } else {
                                 Toast.makeText(
                                     baseContext,

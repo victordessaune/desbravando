@@ -226,14 +226,25 @@ fun Profile(
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(bottom = 12.dp)
                     .padding(top = 12.dp),
                     textAlign = TextAlign.Center
             )
             Row(
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
 
             ) {
+                LocationCard(
+                    imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
+                    name = "Pão de Açúcar",
+                    location = "Rio de Janeiro - RJ"
+                )
+                LocationCard(
+                    imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
+                    name = "Pão de Açúcar",
+                    location = "Rio de Janeiro - RJ"
+                )
                 LocationCard(
                     imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
                     name = "Pão de Açúcar",
@@ -244,9 +255,9 @@ fun Profile(
 
             // Nome de Usuário
             Text(
-                text = "Nome de Usuário",
-                fontSize = 13.sp,
-                color = BlueCustom,
+                text = "Minhas Experiências",
+                fontSize = 14.sp,
+                color = Purple,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp)
@@ -450,7 +461,7 @@ fun LocationCard(
     Card(
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
-            .width(120.dp),
+            .width(110.dp),
     ) {
         Box {
             AsyncImage(
@@ -458,7 +469,7 @@ fun LocationCard(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(90.dp),
+                    .height(100.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -474,10 +485,10 @@ fun LocationCard(
         }
 
 
-        Column(modifier = Modifier.padding(5.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             Text(
                 text = name,
-                fontSize = 13.sp,
+                fontSize = 12.sp,
                 color = Blue,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Medium,
@@ -488,7 +499,7 @@ fun LocationCard(
             Text(
                 text = location,
                 fontFamily = Poppins,
-                fontSize = 10.sp,
+                fontSize = 9.sp,
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier

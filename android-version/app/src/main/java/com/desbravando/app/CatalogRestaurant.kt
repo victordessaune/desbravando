@@ -16,7 +16,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -145,36 +148,128 @@ fun Catalog() {
                     )
             ){
                 Row(
-                    horizontalArrangement = Arrangement.Start
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.cb3),
                         contentDescription = "Foto do lugar",
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .width(120.dp)
+                            .clip(
+                            RoundedCornerShape(
+                                topStart = 16.dp,
+                                bottomStart = 16.dp
+                            )
+                            ),
+                        contentScale = ContentScale.Crop
                     )
 
-                    Column() {
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Text(
                             text = "Nome do Lugar",
                             fontFamily = Poppins,
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
                             text = "Localização",
                             fontFamily = Poppins,
-                            fontSize = 18.sp,
+                            fontSize = 14.sp,
                         )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_next),
+                            contentDescription = "Visualizar",
+                            tint = Blue,
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .size(28.dp)
+                        )
+
                     }
                 }
             }
 
-            Text(
-                text = "Restaurantes",
-                fontFamily = Poppins,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
-            )
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Box(
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxWidth()
+                    .background(
+                        color = White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+            ){
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cb3),
+                        contentDescription = "Foto do lugar",
+                        modifier = Modifier
+                            .width(120.dp)
+                            .clip(
+                                RoundedCornerShape(
+                                    topStart = 16.dp,
+                                    bottomStart = 16.dp
+                                )
+                            ),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Nome do Lugar",
+                            fontFamily = Poppins,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = "Localização",
+                            fontFamily = Poppins,
+                            fontSize = 14.sp,
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_next),
+                            contentDescription = "Visualizar",
+                            tint = Blue,
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .size(28.dp)
+                        )
+
+                    }
+                }
+            }
+
 
         }
     }

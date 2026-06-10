@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.firestore.ktx)
 
     // UI Outros
     implementation(libs.coil.compose)

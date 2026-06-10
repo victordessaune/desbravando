@@ -31,6 +31,7 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.White
 import com.google.android.gms.ads.nativead.NativeAd.Image
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CatalogRestaurant : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,17 @@ class CatalogRestaurant : ComponentActivity() {
 
 @Composable
 fun Catalog() {
+
+    var restaurants by remember {
+        mutableStateOf<List<Restaurants>>(emptyList())
+    }
+
+    LaunchedEffect(Unit) {
+
+        findRestaurants { list ->
+            restaurants = list
+        }
+    }
 
     var search by remember {mutableStateOf("")}
 
@@ -138,6 +150,16 @@ fun Catalog() {
         Column(
             modifier = Modifier.padding(20.dp)
         ) {
+            restaurants.forEach { restaurant ->
+
+                Text(
+                    text = restaurant.name
+                )
+
+                Text(
+                    text = restaurant.city
+                )
+            }
             Box(
                 modifier = Modifier
                     .height(100.dp)
@@ -281,4 +303,25 @@ fun CatalogPreview() {
     DesbravandoTheme {
         Catalog()
     }
+}
+
+data class Restaurants(
+    val name: String = "",
+    val city: String = ""
+)
+
+fun findRestaurants(
+    onResult: (List<Restaurants>) -> Unit
+){
+    FirebaseFirestore
+        .getInstance()
+        .collection("locations")
+        .whereEqualTo("tags", "GatroBar")
+        .get()
+        .addOnSuccessListener { result ->
+            val list = result.documents.mapNotNull {
+                it.toObject(Restaurants::class.java)
+            }
+            onResult(list)
+        }
 }

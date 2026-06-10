@@ -173,7 +173,7 @@ fun Profile(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 30.dp)
+                    .padding(top = 10.dp)
             ) {
                 IconButton(onClick = { }) {
                     Icon(
@@ -255,7 +255,7 @@ fun Profile(
 
             // Nome de Usuário
             Text(
-                text = "Minhas Experiências",
+                text = "Meus Roteiros",
                 fontSize = 14.sp,
                 color = Purple,
                 fontFamily = Poppins,

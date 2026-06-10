@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Desbravando</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="home_logo_text">DESBRAVANDO</string>
+    <string name="home_welcome">Olá, User</string>
+    <string name="home_subtitle">Pronto para desbravar?</string>
+    <string name="home_temp_placeholder">XºC</string>
+    <string name="home_weather_placeholder">tempo</string>
+    <string name="cd_logo">Logo</string>
+    <string name="cd_climate">climate</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,7 +68,7 @@ fun Home(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.purple_logo_desbravando),
-                contentDescription = "Logo",
+                contentDescription = stringResource(R.string.cd_logo),
                 modifier = Modifier
                     .width(15.dp)
                     .height(15.dp)
@@ -76,7 +77,7 @@ fun Home(
                 modifier = Modifier.width(2.dp)
             )
             Text(
-                text = "DESBRAVANDO",
+                text = stringResource(R.string.home_logo_text),
                 fontFamily = Poppins,
                 fontSize = 15.sp,
                 color = Purple,
@@ -87,16 +88,17 @@ fun Home(
         Row(
             modifier = Modifier
                 .padding(start = 10.dp, top = 20.dp, end = 10.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.weight(1f)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Olá, User",
+                        text = stringResource(R.string.home_welcome),
                         fontFamily = Poppins,
                         fontSize = 20.sp,
                         color = DarkBlue,
@@ -107,7 +109,7 @@ fun Home(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "Pronto para desbravar?",
+                        text = stringResource(R.string.home_subtitle),
                         fontFamily = Poppins,
                         fontSize = 12.sp,
                         color = Gray,
@@ -118,42 +120,54 @@ fun Home(
             }
 
             Column(
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.End
             ) {
-                Row(){
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_sun),
-                            contentDescription = "climate"
-                        )
+                WeatherWidget()
+            }
+        }
+    }
+}
 
-                    }
+@Composable
 
-                    Column() {
-                        Row(
+fun WeatherWidget() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
 
-                        ) {
-                            Text(
-                                text = "XºC",
-                                fontFamily = Poppins,
-                                fontSize = 12.sp,
-                                color = Gray,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        Row() {
-                            Text(
-                                text = "tempo",
-                                fontFamily = Poppins,
-                                fontSize = 12.sp,
-                                color = Gray,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                }
+    ){
+        Column(
+            modifier = Modifier.padding(end = 10.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_sun),
+                contentDescription = stringResource(R.string.cd_climate),
+                tint = Color.Yellow
+            )
+
+        }
+
+        Column() {
+            Row(
+
+            ) {
+                Text(
+                    text = stringResource(R.string.home_temp_placeholder),
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    color = Gray,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Row() {
+                Text(
+                    text = stringResource(R.string.home_weather_placeholder),
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    color = Gray,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
     }

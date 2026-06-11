@@ -16,13 +16,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,8 +43,11 @@ import androidx.compose.ui.unit.sp
 import com.desbravando.app.ui.theme.DarkBlue
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.Gray
+import com.desbravando.app.ui.theme.LightGray
+import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
+import com.desbravando.app.ui.theme.White
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +60,7 @@ class HomeActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
-                            .background(Color.White)
+                            .background(OffWhite)
                     ) {
                         Home()
                     }
@@ -61,10 +74,11 @@ class HomeActivity : ComponentActivity() {
 fun Home(
     modifier: Modifier = Modifier
 ) {
+    var search by remember { mutableStateOf("") }
     Column(modifier = modifier.fillMaxSize()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 10.dp, start = 10.dp)
+            modifier = Modifier.padding(top = 30.dp, start = 10.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.purple_logo_desbravando),
@@ -87,8 +101,9 @@ fun Home(
         
         Row(
             modifier = Modifier
-                .padding(start = 10.dp, top = 20.dp, end = 10.dp)
+                .padding(start = 20.dp, top = 15.dp, end = 30.dp)
                 .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
@@ -100,7 +115,7 @@ fun Home(
                     Text(
                         text = stringResource(R.string.home_welcome),
                         fontFamily = Poppins,
-                        fontSize = 20.sp,
+                        fontSize = 24.sp,
                         color = DarkBlue,
                         fontWeight = FontWeight.Bold
                     )
@@ -134,6 +149,13 @@ fun Home(
 fun WeatherWidget() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clip(RoundedCornerShape(
+                10.dp
+            ))
+            .background(White)
+            .padding(6.dp)
+
 
     ){
         Column(
@@ -143,7 +165,8 @@ fun WeatherWidget() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_sun),
                 contentDescription = stringResource(R.string.cd_climate),
-                tint = Color.Yellow
+                tint = Color.Yellow,
+                modifier = Modifier.size(35.dp)
             )
 
         }
@@ -155,9 +178,9 @@ fun WeatherWidget() {
                 Text(
                     text = stringResource(R.string.home_temp_placeholder),
                     fontFamily = Poppins,
-                    fontSize = 12.sp,
-                    color = Gray,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 18.sp,
+                    color = DarkBlue,
+                    fontWeight = FontWeight(600)
                 )
             }
             Row() {
@@ -166,7 +189,7 @@ fun WeatherWidget() {
                     fontFamily = Poppins,
                     fontSize = 12.sp,
                     color = Gray,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight(500)
                 )
             }
         }
@@ -182,7 +205,7 @@ fun HomeActivityPreview() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color.White)
+                    .background(OffWhite)
             ) {
                 Home()
             }

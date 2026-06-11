@@ -29,6 +29,7 @@ import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
+import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 import com.google.android.gms.ads.nativead.NativeAd.Image
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,20 +93,14 @@ fun Catalog() {
                         .padding(5.dp)
                 )
 
-                Spacer(modifier = Modifier.width(6.dp))
-
-                Icon(
-                    painter = painterResource(id = R.drawable.restaurant_icon),
-                    contentDescription = "Ícone de restaurante"
-                )
-
                 Spacer(modifier = Modifier.width(5.dp))
 
                 Text(
-                    text = "GastroBar",
+                    text = "Catálogo de Lugares",
                     fontFamily = Poppins,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
+                    color = Blue,
+                    fontWeight = FontWeight(600)
                 )
             }
 
@@ -137,7 +132,7 @@ fun Catalog() {
                         contentDescription = "Pesquisar"
                     )
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().background(color = White),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true
             )

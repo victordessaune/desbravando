@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -65,6 +66,8 @@ import coil.compose.AsyncImage
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.BlueCustom
 import com.desbravando.app.ui.theme.BlueSecondary
+import com.desbravando.app.ui.theme.DarkBlue
+import com.desbravando.app.ui.theme.DarkGray
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.MediumGray
@@ -238,22 +241,22 @@ fun Profile(
                 LocationCard(
                     imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
                     name = "Pão de Açúcar",
-                    location = "Rio de Janeiro - RJ"
+                    location = " Vitória - ES"
                 )
                 LocationCard(
                     imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
                     name = "Pão de Açúcar",
-                    location = "Rio de Janeiro - RJ"
+                    location = " Vitória - ES"
                 )
                 LocationCard(
                     imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
                     name = "Pão de Açúcar",
-                    location = "Rio de Janeiro - RJ"
+                    location = " Vitória - ES"
                 )
 
             }
 
-            // Nome de Usuário
+
             Text(
                 text = "Meus Roteiros",
                 fontSize = 14.sp,
@@ -262,126 +265,24 @@ fun Profile(
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(top = 12.dp)
             )
-            OutlinedTextField(
-                value = userNickname,
-                onValueChange = { userNickname = it },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(30.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MediumGray,
-                    focusedBorderColor = Blue,
-                    focusedTextColor = Blue,
-                    unfocusedTextColor = MediumGray,
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
-                singleLine = true,
-            )
 
-            // Email
-            Text(
-                text = "Email",
-                fontSize = 13.sp,
-                color = BlueCustom,
-                fontFamily = Poppins,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 12.dp)
-            )
-            OutlinedTextField(
-                value = userEmail,
-                onValueChange = { userEmail = it },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(30.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MediumGray,
-                    focusedBorderColor = Blue,
-                    focusedTextColor = Blue,
-                    unfocusedTextColor = MediumGray,
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
-                singleLine = true,
-            )
+            Column(
 
-            // Senha
-            Text(
-                text = "Senha",
-                fontSize = 13.sp,
-                color = BlueCustom,
-                fontFamily = Poppins,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 12.dp)
-            )
-            OutlinedTextField(
-                value = userPassword,
-                onValueChange = { userPassword = it },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(30.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MediumGray,
-                    focusedBorderColor = Blue,
-                    focusedTextColor = Blue,
-                    unfocusedTextColor = MediumGray,
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
-                singleLine = true,
-                // CORRIGIDO: campo de senha precisa de PasswordVisualTransformation
-                visualTransformation = PasswordVisualTransformation(),
-            )
+            ) {
 
-            // Confirmar Senha
-            Text(
-                text = "Confirme sua senha",
-                fontSize = 13.sp,
-                color = BlueCustom,
-                fontFamily = Poppins,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 12.dp)
-            )
-            OutlinedTextField(
-                value = userConfirmPassword,
-                onValueChange = { userConfirmPassword = it },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(30.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    // CORRIGIDO: borda vermelha quando as senhas não batem
-                    unfocusedBorderColor = if (userConfirmPassword.isNotEmpty() && userConfirmPassword != userPassword) Color.Red else MediumGray,
-                    focusedBorderColor = if (userConfirmPassword != userPassword) Color.Red else Blue,
-                    focusedTextColor = Blue,
-                    unfocusedTextColor = MediumGray,
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
-                // CORRIGIDO: mensagem de erro quando senhas não batem
-                supportingText = if (userConfirmPassword.isNotEmpty() && userConfirmPassword != userPassword) {
-                    { Text(text = "As senhas não coincidem", color = Color.Red, fontSize = 11.sp) }
-                } else null,
-            )
+                    ItineraryCard(
+                        imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
+                        name = "Um dia em Vitória- ES",
+                        description = "Um ótimo roteiro!",
+                        location = "Vitória - ES"
 
-            // Biografia
-            Text(
-                text = "Biografia",
-                fontSize = 13.sp,
-                color = BlueCustom,
-                fontFamily = Poppins,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 12.dp)
-            )
-            OutlinedTextField(
-                value = userBio,
-                onValueChange = { userBio = it },
-                modifier = Modifier.fillMaxWidth().height(100.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MediumGray,
-                    focusedBorderColor = Blue,
-                    focusedTextColor = Blue,
-                    unfocusedTextColor = MediumGray,
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp),
-                // CORRIGIDO: era singleLine = true, bio deve ser multilinha
-                singleLine = false,
-                maxLines = 3,
-            )
+                    )
+
+
+            }
+
+
+
 
             // Botão Criar Conta
             Button(
@@ -453,6 +354,86 @@ fun Profile(
     }
 }
 @Composable
+fun ItineraryCard(
+    imageUrl: String,
+    name: String,
+    location: String,
+    description: String
+) {
+    Card(
+        shape = RoundedCornerShape(25.dp),
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .width(900.dp),
+    ) {
+        Box (modifier = Modifier.fillMaxWidth()){
+            Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+
+                    AsyncImage(
+                        model = imageUrl,
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(130.dp)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)),
+                    )
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(12.dp)
+                    ) {
+                        Text(
+                            text = name,
+                            fontSize = 13.sp,
+                            color = DarkBlue,
+                            fontFamily = Poppins,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+
+                        )
+                        Text(
+                            text = location,
+                            fontFamily = Poppins,
+                            fontSize = 12.sp,
+                            color = Gray,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+
+                        )
+                        Text(
+                            text = description,
+                            fontFamily = Poppins,
+                            fontSize = 11.sp,
+                            color = DarkGray,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+
+                            )
+                    }
+
+
+                }
+            Icon(
+                painter = painterResource(id = R.drawable.openeye),
+                contentDescription = null,
+                tint = Color.Gray,
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.TopEnd)
+                    .padding(10.dp)
+            )
+
+
+        }
+
+    }
+}
+@Composable
 fun LocationCard(
     imageUrl: String,
     name: String,
@@ -499,7 +480,7 @@ fun LocationCard(
             Text(
                 text = location,
                 fontFamily = Poppins,
-                fontSize = 9.sp,
+                fontSize = 11.sp,
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier

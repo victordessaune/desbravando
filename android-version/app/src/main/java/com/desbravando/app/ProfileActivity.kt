@@ -326,29 +326,14 @@ fun Profile(
                }
            }
 
-
-
-
-            // Botão Criar Conta
+            Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
-                    // CORRIGIDO: valida se as senhas coincidem antes de prosseguir
-                    if (userPassword != userConfirmPassword) {
-                        return@Button
-                    }
-                    val userData = hashMapOf(
-                        "name" to userName,
-                        "nickname" to userNickname,
-                        "email" to userEmail,
-                        "bio" to userBio,
-                        "role" to "user"
-                    )
-                    onRegisterClick(userData, userPassword)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp)
-                    .height(35.dp)
+                    .height(25.dp)
+                    .padding(top = 5.dp)
                     .border(
                         width = 1.dp,
                         color = MediumGray,

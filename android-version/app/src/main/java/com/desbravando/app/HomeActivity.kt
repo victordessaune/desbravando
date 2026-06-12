@@ -11,18 +11,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,10 +39,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.desbravando.app.ui.components.BottomBar
 import com.desbravando.app.ui.theme.DarkBlue
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.Gray
-import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
@@ -55,7 +54,16 @@ class HomeActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                var selectedRoute by remember { mutableStateOf("home") }
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomBar(selectedRoute) { route ->
+                            selectedRoute = route
+                        }
+                    }
+                ) { innerPadding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -74,8 +82,12 @@ class HomeActivity : ComponentActivity() {
 fun Home(
     modifier: Modifier = Modifier
 ) {
-    var search by remember { mutableStateOf("") }
-    Column(modifier = modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(top = 30.dp, start = 10.dp)
@@ -109,29 +121,20 @@ fun Home(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_welcome),
-                        fontFamily = Poppins,
-                        fontSize = 24.sp,
-                        color = DarkBlue,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_subtitle),
-                        fontFamily = Poppins,
-                        fontSize = 12.sp,
-                        color = Gray,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
+                Text(
+                    text = stringResource(R.string.home_welcome),
+                    fontFamily = Poppins,
+                    fontSize = 24.sp,
+                    color = DarkBlue,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = stringResource(R.string.home_subtitle),
+                    fontFamily = Poppins,
+                    fontSize = 12.sp,
+                    color = Gray,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
             Column(
@@ -145,53 +148,41 @@ fun Home(
 }
 
 @Composable
-
 fun WeatherWidget() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .clip(RoundedCornerShape(
-                10.dp
-            ))
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(10.dp),
+                spotColor = Purple
+            )
+            .clip(RoundedCornerShape(10.dp))
             .background(White)
             .padding(6.dp)
-
-
-    ){
-        Column(
-            modifier = Modifier.padding(end = 10.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_sun),
-                contentDescription = stringResource(R.string.cd_climate),
-                tint = Color.Yellow,
-                modifier = Modifier.size(35.dp)
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_sun),
+            contentDescription = stringResource(R.string.cd_climate),
+            tint = Color.Yellow,
+            modifier = Modifier.size(35.dp)
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column {
+            Text(
+                text = stringResource(R.string.home_temp_placeholder),
+                fontFamily = Poppins,
+                fontSize = 18.sp,
+                color = DarkBlue,
+                fontWeight = FontWeight(600)
             )
-
-        }
-
-        Column() {
-            Row(
-
-            ) {
-                Text(
-                    text = stringResource(R.string.home_temp_placeholder),
-                    fontFamily = Poppins,
-                    fontSize = 18.sp,
-                    color = DarkBlue,
-                    fontWeight = FontWeight(600)
-                )
-            }
-            Row() {
-                Text(
-                    text = stringResource(R.string.home_weather_placeholder),
-                    fontFamily = Poppins,
-                    fontSize = 12.sp,
-                    color = Gray,
-                    fontWeight = FontWeight(500)
-                )
-            }
+            Text(
+                text = stringResource(R.string.home_weather_placeholder),
+                fontFamily = Poppins,
+                fontSize = 12.sp,
+                color = Gray,
+                fontWeight = FontWeight(500)
+            )
         }
     }
 }
@@ -200,7 +191,10 @@ fun WeatherWidget() {
 @Composable
 fun HomeActivityPreview() {
     DesbravandoTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            bottomBar = { BottomBar("home") {} }
+        ) { innerPadding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()

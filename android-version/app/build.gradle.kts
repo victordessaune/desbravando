@@ -72,4 +72,11 @@ dependencies {
     // UI Outros
     implementation(libs.coil.compose)
     implementation(libs.androidx.compose.material.icons.extended)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // Localização
+    implementation(libs.play.services.location)
 }

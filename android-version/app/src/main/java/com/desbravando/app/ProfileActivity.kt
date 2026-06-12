@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.component1
 import androidx.core.graphics.component2
 import coil.compose.AsyncImage
+import com.desbravando.app.ui.components.BottomBar
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.BlueCustom
 import com.desbravando.app.ui.theme.BlueSecondary

@@ -129,7 +129,7 @@ fun BottomBar(
 fun BottomBarPreview() {
     DesbravandoTheme {
         BottomBar(
-            selectedRoute = "home",
+            selectedRoute = "add",
             onItemSelected = {}
         )
     }

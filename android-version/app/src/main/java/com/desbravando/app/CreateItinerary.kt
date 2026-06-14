@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -85,6 +86,7 @@ import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -230,7 +232,7 @@ fun Itinerary(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
                         .padding(start = 5.dp)
-                        .padding(top = 25.dp)
+                        .padding(top = 20.dp)
                         .fillMaxWidth()
                 ) {
 
@@ -255,13 +257,12 @@ fun Itinerary(
 
 
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .padding(bottom = 10.dp)
                     .padding(top = 25.dp)
                     .fillMaxWidth(),
-            ){
+            ) {
                 Text(
                     text = "Quantos dias?",
                     fontSize = 12.sp,
@@ -272,16 +273,70 @@ fun Itinerary(
                     )
             }
 
-                Row( horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
 
-                ) {
+            ) {
 
-                    DayCard()
-                }
+                DayCard()
+            }
 
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+
+                modifier = Modifier
+                    .padding(start = 5.dp)
+                    .padding(bottom = 10.dp)
+                    .padding(top = 25.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = "Com quem você vai?",
+                    fontSize = 12.sp,
+                    color = DarkBlue,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Medium,
+
+                    )
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+
+            ) {
+
+                CompanyCard()
+            }
+            Row(
+
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .padding(bottom = 10.dp)
+                        .padding(top = 25.dp)
+                        .fillMaxWidth(),
+            ) {
+            Text(
+                text = "Quais são os seus interesses?",
+                fontSize = 12.sp,
+                color = DarkBlue,
+                fontFamily = Poppins,
+                fontWeight = FontWeight.Medium,
+
+                )
+        }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+
+            ) {
+
+                InterestsCard()
+            }
+
+            Row(
+
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .padding(bottom = 10.dp)
@@ -289,7 +344,7 @@ fun Itinerary(
                     .fillMaxWidth(),
             ){
                 Text(
-                    text = "Com quem você vai?",
+                    text = "Estilo da viagem",
                     fontSize = 12.sp,
                     color = DarkBlue,
                     fontFamily = Poppins,
@@ -303,93 +358,14 @@ fun Itinerary(
 
             ) {
 
-                CompanyCard()
+                MoodCard()
             }
 
 
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Button(
-                onClick = {
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(25.dp)
-                    .padding(top = 5.dp)
-                    .border(
-                        width = 1.dp,
-                        color = MediumGray,
-                        shape = RoundedCornerShape(30.dp)
-                    ),
-                shape = RoundedCornerShape(30.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                contentPadding = PaddingValues(),
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "+ Criar novo roteiro",
-                        fontSize = 15.sp,
-                        fontFamily = Poppins,
-                        color = Blue,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
-
-            // Nome
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .padding(start = 5.dp)
-                    .padding(end = 5.dp)
-                    .padding(bottom = 10.dp)
-                    .padding(top = 20.dp)
-                    .fillMaxWidth(),
-            ){
-                Text(
-                    text = "Locais Favoritados",
-                    fontSize = 14.sp,
-                    color = Purple,
-                    fontFamily = Poppins,
-                    fontWeight = FontWeight.Medium,
-
-                    )
-                Text(
-                    text = "Ver Todos",
-                    fontSize = 13.sp,
-                    color = Gray,
-                    fontFamily = Poppins,
-                    fontWeight = FontWeight.Medium,
-
-                    )
-            }
-            val locations = listOf(
-                Triple("https://images.unsplash.com/photo-1601581975053-7f83d35f5e5e?w=400", "Praia de Camburi", "Vitória - ES"),
-                Triple("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400", "Pedra Azul", "Domingos Martins - ES"),
-                Triple("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400", "Convento da Penha", "Vila Velha - ES"),
-                Triple("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400", "Praia de Guarapari", "Guarapari - ES"),
-                Triple("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400", "Itaúnas", "Conceição da Barra - ES"),
-            )
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                modifier = Modifier.fillMaxWidth()
-
-            ) { items(locations) { (imageUrl, name, location) ->
-                LocationCard(
-                    imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                    name = "Pão de Açúcar",
-                    location = " Vitória - ES"
-                )
-
-            }
-
-
-            }
         }
+
     }
+
 }
 @Composable
 fun DayCard() {
@@ -440,7 +416,7 @@ fun CompanyCard() {
     var selected by remember { mutableStateOf("") }
 
 
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
 
         options.forEach { option ->
 
@@ -452,7 +428,7 @@ fun CompanyCard() {
                     .clip(RoundedCornerShape(20))
                     .background(if (isSelected) Purple else LightGray)
                     .clickable{ selected = option.label }
-                    .padding(horizontal = 10.dp, vertical = 12.dp)
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
             ){
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -466,6 +442,123 @@ fun CompanyCard() {
                                 .size(22.dp),
                             tint = if (isSelected) Color.White else DarkBlue
                         )
+
+                    Text(
+                        text = option.label,
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                        color = if (isSelected) Color.White else DarkBlue,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+            }
+
+
+        }
+
+    }
+}
+@Composable
+fun MoodCard() {
+    val options = listOf(
+        FilterOption("Relaxado", R.drawable.ic_relax),
+        FilterOption("Equilibrado", R.drawable.ic_compass),
+        FilterOption("Aventura", R.drawable.ic_mountain)
+    )
+    var selected by remember { mutableStateOf("") }
+
+
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+
+        options.forEach { option ->
+
+            val isSelected = option.label == selected
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20))
+                    .background(if (isSelected) Purple else LightGray)
+                    .clickable{ selected = option.label }
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+            ){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = option.icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .size(20.dp),
+                        tint = if (isSelected) Color.White else DarkBlue
+                    )
+
+                    Text(
+                        text = option.label,
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                        color = if (isSelected) Color.White else DarkBlue,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+            }
+
+
+        }
+
+    }
+
+}
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun InterestsCard() {
+    val options = listOf(
+        FilterOption("Praias", R.drawable.ic_beach),
+        FilterOption("Cultura", R.drawable.ic_culture),
+        FilterOption("GastroBar", R.drawable.ic_utensils),
+        FilterOption("História", R.drawable.ic_landmark),
+        FilterOption("Natureza", R.drawable.ic_tree)
+    )
+    var selected by remember { mutableStateOf(setOf<String>()) }
+
+
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+
+        options.forEach { option ->
+
+            val isSelected = option.label in selected
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20))
+                    .background(if (isSelected) Purple else LightGray)
+                    .clickable{
+                        selected = if (option.label in selected)
+                            selected - option.label
+                        else
+                            selected + option.label }
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+            ){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = option.icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .size(22.dp),
+                        tint = if (isSelected) Color.White else DarkBlue
+                    )
 
                     Text(
                         text = option.label,

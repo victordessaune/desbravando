@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,16 @@ import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 import com.google.android.gms.ads.nativead.NativeAd.Image
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.RectangleShape
+import com.desbravando.app.ui.theme.BlueSecondary
+import com.desbravando.app.ui.theme.Gray
 
 class CatalogRestaurant : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +74,9 @@ fun Catalog() {
     }
 
     var search by remember {mutableStateOf("")}
+    val filteredRestaurants = restaurants.filter {
+        it.name.contains(search, ignoreCase = true)
+    }
 
     Column(
         modifier = Modifier
@@ -77,12 +91,13 @@ fun Catalog() {
             )
         ) {
 
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
 
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "Voltar",
-                    tint = Blue,
                     modifier = Modifier
                         .size(28.dp)
                         .border(
@@ -93,13 +108,12 @@ fun Catalog() {
                         .padding(5.dp)
                 )
 
-                Spacer(modifier = Modifier.width(5.dp))
+                Spacer(modifier = Modifier.width(7.dp))
 
                 Text(
                     text = "Catálogo de Lugares",
                     fontFamily = Poppins,
-                    fontSize = 16.sp,
-                    color = Blue,
+                    fontSize = 17.sp,
                     fontWeight = FontWeight(600)
                 )
             }
@@ -124,7 +138,7 @@ fun Catalog() {
                     search = it
                 },
                 placeholder = {
-                    Text("Pesquisar restaurante")
+                    Text("Buscar lugares")
                 },
                 leadingIcon = {
                     Icon(
@@ -132,9 +146,21 @@ fun Catalog() {
                         contentDescription = "Pesquisar"
                     )
                 },
-                modifier = Modifier.fillMaxWidth().background(color = White),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = White)
+                    .shadow(
+                        elevation = 4.dp,
+                        shape = RoundedCornerShape(12.dp)
+                    ),
                 shape = RoundedCornerShape(12.dp),
-                singleLine = true
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Gray,
+                    unfocusedBorderColor = Gray,
+                    focusedContainerColor = White,
+                    unfocusedContainerColor = White
+            )
             )
         }
         
@@ -142,152 +168,125 @@ fun Catalog() {
             thickness = 1.dp
         )
 
-        Column(
-            modifier = Modifier.padding(20.dp)
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp)
+                .padding(top = 20.dp, start = 18.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            restaurants.forEach { restaurant ->
+
+            items(categories) { category ->
+
+                CategoryItem(
+                    category = category,
+                    onClick = {
+
+                        // filtrar lugares pela categoria
+
+                    }
+                )
+
+            }
+        }
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(top = 20.dp),
+            thickness = 1.dp
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+
+            items(filteredRestaurants) { restaurant ->
+
+                RestaurantCard(
+                    restaurant = restaurant,
+                    onClick = {
+
+                        // Aqui depois você navega
+                        // navController.navigate(...)
+
+                    }
+                )
+            }
+        }
+
+    }
+}
+@Composable
+fun RestaurantCard(
+    restaurant: Restaurants,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .height(110.dp)
+            .fillMaxWidth()
+            .background(
+                color = White,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable { onClick() }
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.cb3),
+                contentDescription = "Foto do lugar",
+                modifier = Modifier
+                    .width(130.dp)
+                    .fillMaxHeight()
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 16.dp,
+                            bottomStart = 16.dp
+                        )
+                    ),
+                contentScale = ContentScale.Crop
+            )
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 12.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
 
                 Text(
-                    text = restaurant.name
+                    text = restaurant.name,
+                    fontFamily = Poppins,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
                 )
 
                 Text(
-                    text = restaurant.city
+                    text = restaurant.city,
+                    fontFamily = Poppins,
+                    fontSize = 14.sp
                 )
             }
-            Box(
-                modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth()
-                    .background(
-                        color = White,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-            ){
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.cb3),
-                        contentDescription = "Foto do lugar",
-                        modifier = Modifier
-                            .width(120.dp)
-                            .clip(
-                            RoundedCornerShape(
-                                topStart = 16.dp,
-                                bottomStart = 16.dp
-                            )
-                            ),
-                        contentScale = ContentScale.Crop
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Nome do Lugar",
-                            fontFamily = Poppins,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = "Localização",
-                            fontFamily = Poppins,
-                            fontSize = 14.sp,
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.End
-
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_next),
-                            contentDescription = "Visualizar",
-                            tint = Blue,
-                            modifier = Modifier
-                                .padding(end = 16.dp)
-                                .size(28.dp)
-                        )
-
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(15.dp))
 
             Box(
-                modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth()
-                    .background(
-                        color = White,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-            ){
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.cb3),
-                        contentDescription = "Foto do lugar",
-                        modifier = Modifier
-                            .width(120.dp)
-                            .clip(
-                                RoundedCornerShape(
-                                    topStart = 16.dp,
-                                    bottomStart = 16.dp
-                                )
-                            ),
-                        contentScale = ContentScale.Crop
-                    )
+                modifier = Modifier.fillMaxHeight(),
+                contentAlignment = Alignment.Center
+            ) {
 
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Nome do Lugar",
-                            fontFamily = Poppins,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = "Localização",
-                            fontFamily = Poppins,
-                            fontSize = 14.sp,
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.End
-
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_next),
-                            contentDescription = "Visualizar",
-                            tint = Blue,
-                            modifier = Modifier
-                                .padding(end = 16.dp)
-                                .size(28.dp)
-                        )
-
-                    }
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_next),
+                    contentDescription = "Visualizar",
+                    tint = Blue,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .size(28.dp)
+                )
             }
-
-
         }
     }
 }
@@ -319,4 +318,68 @@ fun findRestaurants(
             }
             onResult(list)
         }
+}
+
+//Fuções relacionadas a categoria
+data class Category(
+    val name: String,
+    val icon: Int
+)
+
+val categories = listOf(
+    Category("Praia", R.drawable.ic_beach),
+    Category("Restaurante", R.drawable.ic_utensils),
+    Category("Parque", R.drawable.ic_tree),
+    Category("Histórico", R.drawable.ic_historic),
+    Category("Religioso", R.drawable.ic_church),
+    Category("Eco", R.drawable.ic_mountain)
+)
+
+@Composable
+fun CategoryItem(
+    category: Category,
+    onClick: () -> Unit = {}
+) {
+
+    Row(
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(horizontal = 2.dp),
+
+    ) {
+
+        Box(
+            modifier = Modifier
+                .shadow(
+                    elevation = 3.dp,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .fillMaxSize()
+                .background(
+                    color = White,
+                    shape = RoundedCornerShape(10.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    painter = painterResource(category.icon),
+                    contentDescription = category.name,
+                    tint = Blue,
+                    modifier = Modifier.size(20.dp)
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Text(
+                    text = category.name,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(500)
+                )
+            }
+        }
+    }
 }

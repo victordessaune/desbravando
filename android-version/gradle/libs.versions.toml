@@ -15,6 +15,7 @@ navigationCompose = "2.9.8"
 mediationTestSuite = "3.0.0"
 playServicesLocation = "21.3.0"
 retrofit = "3.0.0"
+foundation = "1.11.2"
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
@@ -43,6 +44,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -106,11 +106,9 @@ class CreateItinerary : ComponentActivity() {
             DesbravandoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     // CORRIGIDO: era Register(...), agora chama Profile(...)
-                    Profile(
+                    Itinerary(
                         modifier = Modifier.padding(innerPadding),
-                        onRegisterClick = { userData, password ->
-                            validateData(userData, password)
-                        }
+
                     )
                 }
             }
@@ -164,10 +162,43 @@ class CreateItinerary : ComponentActivity() {
     }
 }
 
+
 @Composable
-fun Itinerary(
+fun Itinerary(modifier: Modifier = Modifier) {
+    var currentStep by remember { mutableStateOf(1) }
+
+    when (currentStep) {
+        1 -> DefineRouteStep(
+            modifier = modifier,
+            onNext = { currentStep = 2 }
+        )
+        2 -> AddLocalsStep(
+            modifier = modifier,
+            onNext = { currentStep = 3 },
+            onBack = { currentStep = 1 }
+        )
+        3 -> OrganizeLocalsStep(
+            modifier = modifier,
+            onNext = { currentStep = 4 },
+            onBack = { currentStep = 2}
+        )
+        4 -> ViewItineraryStep(
+            modifier = modifier,
+            onNext = { currentStep = 4 },
+            onBack = { currentStep = 2}
+        )
+
+
+    }
+}
+
+// ─── PASSO 1 ────────────────────────────────────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun DefineRouteStep(
     modifier: Modifier = Modifier,
-    onRegisterClick: (HashMap<String, String>, String) -> Unit
+    onNext: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -360,6 +391,37 @@ fun Itinerary(
 
                 MoodCard()
             }
+            Button(
+                onClick = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 25.dp)
+                    .height(45.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                contentPadding = PaddingValues()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colorStops = arrayOf(
+                                    0.0f to Purple,
+                                    1.0f to Blue
+                                )
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Continuar",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = Poppins
+                    )
+                }
+            }
 
 
         }
@@ -367,6 +429,160 @@ fun Itinerary(
     }
 
 }
+//─── PASSO 2 ────────────────────────────────────────────────
+
+@Composable
+fun AddLocalsStep(
+    modifier: Modifier = Modifier,
+    onNext: () -> Unit,
+    onBack: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = OffWhite)
+            .verticalScroll(rememberScrollState())
+    ) {
+        Column(modifier = Modifier.padding(24.dp)) {
+
+            var userName by remember { mutableStateOf("") }
+            var userNickname by remember { mutableStateOf("") }
+            var userEmail by remember { mutableStateOf("") }
+            var userBio by remember { mutableStateOf("") }
+            var userPassword by remember { mutableStateOf("") }
+            var userConfirmPassword by remember { mutableStateOf("") }
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+            ) {
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.menu_ellipsis),
+                        contentDescription = null,
+                        modifier = Modifier.size(26.dp),
+                        tint = Blue
+                    )
+                }
+                Text(
+                    text = "Adicionar Locais",
+                    fontSize = 14.sp,
+                    color = Blue,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = Poppins,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(top = 1.dp)
+                )
+
+
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.heart),
+                        contentDescription = null,
+                        modifier = Modifier.size(26.dp),
+                        tint = Blue
+                    )
+                }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+
+            ) {
+
+                CategoryCard()
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .padding(top = 20.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    Text(
+                        text = "Sugestões para você",
+                        fontSize = 16.sp,
+                        color = DarkBlue,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = Poppins,
+                        modifier = Modifier.padding(top = 1.dp)
+                    )
+                    Text(
+                        text = "Selecionamos lugares perfeitos para o seu roteiro!",
+                        fontSize = 12.sp,
+                        color = Gray,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = Poppins,
+
+                        )
+                }
+            }
+
+            Button(
+                onClick = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 25.dp)
+                    .height(45.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                contentPadding = PaddingValues()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colorStops = arrayOf(
+                                    0.0f to Purple,
+                                    1.0f to Blue
+                                )
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Continuar",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = Poppins
+                    )
+                }
+            }
+
+
+        }
+
+    }
+}
+
+//─── PASSO 3 ────────────────────────────────────────────────
+@Composable
+fun OrganizeLocalsStep(
+    modifier: Modifier = Modifier,
+    onNext: () -> Unit,
+    onBack: () -> Unit
+) {}
+//─── PASSO 4 ────────────────────────────────────────────────
+@Composable
+fun ViewItineraryStep(
+    modifier: Modifier = Modifier,
+    onNext: () -> Unit,
+    onBack: () -> Unit
+) {}
+//─── Cards ────────────────────────────────────────────────
 @Composable
 fun DayCard() {
     val options = listOf("1 dia", "2 dias", "3 dias", "+ de 3")
@@ -400,11 +616,47 @@ fun DayCard() {
 
     }
 }
-
 data class FilterOption(
     val label: String,
     val icon: Int
 )
+
+@Composable
+fun CategoryCard() {
+    val options = listOf("Todos", "Praias", "Parques", "Religioso", "GastroBar", "Eco", "Histórico")
+    var selected by remember { mutableStateOf("") }
+
+
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
+        options.forEach { option ->
+
+            items(options) { option ->
+                val isSelected = option == selected
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(40))
+                        .background(if (isSelected) Purple else LightGray)
+                        .clickable { selected = option }
+                        .padding(horizontal = 14.dp, vertical = 5.dp)
+                ) {
+                    Text(
+                        text = option,
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                        color = if (isSelected) Color.White else DarkBlue // branco se selecionado, azul se não
+                    )
+                }
+
+
+            }
+        }
+
+    }
+}
 @Composable
 fun CompanyCard() {
     val options = listOf(
@@ -580,11 +832,19 @@ fun InterestsCard() {
 
 
 
+
 @Preview(showBackground = true)
 @Composable
-fun ItineraryPreview() {
+fun Step1Preview() {
     DesbravandoTheme {
-        Itinerary(onRegisterClick = { _, _ -> })
+        DefineRouteStep(onNext = {})
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun Step2Preview() {
+    DesbravandoTheme {
+        AddLocalsStep(onNext = {}, onBack = {})
+    }
+}

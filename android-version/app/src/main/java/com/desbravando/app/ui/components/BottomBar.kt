@@ -1,5 +1,7 @@
 package com.desbravando.app.ui.components
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -23,6 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.desbravando.app.CatalogActivity
+import com.desbravando.app.CreateItinerary
+import com.desbravando.app.FavoritesActivity
+import com.desbravando.app.HomeActivity
+import com.desbravando.app.ProfileActivity
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.Gray
@@ -121,6 +128,24 @@ fun BottomBar(
                 indicatorColor = Color.Transparent
             )
         )
+    }
+}
+
+@Composable
+fun BottomBarWithNavigation(
+    selectedRoute: String,
+    context: Context
+) {
+    BottomBar(selectedRoute = selectedRoute) { route ->
+        val intent = when (route) {
+            "home"      -> Intent(context, HomeActivity::class.java)
+            "explore"   -> Intent(context, CatalogActivity::class.java)
+            "add"       -> Intent(context, CreateItinerary::class.java)
+            "favorites" -> Intent(context, FavoritesActivity::class.java)
+            "profile"   -> Intent(context, ProfileActivity::class.java)
+            else -> null
+        }
+        intent?.let { context.startActivity(it) }
     }
 }
 

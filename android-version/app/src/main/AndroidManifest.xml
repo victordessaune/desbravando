@@ -25,7 +25,6 @@
             android:theme="@style/Theme.Desbravando">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,6 +33,10 @@
             android:name=".HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.Desbravando" />
+        <activity android:name=".CatalogActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".CreateItinerary" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>

@@ -2,7 +2,6 @@ import { auth, db } from "../js/api/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ─── Helpers ─────────────────────────────────────────────
 function getInitials(name) {
     const ignore = ["de", "da", "do", "dos", "das"];
     const words = name.split(" ").filter(p => p.trim() !== "");
@@ -28,12 +27,10 @@ function getTagClass(tag) {
     return "priv";
 }
 
-// ─── Estado global ───────────────────────────────────────
 let allPlaces = [];
 let activeFilter = "all";
 let searchTerm = "";
 
-// ─── Renderização ────────────────────────────────────────
 function renderTable() {
     const body = document.getElementById("places-table-body");
     const emptyState = document.getElementById("empty-state");
@@ -99,7 +96,6 @@ function renderTable() {
     }).join("");
 }
 
-// ─── Filtros dinâmicos ───────────────────────────────────
 function buildFilters() {
     const tags = new Set();
     allPlaces.forEach(p => (p.tags || []).forEach(t => tags.add(t)));
@@ -125,13 +121,11 @@ function buildFilters() {
     });
 }
 
-// ─── Busca ───────────────────────────────────────────────
 document.getElementById("search-input").addEventListener("input", e => {
     searchTerm = e.target.value;
     renderTable();
 });
 
-// ─── Auth + Firebase ─────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         window.location.href = "../login/login.html";

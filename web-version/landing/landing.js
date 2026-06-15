@@ -1,10 +1,8 @@
-/* ─── NAVBAR SCROLL ─────────────────────────────────────────── */
 window.addEventListener("scroll", () => {
     const navbar = document.querySelector(".navbar");
     navbar.classList.toggle("scrolled", window.scrollY > 50);
 });
 
-/* ─── SCROLL REVEAL ─────────────────────────────────────────── */
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -21,21 +19,18 @@ document.querySelectorAll(
     revealObserver.observe(el);
 });
 
-/* final section entra como um bloco só */
 const finalSection = document.querySelector(".final-section");
 if (finalSection) revealObserver.observe(finalSection);
 
-/* stagger nas features */
+
 document.querySelectorAll(".box-individual-feature").forEach((el, i) => {
     el.style.transitionDelay = `${i * 0.12}s`;
 });
 
-/* stagger nas etapas how it works */
 document.querySelectorAll(".info-top, .info-middle, .info-bottom").forEach((el, i) => {
     el.style.transitionDelay = `${i * 0.15}s`;
 });
 
-/* ─── ANIMATED COUNTERS ──────────────────────────────────────── */
 function animateCounter(el, target, duration = 1800) {
     const suffix = el.textContent.replace(/[0-9]/g, "");
     let start = null;
@@ -60,7 +55,6 @@ const statsObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.4 });
 
-/* prepara os elementos de estatística */
 document.querySelectorAll(".statistics-left h3, .statistics-middle h3, .statistics-right h3").forEach(h3 => {
     const raw = h3.textContent.trim();
     const num = parseInt(raw.replace(/\D/g, ""));
@@ -72,7 +66,6 @@ document.querySelectorAll(".statistics-left h3, .statistics-middle h3, .statisti
 const statsSection = document.querySelector(".statistics");
 if (statsSection) statsObserver.observe(statsSection);
 
-/* ─── PARALLAX SUAVE NO HERO ────────────────────────────────── */
 const woman = document.querySelector(".woman");
 const shape = document.querySelector(".shape");
 
@@ -82,7 +75,6 @@ window.addEventListener("scroll", () => {
     if (shape)  shape.style.transform  = `translateY(${scrollY * 0.03}px)`;
 }, { passive: true });
 
-/* ─── MAGNETIC BUTTONS ──────────────────────────────────────── */
 document.querySelectorAll(".button-primary, .button-secondary, .final-button, .button-navbar").forEach(btn => {
     btn.addEventListener("mousemove", e => {
         const rect = btn.getBoundingClientRect();
@@ -97,7 +89,6 @@ document.querySelectorAll(".button-primary, .button-secondary, .final-button, .b
     });
 });
 
-/* ─── CURSOR HIGHLIGHT NAS FEATURE CARDS ───────────────────── */
 document.querySelectorAll(".box-individual-feature").forEach(card => {
     card.addEventListener("mousemove", e => {
         const rect = card.getBoundingClientRect();
@@ -110,7 +101,6 @@ document.querySelectorAll(".box-individual-feature").forEach(card => {
     });
 });
 
-/* ─── TILT 3D NAS INFO CARDS ────────────────────────────────── */
 document.querySelectorAll(".info-top, .info-middle, .info-bottom").forEach(card => {
     card.addEventListener("mousemove", e => {
         const rect = card.getBoundingClientRect();
@@ -125,7 +115,6 @@ document.querySelectorAll(".info-top, .info-middle, .info-bottom").forEach(card 
     });
 });
 
-/* ─── RIPPLE NOS BOTÕES ──────────────────────────────────────── */
 document.querySelectorAll(".button-primary, .final-button").forEach(btn => {
     btn.style.position   = "relative";
     btn.style.overflow   = "hidden";
@@ -150,7 +139,6 @@ document.querySelectorAll(".button-primary, .final-button").forEach(btn => {
     });
 });
 
-/* injeta o keyframe do ripple dinamicamente */
 const style = document.createElement("style");
 style.textContent = `
 @keyframes rippleAnim {

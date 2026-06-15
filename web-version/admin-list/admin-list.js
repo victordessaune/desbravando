@@ -19,11 +19,9 @@ import {
   initializeApp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-// ── Estado global ──
 let currentOrgId = null;
 let currentUserUid = null;
 
-// ── POPUP ──
 window.openPopup  = () => {
   clearPopupFields();
   document.getElementById("popup-responsavel").classList.add("open");
@@ -47,7 +45,6 @@ window.toggleVis = (id, btn) => {
     : '<i class="fa-solid fa-eye"></i>';
 };
 
-// ── Máscara CPF ──
 document.getElementById("cpf")?.addEventListener("input", function () {
   let v = this.value.replace(/\D/g, "").slice(0, 11);
   v = v
@@ -57,7 +54,6 @@ document.getElementById("cpf")?.addEventListener("input", function () {
   this.value = v;
 });
 
-// ── Limpa erros ao digitar ──
 ["nome", "sobrenome", "cpf", "email", "senha", "confirmar"].forEach((id) => {
   document.getElementById(id)?.addEventListener("input", () => {
     document.getElementById("err-" + id)?.classList.remove("show");
@@ -78,7 +74,6 @@ function clearPopupFields() {
   });
 }
 
-// ── Validação e salvamento ──
 window.validarPopup = async () => {
   let ok = true;
 
@@ -104,7 +99,6 @@ window.validarPopup = async () => {
 
   if (!ok) return;
 
-  // ── Salvar no Firebase ──
   const saveBtn = document.querySelector(".btn-primary");
   saveBtn.disabled = true;
   saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
@@ -117,14 +111,12 @@ window.validarPopup = async () => {
     const occupation = document.getElementById("ocupacao").value.trim();
     const password   = document.getElementById("senha").value;
 
-    // 1. Cria um app Firebase secundário temporário para não alterar a sessão atual
     const secondaryApp  = initializeApp(app.options, "secondary-" + Date.now());
     const secondaryAuth = getAuth(secondaryApp);
     const newCred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
     const newUid  = newCred.user.uid;
     await secondaryAuth.signOut();
 
-    // 2. Salva os dados no Firestore herdando orgId do admin logado
     await setDoc(doc(db, "users", newUid), {
       uid:        newUid,
       firstName,
@@ -165,7 +157,6 @@ function showErr(id, msg) {
   document.getElementById(id)?.classList.add("err");
 }
 
-// ── Gera iniciais ──
 function getInitials(name) {
   const ignore = ["de", "da", "do", "dos", "das"];
   const words  = name.split(" ").filter((p) => p.trim() !== "");
@@ -177,7 +168,6 @@ function getInitials(name) {
     .join("");
 }
 
-// ── Formata data ──
 function formatDate(val) {
   if (!val) return "—";
   if (val.toDate) return val.toDate().toLocaleDateString("pt-BR");
@@ -185,7 +175,6 @@ function formatDate(val) {
   return "—";
 }
 
-// ── Renderiza tabela ──
 async function loadAdmins(orgId) {
   const tableBody = document.getElementById("admins-table-body");
   if (!tableBody) return;
@@ -205,7 +194,6 @@ async function loadAdmins(orgId) {
     const admins = [];
     snap.forEach((d) => admins.push({ id: d.id, ...d.data() }));
 
-    // Atualiza contador
     const counter = document.getElementById("admin-count");
     if (counter) counter.textContent = admins.length;
 
@@ -263,7 +251,6 @@ async function loadAdmins(orgId) {
   }
 }
 
-// ── Remover admin ──
 window.removeAdmin = async (uid, name) => {
   const confirmMsg = `Tem certeza que deseja remover "${name}"? Esta ação não pode ser desfeita.`;
   if (!confirm(confirmMsg)) return;
@@ -271,7 +258,6 @@ window.removeAdmin = async (uid, name) => {
   try {
     await deleteDoc(doc(db, "users", uid));
 
-    // Se removeu a própria conta, faz logout e redireciona para login
     if (uid === currentUserUid) {
       await signOut(auth);
       window.location.href = "../login/login.html";
@@ -285,13 +271,11 @@ window.removeAdmin = async (uid, name) => {
   }
 };
 
-// ── Editar admin (placeholder — implemente conforme sua necessidade) ──
 window.editAdmin = (uid) => {
   console.log("Editar admin:", uid);
   alert("Funcionalidade de edição em desenvolvimento.");
 };
 
-// ── Busca ──
 document.querySelector(".search-input")?.addEventListener("input", function () {
   const term = this.value.toLowerCase();
   document.querySelectorAll("#admins-table-body .table-body-admin").forEach((row) => {
@@ -300,7 +284,6 @@ document.querySelector(".search-input")?.addEventListener("input", function () {
   });
 });
 
-// ── Auth listener ──
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUserUid = user.uid;

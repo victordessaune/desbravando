@@ -92,7 +92,6 @@ class AppSidebar extends HTMLElement {
         </div>
       </aside>`;
 
-    // Listener do logout (após render)
     this.querySelector('#btn-logout')?.addEventListener('click', () => this._logout());
   }
 

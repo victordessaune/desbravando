@@ -1,4 +1,3 @@
-// 🔥 IMPORTS
 import { db, auth } from "/web-version/js/api/firebase.js";
 import {
     collection,
@@ -12,21 +11,14 @@ import {
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// ☁️ CLOUDINARY
 const CLOUDINARY_CLOUD_NAME = "dopr7jbfd";
 const CLOUDINARY_UPLOAD_PRESET = "locations_upload";
 
-/* ═══════════════════════
-   ESTADO
-═══════════════════════ */
 let currentStep = 1;
 const totalSteps = 4;
 let currentUser = null;
 let currentOrgId = null;
 
-/* ═══════════════════════
-   AUTH
-═══════════════════════ */
 onAuthStateChanged(auth, async (user) => {
     currentUser = user || null;
 
@@ -44,13 +36,9 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-/* ═══════════════════════
-   IMAGENS
-═══════════════════════ */
 let selectedCoverFile    = null;
 let selectedGalleryFiles = [];
 
-// ── CAPA ──
 window.previewCover = function(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -88,7 +76,6 @@ window.previewCover = function(event) {
     if (err) { err.textContent = ""; err.classList.remove("show"); }
 };
 
-// ── GALERIA ──
 window.previewGallery = function(event) {
     const files = Array.from(event.target.files);
     const preview  = document.getElementById("gallery-preview");
@@ -123,7 +110,6 @@ window.previewGallery = function(event) {
             preview.appendChild(wrapper);
             countEl.textContent = selectedGalleryFiles.length;
 
-            // limpa erro se já tiver 5+
             if (selectedGalleryFiles.length >= 5 && errorEl) {
                 errorEl.textContent = "";
                 errorEl.classList.remove("show");
@@ -132,11 +118,9 @@ window.previewGallery = function(event) {
         reader.readAsDataURL(file);
     });
 
-    // reset input para permitir re-upload
     event.target.value = "";
 };
 
-// ── CLOUDINARY ──
 async function uploadToCloudinary(file) {
     const formData = new FormData();
     formData.append("file", file);
@@ -152,9 +136,6 @@ async function uploadToCloudinary(file) {
     return data.secure_url;
 }
 
-/* ═══════════════════════
-   STEPS
-═══════════════════════ */
 window.goToStep = function(step) {
     document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
 
@@ -174,7 +155,7 @@ window.goToStepSafe = function(step) {
     if (step > currentStep + 1) return;
 
     if (step > currentStep && !validateStep(currentStep)) {
-        console.log("❌ bloqueado");
+        console.log(" bloqueado");
         return;
     }
 
@@ -189,9 +170,7 @@ window.prevStep = function(from) {
     if (from > 1) goToStep(from - 1);
 };
 
-/* ═══════════════════════
-   VALIDAÇÃO
-═══════════════════════ */
+
 function validateStep(step) {
     const panel = document.getElementById(`panel-${step}`);
     const required = panel.querySelectorAll("input[required], select[required], textarea[required]");
@@ -220,9 +199,6 @@ function validateStep(step) {
         }
     });
 
-    /* ═══════════════════════
-       STEP 2 — HORÁRIO
-    ════════════════════════ */
     if (step === 2) {
         const rows     = document.querySelectorAll("#hours-list .hours-grid[data-day]");
         const errorMsg = document.getElementById("hours-error");
@@ -246,16 +222,11 @@ function validateStep(step) {
         }
     }
 
-    /* ═══════════════════════
-       STEP 3 — TAGS
-    ════════════════════════ */
     if (step === 3) {
         if (!validateTags("tags-pill", "tags-error")) valid = false;
     }
 
-    /* ═══════════════════════
-       STEP 4 — PREÇO + IMAGENS
-    ════════════════════════ */
+
     if (step === 4) {
         // preço
         const selected = document.querySelector(".price-opt.selected");
@@ -279,7 +250,6 @@ function validateStep(step) {
             }
         }
 
-        // capa obrigatória
         const coverErr = document.getElementById("cover-error");
         if (!selectedCoverFile) {
             if (coverErr) { coverErr.textContent = "Adicione uma foto de capa"; coverErr.classList.add("show"); }
@@ -288,7 +258,6 @@ function validateStep(step) {
             if (coverErr) { coverErr.textContent = ""; coverErr.classList.remove("show"); }
         }
 
-        // galeria mínimo 1
         const galleryErr = document.getElementById("gallery-error");
         if (selectedGalleryFiles.length < 1) {
             if (galleryErr) { galleryErr.textContent = `Adicione pelo menos 1 foto na galeria (${selectedGalleryFiles.length}/5)`; galleryErr.classList.add("show"); }
@@ -306,9 +275,6 @@ function validateStep(step) {
     return valid;
 }
 
-/* ═══════════════════════
-   TAGS
-═══════════════════════ */
 function validateTags(containerId, errorId) {
     const container = document.getElementById(containerId);
     if (!container) return true;
@@ -344,9 +310,6 @@ window.toggleTag = function(el) {
     if (selected.length > 0 && errorMsg) { errorMsg.textContent = ""; errorMsg.classList.remove("show"); }
 };
 
-/* ═══════════════════════
-   HORÁRIOS
-═══════════════════════ */
 window.toggleClosed = function(checkbox) {
     const grid     = checkbox.closest(".hours-grid");
     const isClosed = checkbox.checked;
@@ -377,7 +340,6 @@ window.getHorarios = function() {
     return horarios;
 };
 
-// máscara HH:MM
 document.addEventListener("input", function(e) {
     if (!e.target.classList.contains("hour-input")) return;
 
@@ -387,9 +349,6 @@ document.addEventListener("input", function(e) {
     e.target.value = value;
 });
 
-/* ═══════════════════════
-   PRICE
-═══════════════════════ */
 window.selectPrice = function(el, isPago) {
     document.querySelectorAll('.price-opt').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
@@ -414,9 +373,6 @@ window.clearQuickBtns = function() {
     document.querySelectorAll('.price-quick-btn').forEach(b => b.classList.remove('active'));
 };
 
-/* ═══════════════════════
-   CEP
-═══════════════════════ */
 document.getElementById("cep")?.addEventListener("blur", async function() {
     const cep = this.value.replace(/\D/g, "");
     if (cep.length !== 8) return;
@@ -435,14 +391,11 @@ document.getElementById("cep")?.addEventListener("blur", async function() {
     }
 });
 
-/* ═══════════════════════
-   PUBLICAR
-═══════════════════════ */
 window.publishLocal = async function() {
 
     // 1. validar step 4
     if (!validateStep(4)) {
-        console.log("❌ formulário inválido");
+        console.log(" formulário inválido");
         return;
     }
 
@@ -451,16 +404,12 @@ window.publishLocal = async function() {
     if (!currentOrgId) { alert("Nenhuma organização encontrada."); return; }
 
     try {
-        // ⏰ horários
         const horarios = getHorarios();
 
-        // 🖼️ upload capa
         const coverUrl = await uploadToCloudinary(selectedCoverFile);
 
-        // 🖼️ upload galeria
         const galleryUrls = await Promise.all(selectedGalleryFiles.map(f => uploadToCloudinary(f)));
 
-        // 📦 dados completos
         const data = {
             orgId:     currentOrgId,
             createdBy: currentUser.uid,
@@ -479,37 +428,29 @@ window.publishLocal = async function() {
             telefone:     document.getElementById("telefone")?.value || "",
             website:      document.getElementById("website")?.value  || "",
 
-            // ⏰ horários
             horarios,
 
-            // 🖼️ imagens
             cover:  coverUrl,
             images: galleryUrls,
 
-            // 💰 preço
             price: {
                 tipo:  document.querySelector(".price-opt.selected")?.textContent || "",
                 valor: document.getElementById("price-value")?.value             || null,
                 por:   document.getElementById("price-per")?.value               || ""
             },
 
-            // 🏷️ tags
             tags: [...document.querySelectorAll("#tags-pill .tag.selected")]
                 .map(t => t.textContent.replace("#", "").trim()),
 
-            // 🎯 serviços
             services: [...document.querySelectorAll("#services-tags .tag.selected")]
                 .map(t => t.textContent.trim()),
 
-            // 🏗️ infraestrutura
             infrastructure: [...document.querySelectorAll("#infraestrutura input:checked")]
                 .map(i => i.closest(".check-item")?.textContent?.trim())
         };
 
-        // 💾 salvar
         await addDoc(collection(db, "locations"), data);
 
-        // ✅ sucesso
         document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
         const success = document.getElementById("success-screen");
         if (success) success.style.display = "block";

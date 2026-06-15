@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import com.desbravando.app.data.remote.RetrofitInstance
 import com.desbravando.app.ui.components.BottomBar
+import com.desbravando.app.ui.components.BottomBarWithNavigation
 import com.desbravando.app.ui.theme.*
 import com.desbravando.app.ui.utils.WeatherVisual
 import com.desbravando.app.ui.utils.getWeatherVisual
@@ -77,14 +78,14 @@ class HomeActivity : ComponentActivity() {
 
         setContent {
             DesbravandoTheme {
-                var selectedRoute by remember { mutableStateOf("home") }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        BottomBar(selectedRoute) { route ->
-                            selectedRoute = route
-                        }
+                        BottomBarWithNavigation(
+                            selectedRoute = "home",
+                            context = this
+                        )
                     }
                 ) { innerPadding ->
                     Box(

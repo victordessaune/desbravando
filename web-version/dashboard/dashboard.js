@@ -1,13 +1,11 @@
 import { db } from "../js/api/firebase.js";
 import { doc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ─── Paleta de cores para as categorias ───────────────────
 const PALETTE = [
   '#7F77DD', '#1D9E75', '#D4537E', '#EF9F27',
   '#378ADD', '#639922', '#D85A30', '#888780',
 ];
 
-// ─── Data atual ───────────────────────────────────────────
 function atualizarData() {
   const data = new Date();
   const dias  = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
@@ -17,7 +15,6 @@ function atualizarData() {
 }
 atualizarData();
 
-// ─── Gráfico (instância global para poder destruir e recriar) ──
 let donutChart = null;
 
 function buildDonut(categoryCounts, total) {
@@ -25,11 +22,9 @@ function buildDonut(categoryCounts, total) {
   const values = Object.values(categoryCounts);
   const colors = labels.map((_, i) => PALETTE[i % PALETTE.length]);
 
-  // Atualiza número central
   document.querySelector('.donut-number').textContent = total;
   document.querySelector('.donut-label').textContent  = total === 1 ? 'local' : 'locais';
 
-  // Destrói gráfico anterior se existir
   if (donutChart) donutChart.destroy();
 
   donutChart = new Chart(document.getElementById('donutChart'), {
@@ -48,7 +43,6 @@ function buildDonut(categoryCounts, total) {
     }
   });
 
-  // Monta legenda dinamicamente
   const legend = document.querySelector('.legend');
   legend.innerHTML = labels.map((label, i) => {
     const pct = total > 0 ? Math.round((values[i] / total) * 100) : 0;
@@ -62,7 +56,6 @@ function buildDonut(categoryCounts, total) {
   }).join('');
 }
 
-// ─── Locais ───────────────────────────────────────────────
 async function loadLocations(orgId) {
   const snapshot = await getDocs(query(
     collection(db, "locations"),
@@ -76,7 +69,6 @@ async function loadLocations(orgId) {
   document.getElementById("total-places-number").textContent = count;
   document.getElementById("total-places-text").textContent   = count === 1 ? "Local Cadastrado" : "Locais Cadastrados";
 
-  // Conta categorias pela primeira tag de cada local
   const categoryCounts = {};
 
   snapshot.forEach((docSnap) => {
@@ -86,7 +78,6 @@ async function loadLocations(orgId) {
     const firstTag = Array.isArray(d.tags) ? d.tags[0] || "Outros" : d.tags || "Outros";
     const date     = d.createdAt.toDate().toLocaleDateString("pt-BR");
 
-    // Acumula para o gráfico
     categoryCounts[firstTag] = (categoryCounts[firstTag] || 0) + 1;
 
     container.innerHTML += `
@@ -118,7 +109,6 @@ async function loadLocations(orgId) {
       </div>`;
   });
 
-  // Constrói o gráfico com os dados reais
   buildDonut(categoryCounts, count);
 }
 
@@ -133,7 +123,6 @@ function getInitials(name) {
     .join("");
 }
 
-// ─── Escuta dados do usuário vindos da sidebar ────────────
 window.addEventListener("userLoaded", async (e) => {
   const { usuario } = e.detail;
 

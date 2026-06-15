@@ -83,10 +83,6 @@ class Places : ComponentActivity() {
                     PlaceDetailsScreen(
                         place = place!!
                     )
-                    DescriptionPlace(
-                        place = place!!
-                    )
-
                 }
             }
         }
@@ -108,6 +104,9 @@ fun PlaceDetailsScreen(
         }
         item {
             DescriptionPlace(place)
+        }
+        item {
+            ImageSection(place)
         }
     }
 }
@@ -219,10 +218,9 @@ fun DescriptionPlace(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ){
-
         Card(
             modifier = Modifier
-                .height(80.dp)
+                .fillMaxHeight()
                 .fillMaxWidth(0.95f)
                 .padding(8.dp),
             colors = CardDefaults.cardColors(
@@ -253,23 +251,101 @@ fun DescriptionPlace(
                         fontSize = 15.sp,
                         fontWeight = FontWeight(600)
                     )
-
                 }
 
+                Spacer(
+                    modifier = Modifier.height(5.dp)
+                )
+
+                Text(
+                    text = place.bio,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp),
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp
+                )
             }
+        }
+    }
+}
 
+@Composable
+fun ImageSection(
+    place: PlaceInfo
+){
+    Column(
 
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ){
+        Card(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(0.95f)
+                .padding(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = White
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.ic_camera
+                        ),
+                        contentDescription = "Location",
+                        tint = Blue,
+                        modifier = Modifier.size(18.dp)
+                    )
+
+                    Spacer(
+                        modifier = Modifier.width(5.dp)
+                    )
+
+                    Text(
+                        text = "Fotos do local",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight(600)
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier.height(10.dp)
+                )
+
+            }
         }
 
     }
 
+}
+@Composable
+fun InformtionsSection(
+    place: PlaceInfo
+){
+    Column(
+
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ){}
 }
 
 data class PlaceInfo(
     val id: String = "",
     val name: String = "",
     val city: String = "",
-    val tags: String = ""
+    val tags: String = "",
+    val bio: String = ""
 )
 
 @Preview(showBackground = true)
@@ -281,7 +357,8 @@ fun PlacesPreview() {
                 id = "1",
                 name = "Convento da Penha",
                 city = "Vila Velha",
-                tags = "GatroBar"
+                tags = "GatroBar",
+                bio = "O Coco Bambu é uma renomada rede de restaurantes brasileira especializada em frutos do mar, conhecida por pratos fartos, cardápio variado e ambiente sofisticado, mas acessível. Fundada em 2001, destaca-se pelo Camarão Internacional, adegas climatizadas, áreas para eventos e atendimento de alta qualidade."
             )
         )
     }

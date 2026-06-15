@@ -72,9 +72,10 @@ class SplashActivity : ComponentActivity(){
                     Splash(modifier = Modifier.padding(innerPadding))
                 }
             }
+        }
     }
 }
-}
+
 @Composable
 fun Splash(modifier: Modifier = Modifier) {
     Column(

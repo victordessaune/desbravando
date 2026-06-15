@@ -9,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -81,6 +83,9 @@ class Places : ComponentActivity() {
                     PlaceDetailsScreen(
                         place = place!!
                     )
+                    DescriptionPlace(
+                        place = place!!
+                    )
 
                 }
             }
@@ -100,6 +105,9 @@ fun PlaceDetailsScreen(
 
         item {
             HeaderSection(place)
+        }
+        item {
+            DescriptionPlace(place)
         }
     }
 }
@@ -123,7 +131,9 @@ fun HeaderSection(
             modifier = Modifier.padding(start = 20.dp, top = 15.dp, end = 12.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
@@ -190,10 +200,69 @@ fun HeaderSection(
                             vertical = 2.dp
                         )
                 )
+                Spacer(
+                    modifier = Modifier.height(20.dp)
+                )
             }
 
         }
     }
+}
+@Composable
+fun DescriptionPlace(
+    place: PlaceInfo
+){
+    Column(
+
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ){
+
+        Card(
+            modifier = Modifier
+                .height(80.dp)
+                .fillMaxWidth(0.95f)
+                .padding(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = White
+            )
+        ){
+            Column(
+                modifier = Modifier.padding(10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.ic_info
+                        ),
+                        contentDescription = "Location",
+                        tint = Blue,
+                        modifier = Modifier.size(18.dp)
+                    )
+
+                    Spacer(
+                        modifier = Modifier.width(5.dp)
+                    )
+
+                    Text(
+                        text = "Sobre o local",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight(600)
+                    )
+
+                }
+
+            }
+
+
+        }
+
+    }
+
 }
 
 data class PlaceInfo(

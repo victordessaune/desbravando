@@ -397,7 +397,7 @@ fun Profile(
                 modifier = Modifier.fillMaxWidth()
 
             ) { items(locations) { (imageUrl, name, location) ->
-                LocationCard(
+                FavoriteCard(
                     imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
                     name = "Pão de Açúcar",
                     location = " Vitória - ES"
@@ -484,7 +484,7 @@ fun ItineraryCard(
 }
 
 @Composable
-fun LocationCard(
+fun FavoriteCard(
     imageUrl: String,
     name: String,
     location: String

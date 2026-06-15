@@ -42,6 +42,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
+import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.Gray
 
@@ -204,7 +205,7 @@ fun Catalog() {
 
             items(filteredRestaurants) { restaurant ->
 
-                RestaurantCard(
+                LocalCard(
                     restaurant = restaurant,
                     onClick = {
 
@@ -218,78 +219,6 @@ fun Catalog() {
 
     }
 }
-@Composable
-fun RestaurantCard(
-    restaurant: Restaurants,
-    onClick: () -> Unit = {}
-) {
-    Box(
-        modifier = Modifier
-            .height(110.dp)
-            .fillMaxWidth()
-            .background(
-                color = White,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .clickable { onClick() }
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize()
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.cb3),
-                contentDescription = "Foto do lugar",
-                modifier = Modifier
-                    .width(130.dp)
-                    .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 16.dp,
-                            bottomStart = 16.dp
-                        )
-                    ),
-                contentScale = ContentScale.Crop
-            )
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-
-                Text(
-                    text = restaurant.name,
-                    fontFamily = Poppins,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-
-                Text(
-                    text = restaurant.city,
-                    fontFamily = Poppins,
-                    fontSize = 14.sp
-                )
-            }
-
-            Box(
-                modifier = Modifier.fillMaxHeight(),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_next),
-                    contentDescription = "Visualizar",
-                    tint = Blue,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(28.dp)
-                )
-            }
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -301,7 +230,8 @@ fun CatalogPreview() {
 
 data class Restaurants(
     val name: String = "",
-    val city: String = ""
+    val city: String = "",
+    val imageUrl: Int
 )
 
 fun findRestaurants(

@@ -39,7 +39,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import com.desbravando.app.ui.theme.Gray
 
-class Catalog : ComponentActivity() {
+class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

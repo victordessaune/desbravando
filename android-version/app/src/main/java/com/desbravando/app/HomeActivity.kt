@@ -10,9 +10,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +36,7 @@ import com.desbravando.app.data.remote.RetrofitInstance
 import com.desbravando.app.ui.components.BottomBar
 import com.desbravando.app.ui.components.BottomBarWithNavigation
 import com.desbravando.app.ui.theme.*
+import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.utils.WeatherVisual
 import com.desbravando.app.ui.utils.getWeatherVisual
 import com.google.android.gms.location.LocationServices
@@ -45,7 +51,6 @@ class HomeActivity : ComponentActivity() {
 
     private var temperature = mutableStateOf("--°C")
     private var weatherDesc = mutableStateOf("Carregando...")
-
     private var weatherVisual = mutableStateOf(WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00)))
 
     private val locationPermissionRequest = registerForActivityResult(
@@ -53,7 +58,6 @@ class HomeActivity : ComponentActivity() {
     ) { permissions ->
         val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
                 || permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-
         if (granted) fetchWeather()
     }
 
@@ -78,7 +82,6 @@ class HomeActivity : ComponentActivity() {
 
         setContent {
             DesbravandoTheme {
-
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
@@ -223,6 +226,14 @@ fun Home(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(20.dp).padding(start = 10.dp))
+
+        StateSelector()
+
+        Spacer(modifier = Modifier.height(20.dp).padding(start = 10.dp))
+
+        BigLocationCard()
     }
 }
 
@@ -243,7 +254,7 @@ fun WeatherWidget(
         Icon(
             painter = painterResource(id = weatherVisual.icon),
             contentDescription = stringResource(R.string.cd_climate),
-            tint = weatherVisual.tint, // <- agora usa a cor dinâmica
+            tint = weatherVisual.tint,
             modifier = Modifier.size(35.dp)
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -263,6 +274,142 @@ fun WeatherWidget(
                 fontWeight = FontWeight(500)
             )
         }
+    }
+}
+
+val estados = listOf(
+    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
+    "Ceará", "Distrito Federal", "Espírito Santo", "Goiás",
+    "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais",
+    "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí",
+    "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul",
+    "Rondônia", "Roraima", "Santa Catarina", "São Paulo",
+    "Sergipe", "Tocantins"
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StateSelector() {
+    var expanded by remember { mutableStateOf(false) }
+    var estadoSelecionado by remember { mutableStateOf("Espírito Santo") }
+
+    Row(
+        modifier = Modifier
+            .padding(start = 10.dp, end = 10.dp)
+            .fillMaxWidth()
+            .height(40.dp)
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(20.dp), spotColor = Purple)
+            .background(White, RoundedCornerShape(20.dp)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(start = 10.dp)
+        ) {
+            Row {
+                Icon(
+                    painter = painterResource(id = R.drawable.location_dot_solid_full),
+                    contentDescription = "map pin",
+                    tint = Blue
+                )
+                Text(
+                    text = "Estado selecionado:",
+                    fontFamily = Poppins,
+                    fontSize = 14.sp,
+                    color = Gray,
+                    fontWeight = FontWeight(500)
+                )
+            }
+        }
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 12.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+                    .padding(start = 20.dp)
+                    .background(LightGray, RoundedCornerShape(15.dp)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = estadoSelecionado,
+                    fontFamily = Poppins,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = DarkBlue,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Icon(
+                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = Blue,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                estados.forEach { estado ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = estado,
+                                fontFamily = Poppins,
+                                fontSize = 13.sp,
+                                color = if (estado == estadoSelecionado) Blue else DarkBlue
+                            )
+                        },
+                        onClick = {
+                            estadoSelecionado = estado
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BigLocationCard(){
+    Row(
+        modifier = Modifier
+            .padding(start = 10.dp, end = 10.dp)
+            .fillMaxWidth()
+            .height(200.dp)
+            .background(LightGray, RoundedCornerShape(30.dp)),
+        ){
+        Column() {
+            Row(
+                modifier = Modifier
+                    .padding(top = 15.dp, start = 15.dp)
+                    .background(Purple, RoundedCornerShape(30.dp))
+                    .padding(5.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_star),
+                    contentDescription = "Star",
+                    tint = White
+                )
+                Text(
+                    text = "Em destaque",
+                    color = White,
+                    fontFamily = Poppins
+                )
+            }
+        }
+        Column() { }
     }
 }
 

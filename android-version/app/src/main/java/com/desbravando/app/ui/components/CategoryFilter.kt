@@ -32,6 +32,7 @@ import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
+import com.desbravando.app.ui.theme.White
 
 data class FilterOption(
     val label: String,
@@ -39,7 +40,11 @@ data class FilterOption(
 )
 
 @Composable
-fun CategoryCard() {
+fun CategoryCard(
+        selectedTags: Set<String> = emptySet(),
+        onTagSelected: (String) -> Unit = {},
+) {
+
     val options = listOf(
         FilterOption("Todos", R.drawable.ic_all),
         FilterOption("Praias", R.drawable.ic_beach),
@@ -63,7 +68,7 @@ fun CategoryCard() {
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .clip(RoundedCornerShape(40))
-                        .background(if (isSelected) Purple else LightGray)
+                        .background(if (isSelected) Purple else White)
                         .clickable { selected = option.label }
                         .padding(horizontal = 14.dp, vertical = 5.dp)
                 ) {

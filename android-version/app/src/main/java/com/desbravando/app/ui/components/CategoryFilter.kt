@@ -49,7 +49,7 @@ fun CategoryCard(
         FilterOption("Todos", R.drawable.ic_all),
         FilterOption("Praias", R.drawable.ic_beach),
         FilterOption("Parques", R.drawable.ic_tree),
-        FilterOption("Religioso", R.drawable.ic_culture),
+        FilterOption("Religioso", R.drawable.ic_church),
         FilterOption("GastroBar", R.drawable.ic_utensils),
         FilterOption("Eco", R.drawable.ic_mountain),
         FilterOption("Histórico", R.drawable.ic_landmark)
@@ -59,49 +59,48 @@ fun CategoryCard(
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 
-        options.forEach { option ->
+        items(options) { option ->
+            val isSelected = if (option.label == "Todos") selectedTags.isEmpty()
+            else option.label in selectedTags
 
-            items(options) { option ->
-                val isSelected = option.label == selected
-
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(40))
-                        .background(if (isSelected) Purple else White)
-                        .clickable { selected = option.label }
-                        .padding(horizontal = 14.dp, vertical = 5.dp)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(40))
+                    .background(if (isSelected) Purple else White)
+                    .clickable { selected = option.label }
+                    .padding(horizontal = 14.dp, vertical = 5.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = option.icon),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(top = 2.dp)
-                                .size(22.dp),
-                            tint = if (isSelected) Color.White else DarkBlue
-                        )
+                    Icon(
+                        painter = painterResource(id = option.icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .size(22.dp),
+                        tint = if (isSelected) Color.White else DarkBlue
+                    )
 
-                        Text(
-                            text = option.label,
-                            fontSize = 12.sp,
-                            fontFamily = Poppins,
-                            fontWeight = FontWeight.Medium,
-                            color = if (isSelected) Color.White else DarkBlue,
-                            modifier = Modifier.padding(top = 2.dp)
-                        )
-                    }
+                    Text(
+                        text = option.label,
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                        color = if (isSelected) Color.White else DarkBlue,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
                 }
-
-
             }
+
+
         }
 
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun CategoryFilterPreview() {

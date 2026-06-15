@@ -42,6 +42,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
+import com.desbravando.app.ui.components.CategoryCard
+import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.Gray
 
@@ -62,22 +64,22 @@ class CatalogActivity : ComponentActivity() {
 @Composable
 fun Catalog() {
 
-    var restaurants by remember {
-        mutableStateOf<List<Restaurants>>(emptyList())
-    }
+
+    var restaurants by remember { mutableStateOf<List<Restaurants>>(emptyList()) }
+    var search by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("") }  // ← novo
 
     LaunchedEffect(Unit) {
-
-        findRestaurants { list ->
-            restaurants = list
-        }
+        findRestaurants { list -> restaurants = list }
     }
 
-    var search by remember {mutableStateOf("")}
-    val filteredRestaurants = restaurants.filter {
-        it.name.contains(search, ignoreCase = true)
+    // filtra por busca E por categoria
+    val filteredRestaurants = restaurants.filter { restaurant ->
+        val matchesSearch = restaurant.name.contains(search, ignoreCase = true)
+        val matchesCategory = selectedCategory.isEmpty() ||
+                restaurant.tags.any { it.equals(selectedCategory, ignoreCase = true) }
+        matchesSearch && matchesCategory
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +122,7 @@ fun Catalog() {
 
             Spacer(modifier = Modifier.height(15.dp))
         }
-        
+
         HorizontalDivider(
             thickness = 1.dp
         )
@@ -163,31 +165,20 @@ fun Catalog() {
             )
             )
         }
-        
+
         HorizontalDivider(
             thickness = 1.dp
         )
 
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(70.dp)
-                .padding(top = 20.dp, start = 18.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-
-            items(categories) { category ->
-
-                CategoryItem(
-                    category = category,
-                    onClick = {
-
-                        // filtrar lugares pela categoria
-
-                    }
-                )
-
-            }
+        Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+            CategoryCard(
+                selectedTags = if (selectedCategory.isEmpty()) emptySet() else setOf(selectedCategory),
+                onTagSelected = { tag ->
+                    selectedCategory = if (tag == "Todos") ""
+                    else if (selectedCategory == tag) ""
+                    else tag
+                }
+            )
         }
         HorizontalDivider(
             modifier = Modifier
@@ -203,93 +194,19 @@ fun Catalog() {
         ) {
 
             items(filteredRestaurants) { restaurant ->
-
-                RestaurantCard(
+                LocalCard(
                     restaurant = restaurant,
-                    onClick = {
-
-                        // Aqui depois você navega
-                        // navController.navigate(...)
+                    onClick = { }
+                )
+            }
 
                     }
-                )
+
             }
         }
 
-    }
-}
-@Composable
-fun RestaurantCard(
-    restaurant: Restaurants,
-    onClick: () -> Unit = {}
-) {
-    Box(
-        modifier = Modifier
-            .height(110.dp)
-            .fillMaxWidth()
-            .background(
-                color = White,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .clickable { onClick() }
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize()
-        ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.cb3),
-                contentDescription = "Foto do lugar",
-                modifier = Modifier
-                    .width(130.dp)
-                    .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 16.dp,
-                            bottomStart = 16.dp
-                        )
-                    ),
-                contentScale = ContentScale.Crop
-            )
 
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-
-                Text(
-                    text = restaurant.name,
-                    fontFamily = Poppins,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-
-                Text(
-                    text = restaurant.city,
-                    fontFamily = Poppins,
-                    fontSize = 14.sp
-                )
-            }
-
-            Box(
-                modifier = Modifier.fillMaxHeight(),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_next),
-                    contentDescription = "Visualizar",
-                    tint = Blue,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(28.dp)
-                )
-            }
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -302,85 +219,30 @@ fun CatalogPreview() {
 data class Restaurants(
     val name: String = "",
     val city: String = "",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val tags: List<String> = emptyList()
 )
 
 fun findRestaurants(
     onResult: (List<Restaurants>) -> Unit
-){
+) {
     FirebaseFirestore
         .getInstance()
         .collection("locations")
-        .whereEqualTo("tags", "GatroBar")
         .get()
         .addOnSuccessListener { result ->
-            val list = result.documents.mapNotNull {
-                it.toObject(Restaurants::class.java)
+            val list = result.documents.mapNotNull { doc ->
+                val data = doc.data ?: return@mapNotNull null
+                Restaurants(
+                    name     = data["name"] as? String ?: "",
+                    city     = "${data["city"] as? String ?: ""}, ${data["uf"] as? String ?: ""}",
+                    imageUrl = data["cover"] as? String ?: "",
+                    tags     = (data["tags"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
+                )
             }
             onResult(list)
         }
 }
 
-//Fuções relacionadas a categoria
-data class Category(
-    val name: String,
-    val icon: Int
-)
 
-val categories = listOf(
-    Category("Praia", R.drawable.ic_beach),
-    Category("Restaurante", R.drawable.ic_utensils),
-    Category("Parque", R.drawable.ic_tree),
-    Category("Histórico", R.drawable.ic_historic),
-    Category("Religioso", R.drawable.ic_church),
-    Category("Eco", R.drawable.ic_mountain)
-)
 
-@Composable
-fun CategoryItem(
-    category: Category,
-    onClick: () -> Unit = {}
-) {
-
-    Row(
-        modifier = Modifier
-            .clickable { onClick() }
-            .padding(horizontal = 2.dp),
-
-    ) {
-
-        Box(
-            modifier = Modifier
-                .shadow(
-                    elevation = 3.dp,
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .fillMaxSize()
-                .background(
-                    color = White,
-                    shape = RoundedCornerShape(10.dp)
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    painter = painterResource(category.icon),
-                    contentDescription = category.name,
-                    tint = Blue,
-                    modifier = Modifier.size(20.dp)
-                )
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                Text(
-                    text = category.name,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(500)
-                )
-            }
-        }
-    }
-}

@@ -87,6 +87,7 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import com.desbravando.app.ui.components.CategoryCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -620,43 +621,6 @@ data class FilterOption(
     val label: String,
     val icon: Int
 )
-
-@Composable
-fun CategoryCard() {
-    val options = listOf("Todos", "Praias", "Parques", "Religioso", "GastroBar", "Eco", "Histórico")
-    var selected by remember { mutableStateOf("") }
-
-
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-
-        options.forEach { option ->
-
-            items(options) { option ->
-                val isSelected = option == selected
-
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(40))
-                        .background(if (isSelected) Purple else LightGray)
-                        .clickable { selected = option }
-                        .padding(horizontal = 14.dp, vertical = 5.dp)
-                ) {
-                    Text(
-                        text = option,
-                        fontSize = 12.sp,
-                        fontFamily = Poppins,
-                        fontWeight = FontWeight.Medium,
-                        color = if (isSelected) Color.White else DarkBlue // branco se selecionado, azul se não
-                    )
-                }
-
-
-            }
-        }
-
-    }
-}
 @Composable
 fun CompanyCard() {
     val options = listOf(

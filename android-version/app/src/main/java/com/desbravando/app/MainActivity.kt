@@ -70,13 +70,12 @@ import com.desbravando.app.ui.theme.NavGraph
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import kotlin.jvm.java
 
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
-    val db = Firebase.firestore
+    private val db by lazy { Firebase.firestore }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

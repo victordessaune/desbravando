@@ -34,6 +34,11 @@
             android:name=".HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.Desbravando" />
+        <activity android:name=".Places" />
+        <activity android:name=".CatalogActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".CreateItinerary" />
+        <activity android:name=".ProfileActivity" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>

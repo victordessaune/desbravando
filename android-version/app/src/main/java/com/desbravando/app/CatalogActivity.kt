@@ -30,22 +30,16 @@ import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
-import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
-import com.google.android.gms.ads.nativead.NativeAd.Image
 import com.google.firebase.firestore.FirebaseFirestore
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.RectangleShape
-import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.Gray
 
-class CatalogRestaurant : ComponentActivity() {
+class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

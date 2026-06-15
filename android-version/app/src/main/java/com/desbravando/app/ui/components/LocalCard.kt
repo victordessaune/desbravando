@@ -37,6 +37,7 @@ import com.desbravando.app.ui.theme.Gray
 import com.desbravando.app.ui.theme.LightGray
 import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.Poppins
+import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 
 
@@ -61,8 +62,8 @@ fun LocalCard(
             modifier = Modifier.fillMaxSize()
         ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.cb3),
+            AsyncImage(
+                model = restaurant.imageUrl,
                 contentDescription = "Foto do lugar",
                 modifier = Modifier
                     .width(130.dp)
@@ -99,15 +100,17 @@ fun LocalCard(
                     Icon(
                         painter = painterResource(id = R.drawable.location_dot_solid_full),
                         contentDescription = "Visualizar",
-                        tint = Blue,
+                        tint = Purple,
                         modifier = Modifier
-                            .size(18.dp)
+                            .size(16.dp)
                     )
 
                     Text(
                         text = restaurant.city,
                         fontFamily = Poppins,
-                        fontSize = 14.sp
+                        color = Purple,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
                     )
                 }
 
@@ -155,9 +158,9 @@ fun LocalCard(
 fun LocalCardPreview() {
     DesbravandoTheme {
         LocalCard(restaurant = Restaurants(
-            imageUrl = R.drawable.cb3,
-            name = "Convento da Penha",
-            city = "Vila Velha"
+            imageUrl = "",
+            name = "",
+            city = " "
         ),
             onClick = {}
         )

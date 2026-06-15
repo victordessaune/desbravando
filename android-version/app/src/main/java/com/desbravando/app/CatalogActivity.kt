@@ -45,7 +45,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.Gray
 
-class CatalogRestaurant : ComponentActivity() {
+class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -301,7 +301,8 @@ fun CatalogPreview() {
 
 data class Restaurants(
     val name: String = "",
-    val city: String = ""
+    val city: String = "",
+    val imageUrl: String = ""
 )
 
 fun findRestaurants(

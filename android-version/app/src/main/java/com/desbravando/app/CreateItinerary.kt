@@ -88,6 +88,7 @@ import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import com.desbravando.app.ui.components.CategoryCard
+import com.desbravando.app.ui.theme.White
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -599,9 +600,9 @@ fun DayCard() {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .clip(RoundedCornerShape(40))
-                    .background(if (isSelected) Purple else LightGray)
+                    .background(if (isSelected) Purple else White)
                     .clickable{ selected = option }
-                    .padding(horizontal = 14.dp, vertical = 5.dp)
+                    .padding(horizontal = 15.dp, vertical = 5.dp)
             ){
                 Text(
                     text = option,
@@ -642,9 +643,9 @@ fun CompanyCard() {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20))
-                    .background(if (isSelected) Purple else LightGray)
+                    .background(if (isSelected) Purple else White)
                     .clickable{ selected = option.label }
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .padding(horizontal = 14.dp, vertical = 10.dp)
             ){
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -695,9 +696,9 @@ fun MoodCard() {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20))
-                    .background(if (isSelected) Purple else LightGray)
+                    .background(if (isSelected) Purple else White)
                     .clickable{ selected = option.label }
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .padding(horizontal = 18.dp, vertical = 10.dp)
             ){
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -734,10 +735,10 @@ fun MoodCard() {
 fun InterestsCard() {
     val options = listOf(
         FilterOption("Praias", R.drawable.ic_beach),
-        FilterOption("Cultura", R.drawable.ic_culture),
+        FilterOption("ECO", R.drawable.ic_mountain),
         FilterOption("GastroBar", R.drawable.ic_utensils),
-        FilterOption("História", R.drawable.ic_landmark),
-        FilterOption("Natureza", R.drawable.ic_tree)
+        FilterOption("Histórico", R.drawable.ic_landmark),
+        FilterOption("Parques", R.drawable.ic_tree)
     )
     var selected by remember { mutableStateOf(setOf<String>()) }
 
@@ -755,13 +756,13 @@ fun InterestsCard() {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20))
-                    .background(if (isSelected) Purple else LightGray)
+                    .background(if (isSelected) Purple else White)
                     .clickable{
                         selected = if (option.label in selected)
                             selected - option.label
                         else
                             selected + option.label }
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .padding(horizontal = 14.dp, vertical = 10.dp)
             ){
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,

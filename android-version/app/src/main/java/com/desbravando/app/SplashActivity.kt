@@ -52,6 +52,7 @@ import com.desbravando.app.ui.theme.Poppins
 import androidx.compose.material3.ButtonDefaults
 import android.content.Intent
 import android.os.Handler
+import androidx.compose.ui.res.stringResource
 import com.desbravando.app.ui.theme.NavGraph
 
 class SplashActivity : ComponentActivity(){
@@ -94,7 +95,7 @@ fun Splash(modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.white_logo_desbravando),
-            contentDescription = "Logo",
+            contentDescription = stringResource(R.string.cd_logo),
             modifier = Modifier
                 .width(250.dp)
                 .height(100.dp)

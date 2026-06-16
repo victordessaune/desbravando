@@ -58,6 +58,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -120,14 +121,14 @@ class MainActivity : ComponentActivity() {
             } else {
                 Toast.makeText(
                     baseContext,
-                    "Insira uma senha",
+                    getString(R.string.message_alert_password),
                     Toast.LENGTH_SHORT,
                 ).show()
             }
         } else {
             Toast.makeText(
                 baseContext,
-                "Insira um email",
+                getString(R.string.message_alert_email),
                 Toast.LENGTH_SHORT,
             ).show()
         }
@@ -147,7 +148,7 @@ class MainActivity : ComponentActivity() {
                             val role = document.getString("role")
 
                             if (role == "user") {
-                                Toast.makeText(baseContext, "Bem-vindo!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(baseContext, getString(R.string.message_success_welcome), Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, HomeActivity::class.java) // Lembre de arrumar o import antes!
                                 startActivity(intent)
                                 finish()
@@ -156,7 +157,7 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 Toast.makeText(
                                     baseContext,
-                                    "Use a versão de administrador na web!",
+                                    getString(R.string.message_alert_use_admin_version),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             }
@@ -166,7 +167,7 @@ class MainActivity : ComponentActivity() {
                     //
                     Toast.makeText(
                         baseContext,
-                        "Erro de autenticação",
+                        getString(R.string.message_auth_error),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
@@ -206,7 +207,7 @@ fun Login(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.white_logo_desbravando),
-                    contentDescription = "Logo",
+                    contentDescription = stringResource(R.string.cd_logo),
                     modifier = Modifier
                         .width(150.dp)
                         .height(60.dp)
@@ -238,7 +239,7 @@ fun Login(
 
                 ) {
                     Text(
-                        text = "Login",
+                        text = stringResource(R.string.text_login),
                         fontFamily = Poppins,
                         fontSize = 22.sp,
                         color = Blue,
@@ -248,7 +249,7 @@ fun Login(
                     Spacer(modifier = Modifier.width(3.5.dp))
 
                     Text(
-                        text = "Usuário",
+                        text = stringResource(R.string.text_user),
                         fontFamily = Poppins,
                         fontSize = 22.sp,
                         color = BlueSecondary,
@@ -258,7 +259,7 @@ fun Login(
                 }
                 Spacer(modifier = Modifier.padding(top = 25.dp))
                 Text(
-                    text = "Email",
+                    text = stringResource(R.string.text_email),
                     color = Blue,
                     fontSize = 14.sp,
                     fontFamily = Poppins,
@@ -269,7 +270,7 @@ fun Login(
                     onValueChange = { email = it },
                     placeholder = {
                         Text(
-                            text = "você@gmail.com",
+                            text = stringResource(R.string.text_placeholder_email),
                             fontSize = 13.sp)
                     },
                     modifier = Modifier
@@ -286,7 +287,7 @@ fun Login(
                 Spacer(modifier = Modifier.padding(top = 5.dp))
 
                 Text(
-                    text = "Senha",
+                    text = stringResource(R.string.text_password),
                     fontSize = 14.sp,
                     color = Blue,
                     fontFamily = Poppins,
@@ -296,7 +297,7 @@ fun Login(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    placeholder = { Text("******") },
+                    placeholder = { stringResource(R.string.text_placeholder_password) },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password
@@ -313,7 +314,7 @@ fun Login(
                 Spacer(modifier = Modifier.padding(top = 5.dp))
 
                 Text(
-                    text = "Esqueceu a senha?",
+                    text = stringResource(R.string.text_forgot_password),
                     fontSize = 13.sp,
                     textAlign = TextAlign.Right,
                     color = DarkGray,
@@ -331,7 +332,8 @@ fun Login(
                         containerColor = Purple
                     )
                 ) {
-                    Text(text = "Continuar",
+                    Text(
+                        text = stringResource(R.string.title_keep),
                         fontSize = 15.sp,
                         fontFamily = Poppins,
                         fontWeight = FontWeight(500))
@@ -349,14 +351,14 @@ fun Login(
                         Color.Transparent
                     )
                 ) {
-                    Text(text = "Criar Conta",
+                    Text(text = stringResource(R.string.text_create_account),
                         fontSize = 15.sp,
                         fontFamily = Poppins,
                         color = Purple,
                         fontWeight = FontWeight(500))
                 }
                 Text(
-                    text = "Termos de Uso | Políticas de Privacidade",
+                    text = stringResource(R.string.text_privace_politics),
                     fontSize = 11.sp,
                     textAlign = TextAlign.Center,
                     color = DarkGray,

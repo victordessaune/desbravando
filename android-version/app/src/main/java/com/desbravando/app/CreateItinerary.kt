@@ -122,16 +122,16 @@ class CreateItinerary : ComponentActivity() {
         // CORRIGIDO: agora valida nome e nickname além de email e senha
         when {
             userData["name"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira seu nome", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_alert_name), Toast.LENGTH_SHORT).show()
             }
             userData["nickname"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira um nome de usuário", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_alert_username), Toast.LENGTH_SHORT).show()
             }
             userData["email"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira um email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_alert_email), Toast.LENGTH_SHORT).show()
             }
             password.isBlank() -> {
-                Toast.makeText(baseContext, "Insira uma senha", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_alert_password), Toast.LENGTH_SHORT).show()
             }
             else -> createAccount(userData, password)
         }
@@ -144,7 +144,7 @@ class CreateItinerary : ComponentActivity() {
                     val uid = auth.currentUser?.uid
                     saveData(uid, userData)
                 } else {
-                    val erroFirebase = task.exception?.message ?: "Erro desconhecido ao cadastrar."
+                    val erroFirebase = task.exception?.message ?: getString(R.string.message_error_signup)
                     Toast.makeText(baseContext, erroFirebase, Toast.LENGTH_LONG).show()
                 }
             }
@@ -155,12 +155,12 @@ class CreateItinerary : ComponentActivity() {
             .document(uid.toString())
             .set(userData)
             .addOnSuccessListener {
-                Toast.makeText(baseContext, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_succes_signup), Toast.LENGTH_SHORT).show()
                 auth.signOut()
                 finish()
             }
             .addOnFailureListener {
-                Toast.makeText(baseContext, "Erro ao salvar dados do perfil", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.message_error_save_data), Toast.LENGTH_SHORT).show()
             }
     }
 }
@@ -471,7 +471,7 @@ fun AddLocalsStep(
                     )
                 }
                 Text(
-                    text = "Adicionar Locais",
+                    text = stringResource(R.string.text_add_places),
                     fontSize = 14.sp,
                     color = Blue,
                     fontWeight = FontWeight.SemiBold,
@@ -515,7 +515,7 @@ fun AddLocalsStep(
                 ) {
 
                     Text(
-                        text = "Sugestões para você",
+                        text = stringResource(R.string.text_suggestions),
                         fontSize = 16.sp,
                         color = DarkBlue,
                         fontWeight = FontWeight.SemiBold,
@@ -523,7 +523,7 @@ fun AddLocalsStep(
                         modifier = Modifier.padding(top = 1.dp)
                     )
                     Text(
-                        text = "Selecionamos lugares perfeitos para o seu roteiro!",
+                        text = stringResource(R.string.message_perfect_suggestions),
                         fontSize = 12.sp,
                         color = Gray,
                         fontWeight = FontWeight.Medium,
@@ -556,7 +556,7 @@ fun AddLocalsStep(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Continuar",
+                        text = stringResource(R.string.title_keep),
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,

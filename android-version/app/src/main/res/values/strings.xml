@@ -1,12 +1,39 @@
 <resources>
     <string name="app_name">Desbravando</string>
     <string name="home_logo_text">DESBRAVANDO</string>
+
+    <!--Tela HOME-->
     <string name="home_welcome">Olá, User</string>
     <string name="home_subtitle">Pronto para desbravar?</string>
     <string name="home_temp_placeholder">XXºC</string>
     <string name="home_weather_placeholder">tempo</string>
+    <string name="home_load_climate">Carregando...</string>
+    <string name="home_climate_not_determinated">--°C</string>
+    <string name="home_selected_state">Estado selecionado:</string>
+    <string name="home_in_highlighted_place">Em destaque</string>
+
+
     <string name="cd_logo">Logo</string>
     <string name="cd_climate">climate</string>
+    <string name="cd_map_pin">map_pin</string>
+
+
+    <!--Tela MainActivity (Login) -->
+    <string name="message_success_welcome">Bem-vindo!</string>
+    <string name="message_alert_use_admin_version">Use a versão de administrador na web!</string>
+    <string name="message_auth_error">Use a versão de administrador na web!</string>
+    <string name="text_user">Usuário</string>
+    <string name="text_login">Login</string>
+    <string name="text_email">Email</string>
+    <string name="text_placeholder_email">você@gmail.com</string>
+    <string name="text_placeholder_password">••••••••</string>
+    <string name="text_password">Senha</string>
+    <string name="text_forgot_password">Esqueceu a senha?</string>
+    <string name="text_create_account">Criar Conta</string>
+    <string name="text_privace_politics">Termos de Uso | Políticas de Privacidade</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -33,10 +60,46 @@
     <string name="question_with_whom">Com quem você vai?</string>
     <string name="question_interests">Quais são os seus interesses?</string>
     <string name="title_style_trip">Estilo da viagem</string>
+    <string name="text_add_places">Adicionar Locais</string>
+    <string name="text_suggestions">Sugestões para você</string>
+    <string name="message_perfect_suggestions">Selecionamos lugares perfeitos para o seu roteiro!</string>
 
-    <!--Plavras gerais-->
+    <!--Tela de favoritos-->
+    <string name="subtitle_favorite_places">Seus lugares favoritos para visitar e explorar!</string>
+    <string name="title_favorite">Favoritos</string>
+
+
+    <!--Palavras gerais-->
     <string name="title_keep">Continuar</string>
     <string name="title_return">Voltar</string>
     <string name="title_get_in">Entrar</string>
+
+    <!--Tela de Perfil-->
+    <string name="text_see_all">Ver todos</string>
+    <string name="text_favorite_places">Lugares favoritos</string>
+    <string name="text_create_new_itinerary">+ Criar novo roteiro</string>
+    <string name="text_my_itinerary">Meus roteiros</string>
+
+    <!--Tela de Criar Conta-->
+    <string name="title_report">Informe</string>
+    <string name="title_your_data">seus Dados</string>
+    <string name="text_username">Nome de Usuário</string>
+    <string name="text_confirm_password">Confirme sua senha</string>
+    <string name="text_name">Nome</string>
+    <string name="text_biography">Biografia</string>
+    <string name="text_already_have_account">Já possui uma conta?</string>
+    <string name="text_connect">Conecte-se</string>
+    <string name="cd_profile_picture">Foto de perfil</string>
+    <string name="cd_change_profile_picture">Alterar foto</string>
+
+    <!--Mensagens gerais-->
+    <string name="message_alert_name">Insira seu nome</string>
+    <string name="message_alert_username">Insira um nome de usuário</string>
+    <string name="message_alert_email">Insira um email</string>
+    <string name="message_alert_password">Insira uma senha</string>
+    <string name="message_error_signup">Erro desconhecido ao cadastrar.</string>
+    <string name="message_succes_signup">Cadastro realizado com sucesso!</string>
+    <string name="message_error_save_data">Erro ao salvar dados do perfil</string>
+
 
 </resources>

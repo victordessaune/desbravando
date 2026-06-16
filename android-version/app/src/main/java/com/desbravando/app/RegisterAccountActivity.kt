@@ -82,6 +82,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -123,14 +124,14 @@ class RegisterAccountActivity : ComponentActivity(){
             } else {
                 Toast.makeText(
                     baseContext,
-                    "Insira uma senha",
+                    getString(R.string.message_alert_password),
                     Toast.LENGTH_SHORT,
                 ).show()
             }
         } else {
             Toast.makeText(
                 baseContext,
-                "Insira um email",
+                getString(R.string.message_alert_email),
                 Toast.LENGTH_SHORT,
             ).show()
         }
@@ -147,7 +148,7 @@ class RegisterAccountActivity : ComponentActivity(){
                     // para voltar o usuário para a tela de login após salvar tudo!
                 } else {
                     // Pega a mensagem de erro real enviada pelo Firebase
-                    val erroFirebase = task.exception?.message ?: "Erro desconhecido ao cadastrar."
+                    val erroFirebase = task.exception?.message ?: getString(R.string.message_error_signup)
 
                     // Exibe o erro real na tela (ex: "The email address is already in use...")
                     Toast.makeText(
@@ -166,7 +167,7 @@ class RegisterAccountActivity : ComponentActivity(){
             .addOnSuccessListener {
                 Toast.makeText(
                     baseContext,
-                    "Cadastro realizado com sucesso!",
+                    getString(R.string.message_succes_signup),
                     Toast.LENGTH_SHORT,
                 ).show()
 
@@ -179,7 +180,7 @@ class RegisterAccountActivity : ComponentActivity(){
             .addOnFailureListener {
                 Toast.makeText(
                     baseContext,
-                    "Erro ao salvar dados do perfil",
+                    getString(R.string.message_error_save_data),
                     Toast.LENGTH_SHORT,
                 ).show()
             }
@@ -217,7 +218,7 @@ fun Register(
 
             ) {
                 Text(
-                    text = "Informe",
+                    text = stringResource(R.string.title_report),
                     fontFamily = Poppins,
                     fontSize = 22.sp,
                     color = Blue,
@@ -227,7 +228,7 @@ fun Register(
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = "seus Dados",
+                    text = stringResource(R.string.title_your_data),
                     fontFamily = Poppins,
                     fontSize = 22.sp,
                     color = BlueSecondary,
@@ -247,7 +248,7 @@ fun Register(
 
             //Campo do Nome do usuário
             Text(
-                text = "Nome",
+                text = stringResource(R.string.text_name),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -275,7 +276,7 @@ fun Register(
 
             //Campo do apelido do usuário
             Text(
-                text = "Nome de Usuário",
+                text = stringResource(R.string.text_username),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -303,7 +304,7 @@ fun Register(
 
             //Campo do email do usuário
             Text(
-                text = "Email",
+                text = stringResource(R.string.text_email),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -332,7 +333,7 @@ fun Register(
 
             //Campo da senha do usuário
             Text(
-                text = "Senha",
+                text = stringResource(R.string.text_password),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -361,7 +362,7 @@ fun Register(
 
             //Campo de confirmação de senha do usuário
             Text(
-                text = "Confirme sua senha",
+                text = stringResource(R.string.text_confirm_password),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -389,7 +390,7 @@ fun Register(
 
             //Campo da biografia do usuário
             Text(
-                text = "Biografia",
+                text = stringResource(R.string.text_biography),
                 fontSize = 13.sp,
                 color = BlueCustom,
                 fontFamily = Poppins,
@@ -454,7 +455,7 @@ fun Register(
                 ) {
 
                     Text(
-                        text = "Criar Conta",
+                        text = stringResource(R.string.text_create_account),
                         fontSize = 15.sp,
                         fontFamily = Poppins,
                         color = Color.White,
@@ -471,7 +472,7 @@ fun Register(
 
             ) {
                 Text(
-                    text = "Já tem uma conta?",
+                    text = stringResource(R.string.text_already_have_account),
                     fontFamily = Poppins,
                     fontSize = 12.sp,
                     color = Gray,
@@ -480,7 +481,7 @@ fun Register(
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = "Conecte-se",
+                    text = stringResource(R.string.text_connect),
                     fontFamily = Poppins,
                     fontSize = 12.sp,
                     color = Blue,
@@ -507,7 +508,7 @@ fun ProfileRegisterPicture(modifier: Modifier = Modifier){
         if (imageUri != null){
             AsyncImage(
                 model = imageUri,
-                contentDescription = "Foto de perfil",
+                contentDescription = stringResource(R.string.cd_profile_picture),
                 modifier = Modifier
                     .size(125.dp)
                     .clip(CircleShape),
@@ -533,7 +534,7 @@ fun ProfileRegisterPicture(modifier: Modifier = Modifier){
         ){
             Icon(
                 imageVector = Icons.Default.CameraAlt,
-                contentDescription = "Alterar foto",
+                contentDescription = stringResource(R.string.cd_change_profile_picture),
                 tint =  Color.White,
                 modifier = Modifier
                     .size(15.dp)

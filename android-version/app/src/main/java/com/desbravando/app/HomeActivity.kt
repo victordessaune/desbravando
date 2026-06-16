@@ -239,8 +239,8 @@ fun Home(
 
 @Composable
 fun WeatherWidget(
-    temperature: String = "--°C",
-    weatherDesc: String = "Carregando...",
+    temperature: String = stringResource(R.string.home_climate_not_determinated),
+    weatherDesc: String = stringResource(R.string.home_load_climate),
     weatherVisual: WeatherVisual = WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00))
 ) {
     Row(
@@ -310,11 +310,11 @@ fun StateSelector() {
             Row {
                 Icon(
                     painter = painterResource(id = R.drawable.location_dot_solid_full),
-                    contentDescription = "map pin",
+                    contentDescription = stringResource(R.string.cd_map_pin),
                     tint = Blue
                 )
                 Text(
-                    text = "Estado selecionado:",
+                    text = stringResource(R.string.home_selected_state),
                     fontFamily = Poppins,
                     fontSize = 14.sp,
                     color = Gray,
@@ -403,7 +403,7 @@ fun BigLocationCard(){
                     tint = White
                 )
                 Text(
-                    text = "Em destaque",
+                    text = stringResource(R.string.home_in_highlighted_place),
                     color = White,
                     fontFamily = Poppins
                 )

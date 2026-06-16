@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -112,66 +113,16 @@ class ProfileActivity : ComponentActivity() {
                     // CORRIGIDO: era Register(...), agora chama Profile(...)
                     Profile(
                         modifier = Modifier.padding(innerPadding),
-                        onRegisterClick = { userData, password ->
-                            validateData(userData, password)
-                        }
                     )
                 }
             }
         }
-    }
-
-    private fun validateData(userData: HashMap<String, String>, password: String) {
-        // CORRIGIDO: agora valida nome e nickname além de email e senha
-        when {
-            userData["name"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira seu nome", Toast.LENGTH_SHORT).show()
-            }
-            userData["nickname"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira um nome de usuário", Toast.LENGTH_SHORT).show()
-            }
-            userData["email"].isNullOrBlank() -> {
-                Toast.makeText(baseContext, "Insira um email", Toast.LENGTH_SHORT).show()
-            }
-            password.isBlank() -> {
-                Toast.makeText(baseContext, "Insira uma senha", Toast.LENGTH_SHORT).show()
-            }
-            else -> createAccount(userData, password)
-        }
-    }
-
-    private fun createAccount(userData: HashMap<String, String>, password: String) {
-        auth.createUserWithEmailAndPassword(userData["email"].toString(), password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val uid = auth.currentUser?.uid
-                    saveData(uid, userData)
-                } else {
-                    val erroFirebase = task.exception?.message ?: "Erro desconhecido ao cadastrar."
-                    Toast.makeText(baseContext, erroFirebase, Toast.LENGTH_LONG).show()
-                }
-            }
-    }
-
-    private fun saveData(uid: String?, userData: HashMap<String, String>) {
-        db.collection("users")
-            .document(uid.toString())
-            .set(userData)
-            .addOnSuccessListener {
-                Toast.makeText(baseContext, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                auth.signOut()
-                finish()
-            }
-            .addOnFailureListener {
-                Toast.makeText(baseContext, "Erro ao salvar dados do perfil", Toast.LENGTH_SHORT).show()
-            }
     }
 }
 
 @Composable
 fun Profile(
     modifier: Modifier = Modifier,
-    onRegisterClick: (HashMap<String, String>, String) -> Unit
 ) {
     var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
 
@@ -188,13 +139,6 @@ fun Profile(
             .verticalScroll(rememberScrollState())
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
-
-            var userName by remember { mutableStateOf("") }
-            var userNickname by remember { mutableStateOf("") }
-            var userEmail by remember { mutableStateOf("") }
-            var userBio by remember { mutableStateOf("") }
-            var userPassword by remember { mutableStateOf("") }
-            var userConfirmPassword by remember { mutableStateOf("") }
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -275,7 +219,7 @@ fun Profile(
                    .fillMaxWidth(),
            ){
                Text(
-                   text = "Meus Roteiros",
+                   text = stringResource(R.string.text_my_itinerary),
                    fontSize = 14.sp,
                    color = Purple,
                    fontFamily = Poppins,
@@ -283,7 +227,7 @@ fun Profile(
 
                )
                Text(
-                   text = "Ver Todos",
+                   text = stringResource(R.string.text_see_all),
                    fontSize = 13.sp,
                    color = Gray,
                    fontFamily = Poppins,
@@ -363,7 +307,7 @@ fun Profile(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "+ Criar novo roteiro",
+                        text = stringResource(R.string.text_create_new_itinerary),
                         fontSize = 15.sp,
                         fontFamily = Poppins,
                         color = Blue,
@@ -383,7 +327,7 @@ fun Profile(
                     .fillMaxWidth(),
             ){
                 Text(
-                    text = "Locais Favoritados",
+                    text = stringResource(R.string.text_favorite_places),
                     fontSize = 14.sp,
                     color = Purple,
                     fontFamily = Poppins,
@@ -392,7 +336,7 @@ fun Profile(
                     )
                 val context = LocalContext.current
                 Text(
-                    text = "Ver Todos",
+                    text = stringResource(R.string.text_see_all),
                     fontSize = 13.sp,
                     color = Gray,
                     fontFamily = Poppins,
@@ -530,7 +474,7 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
         if (imageUri != null) {
             AsyncImage(
                 model = imageUri,
-                contentDescription = "Foto de perfil",
+                contentDescription = stringResource(R.string.cd_profile_picture),
                 modifier = Modifier
                     .size(125.dp)
                     .clip(CircleShape),
@@ -554,7 +498,7 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 imageVector = Icons.Default.CameraAlt,
-                contentDescription = "Alterar foto",
+                contentDescription = stringResource(R.string.cd_change_profile_picture),
                 tint = Color.White,
                 modifier = Modifier.size(15.dp)
             )
@@ -567,6 +511,6 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
 @Composable
 fun ProfilePreview() {
     DesbravandoTheme {
-        Profile(onRegisterClick = { _, _ -> })
+        Profile()
     }
 }

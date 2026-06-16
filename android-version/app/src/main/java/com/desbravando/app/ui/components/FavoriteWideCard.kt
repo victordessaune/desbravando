@@ -1,5 +1,4 @@
 package com.desbravando.app.ui.components
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +44,7 @@ import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 
 @Composable
-fun FavoriteCard(
+fun FavoriteWideCard(
     favorite: FavoriteLocation,
     onRemove: () -> Unit = {}
 ) {
@@ -58,7 +57,7 @@ fun FavoriteCard(
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
-            .width(110.dp),
+            .width(165.dp),
     ) {
         Box {
             AsyncImage(
@@ -66,7 +65,7 @@ fun FavoriteCard(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
+                    .height(110.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -143,7 +142,7 @@ fun FavoriteCard(
 }
 @Preview(showBackground = true)
 @Composable
-fun FavoriteCardPreview() {
+fun FavoriteWidePreview() {
     DesbravandoTheme {
         val mockFavorite = FavoriteLocation(
             id = "1",
@@ -153,7 +152,7 @@ fun FavoriteCardPreview() {
             tags = listOf("Praia", "Natureza")
         )
 
-        FavoriteCard(
+        FavoriteWideCard(
             favorite = mockFavorite,
             onRemove = {}
         )

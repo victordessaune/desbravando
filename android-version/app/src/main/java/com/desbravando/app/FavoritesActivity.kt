@@ -93,6 +93,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.FavoriteCard
+import com.desbravando.app.ui.components.FavoriteWideCard
 import com.desbravando.app.ui.components.LocalCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -273,7 +274,7 @@ fun Favorites(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 filteredFavorites.forEach { fav ->
-                    FavoriteCard(
+                    FavoriteWideCard(
                         favorite = fav,
                         onRemove = {
                             favorites = favorites.filter { it.id != fav.id }
@@ -282,41 +283,6 @@ fun Favorites(
                     )
                 }
             }
-
-
-
-            Button(
-                onClick = { },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp)
-                    .height(45.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                contentPadding = PaddingValues()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colorStops = arrayOf(
-                                    0.0f to Purple,
-                                    1.0f to Blue
-                                )
-                            )
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Continuar",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = Poppins
-                    )
-                }
-            }
-
 
         }
 

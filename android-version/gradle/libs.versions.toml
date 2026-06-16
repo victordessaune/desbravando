@@ -16,6 +16,8 @@ mediationTestSuite = "3.0.0"
 playServicesLocation = "21.3.0"
 retrofit = "3.0.0"
 foundation = "1.11.2"
+ui = "1.11.2"
+animationCore = "1.11.2"
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
@@ -45,6 +47,8 @@ mediation-test-suite = { group = "com.google.android.ads", name = "mediation-tes
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-compose-animation-core = { group = "androidx.compose.animation", name = "animation-core", version.ref = "animationCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

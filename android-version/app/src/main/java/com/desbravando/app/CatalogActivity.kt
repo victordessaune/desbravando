@@ -42,6 +42,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.BlueSecondary
@@ -113,7 +114,7 @@ fun Catalog() {
                 Spacer(modifier = Modifier.width(7.dp))
 
                 Text(
-                    text = "Catálogo de Lugares",
+                    text = stringResource(R.string.title_catalog),
                     fontFamily = Poppins,
                     fontSize = 17.sp,
                     fontWeight = FontWeight(600)
@@ -140,7 +141,7 @@ fun Catalog() {
                     search = it
                 },
                 placeholder = {
-                    Text("Buscar lugares")
+                    Text(stringResource(R.string.search_bar_placeholder))
                 },
                 leadingIcon = {
                     Icon(

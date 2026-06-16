@@ -44,6 +44,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.platform.LocalContext
 import com.desbravando.app.ui.components.BottomBarWithNavigation
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.res.stringResource
 
 class Places : ComponentActivity() {
 
@@ -123,9 +124,13 @@ fun PlaceDetailsScreen(
 
             item { HeaderSection(place) }
             item { DescriptionPlace(place) }
-            /*item { AddressSection(place) }
+            item {ScheduleSection(place) }
+            item { AddressSection(place) }
+            item { InfrastructureSection(place) }
+            item { ImageSection(place) }
+            item { ServicesSection(place) }
+            item { PriceSection(place) }
             item { InformationSection(place) }
-            item { ImageSection(place) }*/
 
         }
     }
@@ -134,11 +139,8 @@ fun PlaceDetailsScreen(
 fun HeaderSection(
     place: PlaceInfo
 ) {
-
     Column(
-
     ){
-
         Image(
             painter = painterResource(id = R.drawable.cb3),
             contentDescription = "Foto do lugar",
@@ -234,7 +236,7 @@ fun DescriptionPlace(
     place: PlaceInfo
 ){
     SectionCard(
-    title = "Sobre o local",
+    title = stringResource(R.string.about_place),
     icon = R.drawable.ic_info
 
     ) {
@@ -253,7 +255,7 @@ fun AddressSection(
     place: PlaceInfo
 ){
     SectionCard(
-        title = "Endereço",
+        title = stringResource(R.string.address),
         icon = R.drawable.ic_map_pin
 
     ) {
@@ -269,11 +271,11 @@ fun AddressSection(
 }
 
 @Composable
-fun InformationSection(
+fun InfrastructureSection(
     place: PlaceInfo
 ){
     SectionCard(
-        title = "Infraestrutura",
+        title = stringResource(R.string.infrastructure),
         icon = R.drawable.ic_building
     ) {
         LazyVerticalGrid(
@@ -299,7 +301,7 @@ fun ImageSection(
     place: PlaceInfo
 ){
     SectionCard(
-        title = "Galeria de fotos",
+        title = stringResource(R.string.gallery),
         icon = R.drawable.ic_camera
     ){
 
@@ -311,10 +313,185 @@ fun ImageSection(
 fun ScheduleSection(
     place: PlaceInfo
 ){
+    val dayOrganized = listOf(
+        "Segunda",
+        "Terça",
+        "Quarta",
+        "Quinta",
+        "Sexta",
+        "Sábado",
+        "Domingo",
+        "Feriado"
+    )
+
     SectionCard(
-        title = "Horário de Funcionamento",
+        title = stringResource(R.string.schedules),
         icon = R.drawable.ic_clock
     ){
+        dayOrganized.forEach { day ->
+
+            val horario = place.schedules[day]
+
+            horario?.let {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Text(
+                        text = day,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp
+                    )
+
+                    if (it.fechado) {
+
+                        Card(
+                            modifier = Modifier.padding(horizontal = 10.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Red.copy(alpha = 0.15f)
+                            ),
+                            shape = RoundedCornerShape(20.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.closed),
+                                color = Color.Red,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight(500),
+                                modifier = Modifier.padding(
+                                    horizontal = 12.dp,
+                                    vertical = 2.dp
+                                )
+                            )
+                        }
+
+                    } else {
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Icon(
+                                painter = painterResource(
+                                    id = R.drawable.ic_clock
+                                ),
+                                contentDescription = null,
+                                tint = Purple,
+                                modifier = Modifier.size(14.dp)
+                            )
+
+                            Spacer(
+                                modifier = Modifier.width(4.dp)
+                            )
+
+                            Text(
+                                text = "${it.abertura} - ${it.fechamento}",
+                                color = Gray,
+                                fontSize = 13.sp
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@Composable
+fun ServicesSection(
+    place: PlaceInfo
+) {
+    SectionCard(
+        title = stringResource(R.string.services),
+        icon = R.drawable.ic_bell
+
+    ) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            place.services.forEach{ item ->
+                ServicesItem(
+                    title = item
+                )
+            }
+        }
+
+    }
+}
+
+@Composable
+fun PriceSection(
+    place: PlaceInfo
+) {
+    SectionCard(
+        title = stringResource(R.string.price),
+        icon = R.drawable.ic_price
+
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = "R$",
+                color = Purple,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+
+            Spacer (modifier = Modifier.width(3.dp))
+
+            Text(
+                text = place.price.valor,
+                color = Purple,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+            Spacer (modifier = Modifier.width(3.dp))
+
+            Text(
+                text = "por",
+                fontSize = 13.sp,
+                lineHeight = 16.sp
+            )
+
+            Spacer (modifier = Modifier.width(3.dp))
+
+            Text(
+                text = place.price.por,
+                fontSize = 13.sp,
+                lineHeight = 16.sp
+            )
+
+
+        }
+
+    }
+}
+
+@Composable
+fun InformationSection(
+    place: PlaceInfo
+) {
+    SectionCard(
+        title = stringResource(R.string.informations),
+        icon = R.drawable.ic_info_id
+
+    ) {
+        Text(
+            text = place.informations,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 12.sp,
+            lineHeight = 16.sp
+        )
 
     }
 }
@@ -357,6 +534,31 @@ fun InfrastructureItem(
             )
         }
     }
+}
+
+@Composable
+fun ServicesItem(
+    title: String
+){
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Blue.copy(alpha = 0.15f)
+        )
+    ) {
+
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 3.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                fontSize = 12.sp,
+                fontWeight = FontWeight(600)
+            )
+        }
+    }
+
 }
 
 @DrawableRes
@@ -433,6 +635,16 @@ fun SectionCard(
     }
 }
 
+data class Schedule(
+    val abertura: String? = null,
+    val fechamento: String? = null,
+    val fechado: Boolean = false
+)
+
+data class Price(
+    val por: String = "",
+    val valor: String = ""
+)
 
 data class PlaceInfo(
     val id: String = "",
@@ -441,7 +653,11 @@ data class PlaceInfo(
     val tags: String = "",
     val bio: String = "",
     val address: String = "",
-    val infrastructure: List<String> = emptyList()
+    val infrastructure: List<String> = emptyList(),
+    val schedules: Map<String, Schedule> = emptyMap(),
+    val informations: String = "",
+    val price: Price = Price(),
+    val services: List<String> = emptyList(),
 )
 
 @Preview(showBackground = true)
@@ -462,7 +678,31 @@ fun PlacesPreview() {
                     "Toaletes",
                     "Na Sombra",
                     "Bicicletas"
-                )
+                ),
+                schedules = mapOf(
+                        "Segunda" to Schedule(
+                            fechado = true
+                        ), 
+                    
+                    "Terça" to Schedule(
+                    abertura = "11:00",
+                    fechamento = "22:00"
+                ),
+
+                "Quarta" to Schedule(
+                    abertura = "11:00",
+                    fechamento = "22:00"
+                ),
+                ),
+                informations = "Nenhuma informação adicional.",
+                price = Price(
+                    por = "pessoa",
+                    valor = "35.00"
+                ),
+                services = listOf(
+                    "Guarda-volumes",
+                    "Wifi"
+                ),
             )
         )
     }

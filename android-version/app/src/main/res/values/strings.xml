@@ -9,4 +9,34 @@
     <string name="cd_climate">climate</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Tela de exibição de um local-->
+    <string name="about_place">Sobre o local</string>
+    <string name="infrastructure">Infraestrutura</string>
+    <string name="schedules">Horário de Funcionamento</string>
+    <string name="address">Endereço</string>
+    <string name="gallery">Galeria de Fotos</string>
+    <string name="price">Valores</string>
+    <string name="closed">Fechado</string>
+    <string name="services">Serviços e Facilidades</string>
+    <string name="informations">Informações Adicionais</string>
+
+    <!--Tela de Catálogo de Lugares-->
+    <string name="title_catalog">Catálogo de lugares</string>
+    <string name="search_bar_placeholder">Buscar lugares</string>
+
+    <!--Tela de Criar Roteiro-->
+    <string name="title_new_itinerary">Novo Roteiro</string>
+    <string name="subtitle_new_itinerary">Como será sua viagem?</string>
+    <string name="title_define_details_itinerary">Defina alguns detalhes para o seu roteiro</string>
+    <string name="question_days">Quantos dias?</string>
+    <string name="question_with_whom">Com quem você vai?</string>
+    <string name="question_interests">Quais são os seus interesses?</string>
+    <string name="title_style_trip">Estilo da viagem</string>
+
+    <!--Plavras gerais-->
+    <string name="title_keep">Continuar</string>
+    <string name="title_return">Voltar</string>
+    <string name="title_get_in">Entrar</string>
+
 </resources>

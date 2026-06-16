@@ -1,4 +1,4 @@
-package com.desbravando.app
+ package com.desbravando.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -169,7 +169,6 @@ fun Catalog() {
         HorizontalDivider(
             thickness = 1.dp
         )
-
         Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
             CategoryCard(
                 selectedTags = if (selectedCategory.isEmpty()) emptySet() else setOf(selectedCategory),

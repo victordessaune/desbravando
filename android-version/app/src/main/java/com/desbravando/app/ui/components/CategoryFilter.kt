@@ -54,7 +54,6 @@ fun CategoryCard(
         FilterOption("Eco", R.drawable.ic_mountain),
         FilterOption("Histórico", R.drawable.ic_landmark)
     )
-    var selected by remember { mutableStateOf("Todos") }
 
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -68,7 +67,7 @@ fun CategoryCard(
                 modifier = Modifier
                     .clip(RoundedCornerShape(40))
                     .background(if (isSelected) Purple else White)
-                    .clickable { selected = option.label }
+                    .clickable { onTagSelected(option.label) }
                     .padding(horizontal = 14.dp, vertical = 5.dp)
             ) {
                 Row(

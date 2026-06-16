@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,6 +36,10 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.desbravando.app.ui.theme.DarkBlue
 
 class Places : ComponentActivity() {
 
@@ -97,6 +104,7 @@ fun PlaceDetailsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(OffWhite)
+            //.verticalScroll(rememberScrollState())
     ) {
 
         item {
@@ -104,6 +112,12 @@ fun PlaceDetailsScreen(
         }
         item {
             DescriptionPlace(place)
+        }
+        item {
+            AddressSection(place)
+        }
+        item {
+            InformationSection(place)
         }
         item {
             ImageSection(place)
@@ -115,7 +129,9 @@ fun HeaderSection(
     place: PlaceInfo
 ) {
 
-    Column {
+    Column(
+
+    ){
 
         Image(
             painter = painterResource(id = R.drawable.cb3),
@@ -211,63 +227,62 @@ fun HeaderSection(
 fun DescriptionPlace(
     place: PlaceInfo
 ){
-    Column(
+    SectionCard(
+    title = "Sobre o local",
+    icon = R.drawable.ic_info
 
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = place.bio,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 12.sp,
+            lineHeight = 16.sp
+        )
+    }
+}
 
-    ){
-        Card(
+@Composable
+fun AddressSection(
+    place: PlaceInfo
+){
+    SectionCard(
+        title = "Endereço",
+        icon = R.drawable.ic_map_pin
+
+    ) {
+        Text(
+            text = place.address,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 12.sp,
+            lineHeight = 16.sp
+        )
+    }
+}
+
+@Composable
+fun InformationSection(
+    place: PlaceInfo
+){
+    SectionCard(
+        title = "Infraestrutura",
+        icon = R.drawable.ic_building
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
             modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(0.95f)
-                .padding(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = White
-            )
-        ){
-            Column(
-                modifier = Modifier.padding(10.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Icon(
-                        painter = painterResource(
-                            id = R.drawable.ic_info
-                        ),
-                        contentDescription = "Location",
-                        tint = Blue,
-                        modifier = Modifier.size(18.dp)
-                    )
-
-                    Spacer(
-                        modifier = Modifier.width(5.dp)
-                    )
-
-                    Text(
-                        text = "Sobre o local",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight(600)
-                    )
-                }
-
-                Spacer(
-                    modifier = Modifier.height(5.dp)
-                )
-
-                Text(
-                    text = place.bio,
-                    textAlign = TextAlign.Justify,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp),
-                    fontSize = 12.sp,
-                    lineHeight = 16.sp
+                .heightIn(max = 500.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(place.infrastructure){ item ->
+                InfrastructureItem(
+                    title = item
                 )
             }
         }
+
     }
 }
 
@@ -275,16 +290,87 @@ fun DescriptionPlace(
 fun ImageSection(
     place: PlaceInfo
 ){
-    Column(
-
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-
+    SectionCard(
+        title = "Galeria de fotos",
+        icon = R.drawable.ic_camera
     ){
+
+    }
+
+}
+
+//Função para definifr o item apresentação na seção de infraestrutura
+@Composable
+fun InfrastructureItem(
+    title: String
+) {
+
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = OffWhite
+        )
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Icon(
+                painter = painterResource(
+                    id = getInfrastructureIcon(title)
+                ),
+                contentDescription = null,
+                tint = Blue,
+                modifier = Modifier.size(18.dp)
+            )
+
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+
+            Text(
+                text = title,
+                fontSize = 12.sp
+            )
+        }
+    }
+}
+
+@DrawableRes
+fun getInfrastructureIcon(name: String): Int {
+    return when(name) {
+        "Estacionamento" -> R.drawable.ic_parking
+        "Segurança" -> R.drawable.ic_shield
+        "Familiar" -> R.drawable.ic_family
+        "Lanchonetes" -> R.drawable.ic_utensils
+        "Toaletes" -> R.drawable.ic_restroom
+        "Climatizado" -> R.drawable.ic_snowflake
+        "Playground" -> R.drawable.ic_playground
+        "Monitoramento" -> R.drawable.ic_video
+        "Iluminação" -> R.drawable.ic_light
+        "Bicicletas" -> R.drawable.ic_bicycle
+        "Na Sombra" -> R.drawable.ic_tree
+        "Acessível" -> R.drawable.ic_wheelchair
+        else -> R.drawable.ic_info
+    }
+}
+
+//Função para o modelo do card
+@Composable
+fun SectionCard(
+    title: String,
+    icon: Int,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Card(
             modifier = Modifier
-                .fillMaxHeight()
                 .fillMaxWidth(0.95f)
                 .padding(8.dp),
             colors = CardDefaults.cardColors(
@@ -294,15 +380,15 @@ fun ImageSection(
             Column(
                 modifier = Modifier.padding(10.dp)
             ) {
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Icon(
-                        painter = painterResource(
-                            id = R.drawable.ic_camera
-                        ),
-                        contentDescription = "Location",
-                        tint = Blue,
+                        painter = painterResource(icon),
+                        contentDescription = null,
+                        tint = Purple,
                         modifier = Modifier.size(18.dp)
                     )
 
@@ -311,9 +397,9 @@ fun ImageSection(
                     )
 
                     Text(
-                        text = "Fotos do local",
+                        text = title,
                         fontSize = 15.sp,
-                        fontWeight = FontWeight(600)
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
@@ -321,31 +407,21 @@ fun ImageSection(
                     modifier = Modifier.height(10.dp)
                 )
 
+                content()
             }
         }
-
     }
-
 }
-@Composable
-fun InformtionsSection(
-    place: PlaceInfo
-){
-    Column(
 
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ){}
-}
 
 data class PlaceInfo(
     val id: String = "",
     val name: String = "",
     val city: String = "",
     val tags: String = "",
-    val bio: String = ""
+    val bio: String = "",
+    val address: String = "",
+    val infrastructure: List<String> = emptyList()
 )
 
 @Preview(showBackground = true)
@@ -358,7 +434,15 @@ fun PlacesPreview() {
                 name = "Convento da Penha",
                 city = "Vila Velha",
                 tags = "GatroBar",
-                bio = "O Coco Bambu é uma renomada rede de restaurantes brasileira especializada em frutos do mar, conhecida por pratos fartos, cardápio variado e ambiente sofisticado, mas acessível. Fundada em 2001, destaca-se pelo Camarão Internacional, adegas climatizadas, áreas para eventos e atendimento de alta qualidade."
+                bio = "O Coco Bambu é uma renomada rede de restaurantes brasileira especializada em frutos do mar, conhecida por pratos fartos, cardápio variado e ambiente sofisticado, mas acessível. Fundada em 2001, destaca-se pelo Camarão Internacional, adegas climatizadas, áreas para eventos e atendimento de alta qualidade.",
+                address = "Rua Vasco Coutinho, s/n, Prainha, na cidade de Vila Velha, ES",
+                infrastructure = listOf(
+                    "Estacionamento",
+                    "Segurança",
+                    "Toaletes",
+                    "Na Sombra",
+                    "Bicicletas"
+                )
             )
         )
     }

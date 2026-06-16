@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,6 +85,7 @@ import com.desbravando.app.ui.theme.MediumGray
 import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
+import com.desbravando.app.ui.theme.White
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -417,6 +419,8 @@ fun ItineraryCard(
     location: String,
     description: String
 ) {
+    var isFavorited by remember { mutableStateOf(true) }
+
     Card(
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -429,23 +433,45 @@ fun ItineraryCard(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
+                    .height(110.dp),
                 contentScale = ContentScale.Crop
             )
-
-            Icon(
-                painter = painterResource(id = R.drawable.heart),
-                contentDescription = null,
-                tint = Color.White,
+            Row(
+                horizontalArrangement = Arrangement.End,
                 modifier = Modifier
-                    .size(40.dp)
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-            )
+                    .padding(top = 10.dp)
+                    .padding(end = 10.dp)
+                    .fillMaxWidth(),
+
+            ){
+                Box(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .background(color = White, shape = CircleShape)
+                        .clickable { isFavorited = !isFavorited }
+
+                )
+                {
+                    Icon(
+                        painter =  painterResource(id = if (isFavorited) R.drawable.ic_heart_regular
+                        else R.drawable.heart),
+                        contentDescription = null,
+                        tint = Purple,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.Center)
+
+                    )
+
+                }
+
+            }
+
+
         }
 
 
-        Column(modifier = Modifier.padding(start = 14.dp, top = 8.dp, bottom = 4.dp, end = 8.dp)) {
+        Column(modifier = Modifier.padding(start = 14.dp, top = 6.dp, bottom = 4.dp, end = 8.dp)) {
             Text(
                 text = name,
                 fontSize = 13.sp,
@@ -489,6 +515,8 @@ fun FavoriteCard(
     name: String,
     location: String
 ) {
+    var isFavorited by remember { mutableStateOf(true) }
+
     Card(
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -501,19 +529,39 @@ fun FavoriteCard(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(90.dp),
+                    .height(100.dp),
                 contentScale = ContentScale.Crop
             )
 
-            Icon(
-                painter = painterResource(id = R.drawable.heart),
-                contentDescription = null,
-                tint = Color.White,
+            Row(
+                horizontalArrangement = Arrangement.End,
                 modifier = Modifier
-                    .size(40.dp)
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-            )
+                    .padding(top = 10.dp)
+                    .padding(end = 10.dp)
+                    .fillMaxWidth(),
+
+                ){
+                Box(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .background(color = White, shape = CircleShape)
+                        .clickable { isFavorited = !isFavorited }
+                )
+                {
+                    Icon(
+                        painter = painterResource(id = if (isFavorited) R.drawable.ic_heart_regular
+                        else R.drawable.heart),
+                        contentDescription = null,
+                        tint = Purple,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.Center)
+
+                    )
+
+                }
+
+            }
         }
 
 

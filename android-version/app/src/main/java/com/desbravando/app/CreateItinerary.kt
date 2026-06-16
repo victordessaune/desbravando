@@ -87,6 +87,7 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.ui.res.stringResource
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.theme.White
 import com.google.firebase.Firebase
@@ -233,7 +234,7 @@ fun DefineRouteStep(
                     )
                 }
                 Text(
-                    text = "Novo Roteiro",
+                    text = stringResource(R.string.title_new_itinerary),
                     fontSize = 14.sp,
                     color = Blue,
                     fontWeight = FontWeight.SemiBold,
@@ -270,7 +271,7 @@ fun DefineRouteStep(
                 ) {
 
                     Text(
-                        text = "Como será sua viagem?",
+                        text = stringResource(R.string.subtitle_new_itinerary),
                         fontSize = 18.sp,
                         color = DarkBlue,
                         fontWeight = FontWeight.SemiBold,
@@ -278,7 +279,7 @@ fun DefineRouteStep(
                         modifier = Modifier.padding(top = 1.dp)
                     )
                     Text(
-                        text = "Defina alguns detalhes para o seu roteiro",
+                        text = stringResource(R.string.title_define_details_itinerary),
                         fontSize = 12.sp,
                         color = Gray,
                         fontWeight = FontWeight.Medium,
@@ -297,7 +298,7 @@ fun DefineRouteStep(
                     .fillMaxWidth(),
             ) {
                 Text(
-                    text = "Quantos dias?",
+                    text = stringResource(R.string.question_days),
                     fontSize = 12.sp,
                     color = DarkBlue,
                     fontFamily = Poppins,
@@ -324,7 +325,7 @@ fun DefineRouteStep(
                     .fillMaxWidth(),
             ) {
                 Text(
-                    text = "Com quem você vai?",
+                    text = stringResource(R.string.question_with_whom),
                     fontSize = 12.sp,
                     color = DarkBlue,
                     fontFamily = Poppins,
@@ -350,7 +351,7 @@ fun DefineRouteStep(
                         .fillMaxWidth(),
             ) {
             Text(
-                text = "Quais são os seus interesses?",
+                text = stringResource(R.string.title_style_trip),
                 fontSize = 12.sp,
                 color = DarkBlue,
                 fontFamily = Poppins,
@@ -377,7 +378,7 @@ fun DefineRouteStep(
                     .fillMaxWidth(),
             ){
                 Text(
-                    text = "Estilo da viagem",
+                    text = stringResource(R.string.title_style_trip),
                     fontSize = 12.sp,
                     color = DarkBlue,
                     fontFamily = Poppins,
@@ -416,7 +417,7 @@ fun DefineRouteStep(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Continuar",
+                        text = stringResource(R.string.title_keep),
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,

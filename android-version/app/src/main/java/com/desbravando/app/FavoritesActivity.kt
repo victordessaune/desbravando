@@ -88,7 +88,6 @@ import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -179,6 +178,16 @@ fun Favorites(
                         tint = Blue
                     )
                 }
+                Text(
+                    text = "Adicionar Locais",
+                    fontSize = 14.sp,
+                    color = Blue,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = Poppins,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(top = 1.dp)
+                )
 
 
                 IconButton(onClick = { }) {
@@ -204,7 +213,7 @@ fun Favorites(
                 ) {
 
                     Text(
-                        text = stringResource(R.string.title_favorite),
+                        text = "Favoritos",
                         fontSize = 18.sp,
                         color = DarkBlue,
                         fontWeight = FontWeight.SemiBold,
@@ -231,7 +240,7 @@ fun Favorites(
                         fontFamily = Poppins,
                     )
                     Text(
-                        text = stringResource(R.string.subtitle_favorite_places),
+                        text = "Seus lugares favoritos para visitar e explorar!",
                         fontSize = 12.sp,
                         color = Gray,
                         fontWeight = FontWeight.Medium,
@@ -299,7 +308,7 @@ fun Favorites(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.title_keep),
+                        text = "Continuar",
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,

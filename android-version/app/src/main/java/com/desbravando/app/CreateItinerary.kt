@@ -87,8 +87,12 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
+import com.desbravando.app.ui.components.AddLocalCard
 import com.desbravando.app.ui.components.CategoryCard
+import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.White
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -440,6 +444,11 @@ fun AddLocalsStep(
     onNext: () -> Unit,
     onBack: () -> Unit
 ) {
+    var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        findLocations { list -> locations = list }
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -532,6 +541,23 @@ fun AddLocalsStep(
                         )
                 }
             }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+
+                /*locations.forEach { location ->
+                    AddLocalCard(
+                        location = location,
+                        onClick = { }
+                    )
+                }*/
+
+            }
+
+
 
             Button(
                 onClick = { },

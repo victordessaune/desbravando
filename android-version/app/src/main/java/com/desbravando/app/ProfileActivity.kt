@@ -1,5 +1,6 @@
   package com.desbravando.app
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -50,6 +51,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -86,6 +88,9 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
+import com.desbravando.app.FavoritesRepository
+import com.desbravando.app.FavoriteLocation
+import com.desbravando.app.ui.components.FavoriteCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -168,6 +173,13 @@ fun Profile(
     modifier: Modifier = Modifier,
     onRegisterClick: (HashMap<String, String>, String) -> Unit
 ) {
+    var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        FavoritesRepository.getFavorites { favorites = it }
+    }
+
+    val favoritosExibidos = favorites.takeLast(3)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -378,31 +390,25 @@ fun Profile(
                     fontWeight = FontWeight.Medium,
 
                     )
+                val context = LocalContext.current
                 Text(
                     text = "Ver Todos",
                     fontSize = 13.sp,
                     color = Gray,
                     fontFamily = Poppins,
                     fontWeight = FontWeight.Medium,
+                    modifier = Modifier.clickable {
+                        context.startActivity(Intent(context, FavoritesActivity::class.java))  }
 
                     )
             }
-            val locations = listOf(
-                Triple("https://images.unsplash.com/photo-1601581975053-7f83d35f5e5e?w=400", "Praia de Camburi", "Vitória - ES"),
-                Triple("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400", "Pedra Azul", "Domingos Martins - ES"),
-                Triple("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400", "Convento da Penha", "Vila Velha - ES"),
-                Triple("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400", "Praia de Guarapari", "Guarapari - ES"),
-                Triple("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400", "Itaúnas", "Conceição da Barra - ES"),
-            )
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 modifier = Modifier.fillMaxWidth()
 
-            ) { items(locations) { (imageUrl, name, location) ->
+            ) { items(favoritosExibidos)  { fav ->
                 FavoriteCard(
-                    imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                    name = "Pão de Açúcar",
-                    location = " Vitória - ES"
+                    favorite = fav
                 )
 
             }
@@ -509,86 +515,7 @@ fun ItineraryCard(
     }
 }
 
-@Composable
-fun FavoriteCard(
-    imageUrl: String,
-    name: String,
-    location: String
-) {
-    var isFavorited by remember { mutableStateOf(true) }
 
-    Card(
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = Modifier
-            .width(110.dp),
-    ) {
-        Box {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .padding(end = 10.dp)
-                    .fillMaxWidth(),
-
-                ){
-                Box(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .background(color = White, shape = CircleShape)
-                        .clickable { isFavorited = !isFavorited }
-                )
-                {
-                    Icon(
-                        painter = painterResource(id = if (isFavorited) R.drawable.ic_heart_regular
-                        else R.drawable.heart),
-                        contentDescription = null,
-                        tint = Purple,
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center)
-
-                    )
-
-                }
-
-            }
-        }
-
-
-        Column(modifier = Modifier.padding(2.dp)) {
-            Text(
-                text = name,
-                fontSize = 12.sp,
-                color = DarkBlue,
-                fontFamily = Poppins,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = location,
-                fontFamily = Poppins,
-                fontSize = 11.sp,
-                color = Gray,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
 @Composable
 fun ProfilePicture(modifier: Modifier = Modifier) {
     var imageUri by remember { mutableStateOf<Uri?>(null) }

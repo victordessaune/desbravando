@@ -15,10 +15,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,8 +35,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.desbravando.app.FavoritesRepository
 import com.desbravando.app.R
-import com.desbravando.app.Restaurants
+import com.desbravando.app.Location
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.DesbravandoTheme
 import com.desbravando.app.ui.theme.Gray
@@ -44,9 +51,14 @@ import com.desbravando.app.ui.theme.White
 
 @Composable
 fun LocalCard(
-    restaurant: Restaurants,
+    location: Location,
     onClick: () -> Unit = {}
 ) {
+    var isFavorited by remember { mutableStateOf(false) }
+    LaunchedEffect(location.id) {
+        FavoritesRepository.isFavorited(location.id) { isFavorited = it }
+    }
+
     Box(
         modifier = Modifier
             .height(110.dp)
@@ -63,7 +75,7 @@ fun LocalCard(
         ) {
 
             AsyncImage(
-                model = restaurant.imageUrl,
+                model = location.imageUrl,
                 contentDescription = "Foto do lugar",
                 modifier = Modifier
                     .width(130.dp)
@@ -87,7 +99,7 @@ fun LocalCard(
             ) {
 
                 Text(
-                    text = restaurant.name,
+                    text = location.name,
                     fontFamily = Poppins,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
@@ -106,7 +118,7 @@ fun LocalCard(
                     )
 
                     Text(
-                        text = restaurant.city,
+                        text = location.city,
                         fontFamily = Poppins,
                         color = Purple,
                         fontSize = 12.sp,
@@ -128,14 +140,36 @@ fun LocalCard(
                     verticalArrangement = Arrangement.Top
                 ) {
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.heart),
-                        contentDescription = "Visualizar",
-                        tint = MediumGray,
+                    Box(
                         modifier = Modifier
-                            .padding(end = 16.dp)
-                            .size(25.dp)
+                            .size(30.dp)
+                            .background(color = White, shape = CircleShape)
+                            .clickable {
+                                isFavorited = !isFavorited
+                                FavoritesRepository.toggleFavorite(
+                                    locationId = location.id,
+                                    locationData = mapOf(
+                                        "imageUrl" to location.imageUrl,
+                                        "name" to location.name,
+                                        "city" to location.city,
+                                        "tags" to location.tags
+                                    )
+                                )
+                            }
                     )
+                    {
+                        Icon(
+                            painter = painterResource(id = if (isFavorited) R.drawable.heart
+                            else R.drawable.ic_heart_regular),
+                            contentDescription = null,
+                            tint = Purple,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .align(Alignment.Center)
+
+                        )
+
+                    }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
@@ -157,7 +191,7 @@ fun LocalCard(
 @Composable
 fun LocalCardPreview() {
     DesbravandoTheme {
-        LocalCard(restaurant = Restaurants(
+        LocalCard(location = Location(
             imageUrl = "",
             name = "",
             city = " "

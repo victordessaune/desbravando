@@ -65,19 +65,28 @@ class CatalogActivity : ComponentActivity() {
 fun Catalog() {
 
 
-    var restaurants by remember { mutableStateOf<List<Restaurants>>(emptyList()) }
+    var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
     var search by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("") }  // ← novo
 
     LaunchedEffect(Unit) {
-        findRestaurants { list -> restaurants = list }
+        findLocations { list -> locations = list }
     }
 
     // filtra por busca E por categoria
-    val filteredRestaurants = restaurants.filter { restaurant ->
-        val matchesSearch = restaurant.name.contains(search, ignoreCase = true)
-        val matchesCategory = selectedCategory.isEmpty() ||
-                restaurant.tags.any { it.equals(selectedCategory, ignoreCase = true) }
+    val filteredLocations = locations.filter { locationItem ->
+        val matchesSearch = locationItem.name.contains(search, ignoreCase = true)
+
+        val matchesCategory = selectedCategory.isEmpty() || locationItem.tags.any { tag ->
+            // Remove o 's' do final para não quebrar em "Parque" / "Parques"
+            val cleanTag = tag.trim().removeSuffix("s")
+            val cleanSelected = selectedCategory.trim().removeSuffix("s")
+
+            cleanTag.equals(cleanSelected, ignoreCase = true) ||
+                    tag.contains(selectedCategory, ignoreCase = true) ||
+                    selectedCategory.contains(tag, ignoreCase = true)
+        }
+
         matchesSearch && matchesCategory
     }
     Column(
@@ -192,9 +201,9 @@ fun Catalog() {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
 
-            items(filteredRestaurants) { restaurant ->
+            items(filteredLocations) { location ->
                 LocalCard(
-                    restaurant = restaurant,
+                    location = location,
                     onClick = { }
                 )
             }
@@ -215,15 +224,16 @@ fun CatalogPreview() {
     }
 }
 
-data class Restaurants(
-    val name: String = "",
-    val city: String = "",
-    val imageUrl: String = "",
-    val tags: List<String> = emptyList()
-)
+ data class Location(
+     val id: String = "",
+     val name: String = "",
+     val city: String = "",
+     val imageUrl: String = "",
+     val tags: List<String> = emptyList()
+ )
 
-fun findRestaurants(
-    onResult: (List<Restaurants>) -> Unit
+fun findLocations(
+    onResult: (List<Location>) -> Unit
 ) {
     FirebaseFirestore
         .getInstance()
@@ -232,7 +242,8 @@ fun findRestaurants(
         .addOnSuccessListener { result ->
             val list = result.documents.mapNotNull { doc ->
                 val data = doc.data ?: return@mapNotNull null
-                Restaurants(
+                Location(
+                    id       = doc.id,
                     name     = data["name"] as? String ?: "",
                     city     = "${data["city"] as? String ?: ""}, ${data["uf"] as? String ?: ""}",
                     imageUrl = data["cover"] as? String ?: "",

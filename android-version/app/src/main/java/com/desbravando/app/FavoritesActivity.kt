@@ -87,10 +87,13 @@ import com.desbravando.app.ui.theme.OffWhite
 import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.desbravando.app.ui.components.CategoryCard
+import com.desbravando.app.ui.components.FavoriteCard
+import com.desbravando.app.ui.components.LocalCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -109,7 +112,6 @@ class FavoritesActivity : ComponentActivity() {
         setContent {
             DesbravandoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // CORRIGIDO: era Register(...), agora chama Profile(...)
                     Favorites(
                         modifier = Modifier.padding(innerPadding),
 
@@ -119,11 +121,33 @@ class FavoritesActivity : ComponentActivity() {
         }
     }
 }
-
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Favorites(
     modifier: Modifier = Modifier
 ) {
+    var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
+    var selectedCategory by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        FavoritesRepository.getFavorites { list ->
+            favorites = list
+        }
+    }
+    val filteredFavorites = favorites.filter { item ->
+        if (selectedCategory.isEmpty()) return@filter true
+
+        item.tags.any { tag ->
+            // Remove o 's' do final para comparar "Parque" com "Parques"
+            val cleanTag = tag.trim().removeSuffix("s")
+            val cleanSelected = selectedCategory.trim().removeSuffix("s")
+
+            cleanTag.equals(cleanSelected, ignoreCase = true) ||
+                    tag.contains(selectedCategory, ignoreCase = true) ||
+                    selectedCategory.contains(tag, ignoreCase = true)
+        }
+
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -198,12 +222,13 @@ fun Favorites(
                     )
                     Text(
                         text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(
-                                color = Purple,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Purple,
+                                    fontWeight = FontWeight.SemiBold
+                                )
                             ) {
-                                append("24 ")
+                                append("${favorites.size} ")
                             }
                             withStyle(style = SpanStyle(color = Gray)) {
                                 append("Lugares salvos")
@@ -213,8 +238,7 @@ fun Favorites(
                         color = Gray,
                         fontWeight = FontWeight.Medium,
                         fontFamily = Poppins,
-
-                        )
+                    )
                     Text(
                         text = "Seus lugares favoritos para visitar e explorar!",
                         fontSize = 12.sp,
@@ -233,11 +257,32 @@ fun Favorites(
                     .padding(top = 15.dp)
                     .padding(bottom = 15.dp)
                     .fillMaxWidth()
-
             ) {
-
-                CategoryCard()
+                CategoryCard(
+                    selectedTags = if (selectedCategory.isEmpty()) emptySet() else setOf(selectedCategory),
+                    onTagSelected = { tag ->
+                        selectedCategory = if (tag == "Todos") ""
+                        else if (selectedCategory == tag) ""
+                        else tag
+                    }
+                )
             }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                filteredFavorites.forEach { fav ->
+                    FavoriteCard(
+                        favorite = fav,
+                        onRemove = {
+                            favorites = favorites.filter { it.id != fav.id }
+
+                        }
+                    )
+                }
+            }
+
 
 
             Button(

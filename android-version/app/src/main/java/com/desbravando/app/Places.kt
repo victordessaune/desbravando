@@ -40,6 +40,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import com.desbravando.app.ui.theme.DarkBlue
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.platform.LocalContext
+import com.desbravando.app.ui.components.BottomBarWithNavigation
+import androidx.compose.foundation.layout.padding
 
 class Places : ComponentActivity() {
 
@@ -80,16 +84,15 @@ class Places : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-
                         CircularProgressIndicator()
-
                     }
 
                 } else {
 
-                    PlaceDetailsScreen(
-                        place = place!!
-                    )
+                    place?.let {
+                        PlaceDetailsScreen(place = it)
+                    }
+
                 }
             }
         }
@@ -99,28 +102,31 @@ class Places : ComponentActivity() {
 fun PlaceDetailsScreen(
     place: PlaceInfo
 ) {
+    
+    val context = LocalContext.current
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(OffWhite)
-            //.verticalScroll(rememberScrollState())
-    ) {
+    Scaffold(
+        bottomBar = {
+            BottomBarWithNavigation(
+                selectedRoute = "explore",
+                context = context
+            )
+        }
+    ) { paddingValues ->
 
-        item {
-            HeaderSection(place)
-        }
-        item {
-            DescriptionPlace(place)
-        }
-        item {
-            AddressSection(place)
-        }
-        item {
-            InformationSection(place)
-        }
-        item {
-            ImageSection(place)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(OffWhite)
+        ) {
+
+            item { HeaderSection(place) }
+            item { DescriptionPlace(place) }
+            /*item { AddressSection(place) }
+            item { InformationSection(place) }
+            item { ImageSection(place) }*/
+
         }
     }
 }
@@ -256,7 +262,8 @@ fun AddressSection(
             textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 12.sp,
-            lineHeight = 16.sp
+            lineHeight = 16.sp,
+            fontWeight = FontWeight(500)
         )
     }
 }
@@ -271,6 +278,7 @@ fun InformationSection(
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
+            userScrollEnabled = false,
             modifier = Modifier
                 .heightIn(max = 500.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -299,6 +307,18 @@ fun ImageSection(
 
 }
 
+@Composable
+fun ScheduleSection(
+    place: PlaceInfo
+){
+    SectionCard(
+        title = "Horário de Funcionamento",
+        icon = R.drawable.ic_clock
+    ){
+
+    }
+}
+
 //Função para definifr o item apresentação na seção de infraestrutura
 @Composable
 fun InfrastructureItem(
@@ -313,8 +333,7 @@ fun InfrastructureItem(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
+                .padding(horizontal = 10.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -333,7 +352,8 @@ fun InfrastructureItem(
 
             Text(
                 text = title,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                fontWeight = FontWeight(500)
             )
         }
     }

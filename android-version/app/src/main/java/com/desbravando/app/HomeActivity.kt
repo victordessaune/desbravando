@@ -65,13 +65,18 @@ import kotlin.math.absoluteValue
 
 const val API_KEY = "6168cafa8739e67b09689ffecf6e0eac"
 
+data class CarouselLocation(
+    val id: String = "",
+    val cover: String = ""
+)
+
 class HomeActivity : ComponentActivity() {
 
     private var temperature = mutableStateOf("--°C")
     private var weatherDesc = mutableStateOf("Carregando...")
     private var weatherVisual = mutableStateOf(WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00)))
     private var userName = mutableStateOf("Explorador")
-    private var carouselImages = mutableStateOf<List<String>>(emptyList())
+    private var carouselImages = mutableStateOf<List<CarouselLocation>>(emptyList())
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -150,10 +155,12 @@ class HomeActivity : ComponentActivity() {
             .collection("locations")
             .get()
             .addOnSuccessListener { result ->
-                val allCovers = result.documents.mapNotNull { doc ->
-                    doc.getString("cover")?.takeIf { it.isNotBlank() }
+                val allLocations = result.documents.mapNotNull { doc ->
+                    val cover = doc.getString("cover")
+                    if (cover.isNullOrBlank()) null
+                    else CarouselLocation(id = doc.id, cover = cover)
                 }
-                carouselImages.value = allCovers.shuffled().take(5)
+                carouselImages.value = allLocations.shuffled().take(5)
             }
     }
 
@@ -215,7 +222,7 @@ fun Home(
     weatherDesc: String = "Carregando...",
     weatherVisual: WeatherVisual = WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00)),
     userName: String = "Explorador",
-    carouselImages: List<String> = emptyList()
+    carouselImages: List<CarouselLocation> = emptyList()
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -286,7 +293,7 @@ fun Home(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        BigLocationCardList(images = carouselImages)
+        BigLocationCardList(locations = carouselImages)
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -482,10 +489,15 @@ fun StateSelector() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BigLocationCardList(images: List<String> = emptyList()) {
+fun BigLocationCardList(locations: List<CarouselLocation> = emptyList()) {
 
-    val placeholders = listOf("", "", "", "", "")
-    val cards = images.ifEmpty { placeholders }
+    val context = LocalContext.current
+
+    val placeholders = listOf(
+        CarouselLocation(), CarouselLocation(), CarouselLocation(),
+        CarouselLocation(), CarouselLocation()
+    )
+    val cards = locations.ifEmpty { placeholders }
 
     val pagerState = rememberPagerState(pageCount = { cards.size })
 
@@ -518,11 +530,19 @@ fun BigLocationCardList(images: List<String> = emptyList()) {
                         this.alpha = alpha
                     }
                     .clip(RoundedCornerShape(30.dp))
+                    .clickable {
+                        if (cards[page].id.isNotBlank()) {
+                            context.startActivity(
+                                Intent(context, Places::class.java)
+                                    .putExtra("PLACE_ID", cards[page].id)
+                            )
+                        }
+                    }
                     .background(LightGray)
             ) {
-                if (cards[page].isNotBlank()) {
+                if (cards[page].cover.isNotBlank()) {
                     AsyncImage(
-                        model = cards[page],
+                        model = cards[page].cover,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()

@@ -91,6 +91,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import com.desbravando.app.ui.components.BottomBarWithNavigation
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.FavoriteCard
 import com.desbravando.app.ui.components.FavoriteWideCard
@@ -112,12 +113,20 @@ class FavoritesActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomBarWithNavigation(
+                            selectedRoute = "favorites",
+                            context = this
+                        )
+                    }
+                ) { innerPadding ->
                     Favorites(
                         onBack = { finish() },
                         modifier = Modifier.padding(innerPadding),
 
-                        )
+                   )
                 }
             }
         }

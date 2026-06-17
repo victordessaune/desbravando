@@ -91,6 +91,7 @@ import com.desbravando.app.ui.theme.Purple
 import com.desbravando.app.ui.theme.White
 import com.desbravando.app.FavoritesRepository
 import com.desbravando.app.FavoriteLocation
+import com.desbravando.app.ui.components.BottomBarWithNavigation
 import com.desbravando.app.ui.components.FavoriteCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -109,10 +110,23 @@ class ProfileActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // CORRIGIDO: era Register(...), agora chama Profile(...)
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomBarWithNavigation(
+                            selectedRoute = "profile",
+                            context = this
+                        )
+                    }
+                ) { innerPadding ->
                     Profile(
                         onBack = { finish() },
+                        onLogout = {
+                            auth.signOut()
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        },
                         modifier = Modifier.padding(innerPadding),
                     )
                 }
@@ -124,6 +138,7 @@ class ProfileActivity : ComponentActivity() {
 @Composable
 fun Profile(
     onBack: () -> Unit = {},
+    onLogout: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -175,7 +190,7 @@ fun Profile(
                     )
                 }
 
-                IconButton(onClick = { }) {
+                IconButton(onClick = { onLogout() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_logout),
                         contentDescription = null,
@@ -516,6 +531,6 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
 @Composable
 fun ProfilePreview() {
     DesbravandoTheme {
-        Profile(onBack = {})
+        Profile(onBack = {}, onLogout = {})
     }
 }

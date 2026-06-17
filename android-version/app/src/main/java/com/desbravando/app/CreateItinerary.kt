@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.desbravando.app.ui.components.AddLocalCard
+import com.desbravando.app.ui.components.BottomBarWithNavigation
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.theme.Blue
 import com.desbravando.app.ui.theme.BlueSecondary
@@ -96,7 +97,15 @@ class CreateItinerary : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DesbravandoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomBarWithNavigation(
+                            selectedRoute = "add",
+                            context = this
+                        )
+                    }
+                ) { innerPadding ->
                     Itinerary(modifier = Modifier.padding(innerPadding))
                 }
             }

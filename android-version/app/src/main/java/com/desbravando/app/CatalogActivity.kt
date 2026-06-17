@@ -29,12 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.draw.clip
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.*
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.ui.platform.LocalContext
+import com.desbravando.app.ui.components.BottomBarWithNavigation
 
 class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +47,24 @@ class CatalogActivity : ComponentActivity() {
 
         setContent {
             DesbravandoTheme {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomBarWithNavigation(
+                            selectedRoute = "explore",
+                            context = this
+                        )
+                    }
+                ) { innerPadding ->
+                    Catalog(
+                        onBack = { finish() },
+                        initialCategory = filterCategory,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
 
-                Catalog(
-                    onBack = { finish() },
-                    initialCategory = filterCategory)
+
+
             }
         }
     }
@@ -57,7 +73,9 @@ class CatalogActivity : ComponentActivity() {
 @Composable
 fun Catalog(
     onBack: () -> Unit = {},
-    initialCategory: String = "") {
+    initialCategory: String = "",
+    modifier: Modifier = Modifier
+) {
 
     val context = LocalContext.current
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
@@ -84,7 +102,7 @@ fun Catalog(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(OffWhite)
     ) {

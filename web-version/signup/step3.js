@@ -109,7 +109,8 @@ form.addEventListener("submit", async function (e) {
             email: fields.email.value,
             occupation: fields.occupation.value,
             orgId: orgRef.id,
-            createdAt: new Date()
+            createdAt: new Date(),
+            role: "admin"
         });
 
         localStorage.removeItem("orgData");

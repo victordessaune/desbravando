@@ -3,6 +3,12 @@
     background-color: var(--color-off-white);
 }
 
+main{
+    margin-left: 220px;
+    width: calc(100% - 220px); 
+    min-height: 100vh;  
+}
+
 .banner{
     height: 230px;
     width: 100%;

@@ -1,20 +1,29 @@
 package com.desbravando.app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
@@ -24,6 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +43,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.lerp
 import androidx.core.app.ActivityCompat
+import coil.compose.AsyncImage
 import com.desbravando.app.data.remote.RetrofitInstance
 import com.desbravando.app.ui.components.BottomBar
 import com.desbravando.app.ui.components.BottomBarWithNavigation
@@ -40,10 +54,14 @@ import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.utils.WeatherVisual
 import com.desbravando.app.ui.utils.getWeatherVisual
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.absoluteValue
 
 const val API_KEY = "6168cafa8739e67b09689ffecf6e0eac"
 
@@ -52,6 +70,8 @@ class HomeActivity : ComponentActivity() {
     private var temperature = mutableStateOf("--°C")
     private var weatherDesc = mutableStateOf("Carregando...")
     private var weatherVisual = mutableStateOf(WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00)))
+    private var userName = mutableStateOf("Explorador")
+    private var carouselImages = mutableStateOf<List<String>>(emptyList())
 
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -64,6 +84,9 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        fetchUserData()
+        fetchCarouselImages()
 
         val alreadyGranted = ActivityCompat.checkSelfPermission(
             this, Manifest.permission.ACCESS_FINE_LOCATION
@@ -100,12 +123,38 @@ class HomeActivity : ComponentActivity() {
                         Home(
                             temperature = temperature.value,
                             weatherDesc = weatherDesc.value,
-                            weatherVisual = weatherVisual.value
+                            weatherVisual = weatherVisual.value,
+                            userName = userName.value,
+                            carouselImages = carouselImages.value
                         )
                     }
                 }
             }
         }
+    }
+
+    private fun fetchUserData() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                val name = doc.getString("name") ?: "Explorador"
+                userName.value = name
+            }
+    }
+
+    private fun fetchCarouselImages() {
+        FirebaseFirestore.getInstance()
+            .collection("locations")
+            .get()
+            .addOnSuccessListener { result ->
+                val allCovers = result.documents.mapNotNull { doc ->
+                    doc.getString("cover")?.takeIf { it.isNotBlank() }
+                }
+                carouselImages.value = allCovers.shuffled().take(5)
+            }
     }
 
     private fun fetchWeather() {
@@ -164,9 +213,13 @@ fun Home(
     modifier: Modifier = Modifier,
     temperature: String = "--°C",
     weatherDesc: String = "Carregando...",
-    weatherVisual: WeatherVisual = WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00))
+    weatherVisual: WeatherVisual = WeatherVisual(R.drawable.ic_sun, Color(0xFFFFCC00)),
+    userName: String = "Explorador",
+    carouselImages: List<String> = emptyList()
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -193,14 +246,14 @@ fun Home(
 
         Row(
             modifier = Modifier
-                .padding(start = 20.dp, top = 15.dp, end = 30.dp)
+                .padding(start = 20.dp, top = 15.dp, end = 20.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.home_welcome),
+                    text = "Olá, $userName!",
                     fontFamily = Poppins,
                     fontSize = 24.sp,
                     color = DarkBlue,
@@ -227,13 +280,59 @@ fun Home(
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp).padding(start = 10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         StateSelector()
 
-        Spacer(modifier = Modifier.height(20.dp).padding(start = 10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-        BigLocationCard()
+        BigLocationCardList(images = carouselImages)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(
+            modifier = Modifier
+                .padding(start = 20.dp, end = 20.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            CategoryCard(icon = R.drawable.ic_beach, label = "Praias") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "Praias")
+                )
+            }
+            CategoryCard(icon = R.drawable.ic_tree, label = "Parques") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "Parques")
+                )
+            }
+            CategoryCard(icon = R.drawable.ic_church, label = "Religioso") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "Religioso")
+                )
+            }
+            CategoryCard(icon = R.drawable.ic_utensils, label = "Gastrobar") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "GastroBar")
+                )
+            }
+            CategoryCard(icon = R.drawable.ic_mountain, label = "Eco") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "Eco")
+                )
+            }
+            CategoryCard(icon = R.drawable.ic_historic, label = "Histórico") {
+                context.startActivity(
+                    Intent(context, CatalogActivity::class.java)
+                        .putExtra("filter_category", "Histórico")
+                )
+            }
+        }
     }
 }
 
@@ -295,7 +394,7 @@ fun StateSelector() {
 
     Row(
         modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp)
+            .padding(start = 20.dp, end = 20.dp)
             .fillMaxWidth()
             .height(40.dp)
             .shadow(elevation = 8.dp, shape = RoundedCornerShape(20.dp), spotColor = Purple)
@@ -304,7 +403,7 @@ fun StateSelector() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.5f)
+                .fillMaxWidth(0.55f)
                 .padding(start = 10.dp)
         ) {
             Row {
@@ -334,7 +433,7 @@ fun StateSelector() {
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
-                    .padding(start = 20.dp)
+                    .padding(start = 15.dp)
                     .background(LightGray, RoundedCornerShape(15.dp)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -381,35 +480,174 @@ fun StateSelector() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BigLocationCard(){
-    Row(
-        modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp)
-            .fillMaxWidth()
-            .height(200.dp)
-            .background(LightGray, RoundedCornerShape(30.dp)),
-        ){
-        Column() {
-            Row(
+fun BigLocationCardList(images: List<String> = emptyList()) {
+
+    val placeholders = listOf("", "", "", "", "")
+    val cards = images.ifEmpty { placeholders }
+
+    val pagerState = rememberPagerState(pageCount = { cards.size })
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(10000L)
+            val next = (pagerState.currentPage + 1) % cards.size
+            pagerState.animateScrollToPage(next)
+        }
+    }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        HorizontalPager(
+            state = pagerState,
+            contentPadding = PaddingValues(horizontal = 40.dp),
+            pageSpacing = 12.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) { page ->
+            val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+            val scale = lerp(0.90f, 1f, 1f - pageOffset.absoluteValue.coerceIn(0f, 1f))
+            val alpha = lerp(0.6f, 1f, 1f - pageOffset.absoluteValue.coerceIn(0f, 1f))
+
+            Box(
                 modifier = Modifier
-                    .padding(top = 15.dp, start = 15.dp)
-                    .background(Purple, RoundedCornerShape(30.dp))
-                    .padding(5.dp)
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .graphicsLayer {
+                        scaleY = scale
+                        scaleX = scale
+                        this.alpha = alpha
+                    }
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(LightGray)
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_star),
-                    contentDescription = "Star",
-                    tint = White
+                if (cards[page].isNotBlank()) {
+                    AsyncImage(
+                        model = cards[page],
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(top = 15.dp, start = 15.dp)
+                        .background(Purple, RoundedCornerShape(30.dp))
+                        .padding(horizontal = 10.dp, vertical = 5.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_star),
+                        contentDescription = null,
+                        tint = White
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Em destaque",
+                        color = White,
+                        fontFamily = Poppins,
+                        fontSize = 12.sp
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 15.dp)
+                        .background(Purple, RoundedCornerShape(30.dp))
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Explorar", color = White, fontFamily = Poppins, fontSize = 12.sp)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
+                        contentDescription = null,
+                        tint = White
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 15.dp, bottom = 15.dp)
+                        .size(40.dp)
+                        .background(White, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_heart_regular),
+                        contentDescription = "Favoritar",
+                        tint = Purple,
+                        modifier = Modifier.fillMaxSize(0.7f)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            repeat(cards.size) { index ->
+                val isSelected = pagerState.currentPage == index
+                val width by animateDpAsState(
+                    targetValue = if (isSelected) 20.dp else 7.dp,
+                    animationSpec = tween(300),
+                    label = "dot_width"
                 )
-                Text(
-                    text = "Em destaque",
-                    color = White,
-                    fontFamily = Poppins
+                Box(
+                    modifier = Modifier
+                        .height(7.dp)
+                        .width(width)
+                        .background(
+                            color = if (isSelected) Purple else LightGray,
+                            shape = CircleShape
+                        )
                 )
             }
         }
-        Column() { }
+    }
+}
+
+@Composable
+fun CategoryCard(
+    icon: Int,
+    label: String,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .width(55.dp)
+            .height(75.dp)
+            .clickable { onClick() }
+            .background(color = White, RoundedCornerShape(8.dp))
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(10.dp)
+                .align(Alignment.TopCenter)
+                .background(LightGray, CircleShape)
+                .padding(5.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = Blue,
+            )
+        }
+        Text(
+            text = label,
+            fontFamily = Poppins,
+            fontSize = 8.sp,
+            color = Blue,
+            fontWeight = FontWeight(500),
+            modifier = Modifier
+                .padding(5.dp)
+                .align(Alignment.BottomCenter)
+        )
     }
 }
 

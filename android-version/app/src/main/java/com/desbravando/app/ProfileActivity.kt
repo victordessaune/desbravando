@@ -112,6 +112,7 @@ class ProfileActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     // CORRIGIDO: era Register(...), agora chama Profile(...)
                     Profile(
+                        onBack = { finish() },
                         modifier = Modifier.padding(innerPadding),
                     )
                 }
@@ -122,8 +123,15 @@ class ProfileActivity : ComponentActivity() {
 
 @Composable
 fun Profile(
+    onBack: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    var itineraries by remember { mutableStateOf<List<SavedItinerary>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        ItinerariesRepository.getItineraries { itineraries = it }
+    }
     var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -141,23 +149,35 @@ fun Profile(
         Column(modifier = Modifier.padding(24.dp)) {
 
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
             ) {
-                IconButton(onClick = { }) {
+                Box(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .border(
+                            width = 1.dp,
+                            color = Blue,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable { onBack() },
+                    contentAlignment = Alignment.Center
+                ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.menu_ellipsis),
-                        contentDescription = null,
-                        modifier = Modifier.size(26.dp),
-                        tint = Blue
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Voltar",
+                        tint = Blue,
+                        modifier = Modifier.size(16.dp)
                     )
                 }
 
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.heart),
+                        painter = painterResource(id = R.drawable.ic_logout),
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
                         tint = Blue
@@ -236,58 +256,44 @@ fun Profile(
                )
            }
 
-           Column( verticalArrangement = Arrangement.spacedBy(12.dp),
-               modifier = Modifier.fillMaxHeight())
-           {
-               Row( horizontalArrangement = Arrangement.SpaceBetween,
-                   modifier = Modifier.fillMaxWidth()
-
-               ) {
-
-                   ItineraryCard(
-                       imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                       name = "Vitória Histórica",
-                       description = "2 dias - 6 Locais",
-                       location = "Vitória - ES"
-
-                   )
-                   ItineraryCard(
-                       imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                       name = "Praias do ES",
-                       description = "2 dias - 6 Locais",
-                       location = "Vitória - ES"
-
-                   )
-
-
-               }
-               Row( horizontalArrangement = Arrangement.SpaceBetween,
-                   modifier = Modifier.fillMaxWidth()
-
-               ) {
-
-                   ItineraryCard(
-                       imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                       name = "Vitória Histórica",
-                       description = "2 dias - 6 Locais",
-                       location = "Vitória - ES"
-
-                   )
-                   ItineraryCard(
-                       imageUrl = "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400",
-                       name = "Praias do ES",
-                       description = "2 dias - 6 Locais",
-                       location = "Vitória - ES"
-
-                   )
-
-
-               }
-           }
-
+            if (itineraries.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Você ainda não criou nenhum roteiro",
+                        fontSize = 12.sp,
+                        color = Gray,
+                        fontFamily = Poppins,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
+                    itineraries.chunked(2).forEach { par ->
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            par.forEach { itinerary ->
+                                ItineraryCard(
+                                    imageUrl = itinerary.imageUrl,
+                                    name = itinerary.title,
+                                    description = "${itinerary.locationsCount} locais",
+                                    location = ""
+                                )
+                            }
+                        }
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
+                    context.startActivity(Intent(context, CreateItinerary::class.java))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -323,7 +329,7 @@ fun Profile(
                     .padding(start = 5.dp)
                     .padding(end = 5.dp)
                     .padding(bottom = 10.dp)
-                    .padding(top = 20.dp)
+                    .padding(top = 25.dp)
                     .fillMaxWidth(),
             ){
                 Text(
@@ -506,11 +512,10 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
     }
 }
 
-// CORRIGIDO: @Preview agora chama Profile(...) em vez de Register(...)
 @Preview(showBackground = true)
 @Composable
 fun ProfilePreview() {
     DesbravandoTheme {
-        Profile()
+        Profile(onBack = {})
     }
 }

@@ -34,7 +34,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.desbravando.app.FavoritesRepository
 import com.desbravando.app.R
 import com.desbravando.app.Location
 import com.desbravando.app.findLocations
@@ -49,9 +48,11 @@ import com.desbravando.app.ui.theme.White
 
 
 
+
 @Composable
 fun AddLocalCard(
     location: Location,
+    isSelected: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
@@ -143,9 +144,10 @@ fun AddLocalCard(
                 ) {
 
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_plus),
+                        painter = painterResource(
+                            id = if (isSelected) R.drawable.ic_check else R.drawable.ic_plus),
                         contentDescription = "Visualizar",
-                        tint = Blue,
+                        tint = if (isSelected) Purple else Blue,
                         modifier = Modifier
                             .padding(end = 16.dp, bottom = 16.dp)
                             .size(45.dp)

@@ -55,7 +55,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -88,11 +87,13 @@ import com.desbravando.app.ui.theme.Poppins
 import com.desbravando.app.ui.theme.Purple
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.FavoriteCard
+import com.desbravando.app.ui.components.FavoriteWideCard
 import com.desbravando.app.ui.components.LocalCard
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -113,6 +114,7 @@ class FavoritesActivity : ComponentActivity() {
             DesbravandoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Favorites(
+                        onBack = { finish() },
                         modifier = Modifier.padding(innerPadding),
 
                         )
@@ -124,6 +126,7 @@ class FavoritesActivity : ComponentActivity() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Favorites(
+    onBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
@@ -165,39 +168,31 @@ fun Favorites(
             var userConfirmPassword by remember { mutableStateOf("") }
 
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
             ) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = { onBack() }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.menu_ellipsis),
-                        contentDescription = null,
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Voltar",
                         modifier = Modifier.size(26.dp),
                         tint = Blue
                     )
                 }
                 Text(
-                    text = "Adicionar Locais",
+                    text = "Organizar Roteiro",
                     fontSize = 14.sp,
                     color = Blue,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = Poppins,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(top = 1.dp)
+                    fontFamily = Poppins
                 )
+                Spacer(modifier = Modifier.size(48.dp))
 
 
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.heart),
-                        contentDescription = null,
-                        modifier = Modifier.size(26.dp),
-                        tint = Blue
-                    )
-                }
+
             }
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -273,7 +268,7 @@ fun Favorites(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 filteredFavorites.forEach { fav ->
-                    FavoriteCard(
+                    FavoriteWideCard(
                         favorite = fav,
                         onRemove = {
                             favorites = favorites.filter { it.id != fav.id }
@@ -283,39 +278,6 @@ fun Favorites(
                 }
             }
 
-
-
-            Button(
-                onClick = { },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp)
-                    .height(45.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                contentPadding = PaddingValues()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colorStops = arrayOf(
-                                    0.0f to Purple,
-                                    1.0f to Blue
-                                )
-                            )
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Continuar",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = Poppins
-                    )
-                }
-            }
 
 
         }

@@ -39,6 +39,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
@@ -56,14 +57,14 @@ class CatalogActivity : ComponentActivity() {
 
         setContent {
             DesbravandoTheme {
-                Catalog()
+                Catalog(onBack = { finish() })
             }
         }
     }
 }
 
 @Composable
-fun Catalog() {
+fun Catalog(onBack: () -> Unit = {}) {
 
 
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
@@ -107,9 +108,7 @@ fun Catalog() {
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = "Voltar",
+                Box(
                     modifier = Modifier
                         .size(28.dp)
                         .border(
@@ -117,10 +116,19 @@ fun Catalog() {
                             color = Blue,
                             shape = RoundedCornerShape(4.dp)
                         )
-                        .padding(5.dp)
-                )
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable { onBack() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Voltar",
+                        tint = Blue,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
 
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(10.dp))
 
                 Text(
                     text = stringResource(R.string.title_catalog),
@@ -221,7 +229,7 @@ fun Catalog() {
 @Composable
 fun CatalogPreview() {
     DesbravandoTheme {
-        Catalog()
+        Catalog(onBack = {})
     }
 }
 

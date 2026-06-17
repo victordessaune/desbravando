@@ -62,6 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+            const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+
+            if (!userDoc.exists() || userDoc.data().role !== "admin") {
+                await auth.signOut();
+                setError(emailInput, errorEmail, "Acesso restrito a administradores.");
+                return;
+            }
+
             window.location.href = "../dashboard/dashboard.html";
 
         } catch (error) {

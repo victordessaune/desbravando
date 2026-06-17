@@ -1,13 +1,12 @@
- package com.desbravando.app
+package com.desbravando.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -15,72 +14,57 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.desbravando.app.ui.theme.Blue
-import com.desbravando.app.ui.theme.DesbravandoTheme
-import com.desbravando.app.ui.theme.OffWhite
-import com.desbravando.app.ui.theme.Poppins
-import com.desbravando.app.ui.theme.Purple
-import com.desbravando.app.ui.theme.White
-import com.google.android.gms.ads.nativead.NativeAd.Image
-import com.google.firebase.firestore.FirebaseFirestore
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
-import com.desbravando.app.ui.theme.BlueSecondary
-import com.desbravando.app.ui.theme.Gray
+import com.desbravando.app.ui.theme.*
+import com.google.firebase.firestore.FirebaseFirestore
+import androidx.compose.ui.platform.LocalContext
 
 class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
+
+        val filterCategory = intent.getStringExtra("filter_category") ?: ""
 
         setContent {
             DesbravandoTheme {
-                Catalog(onBack = { finish() })
+                Catalog(initialCategory = filterCategory)
             }
         }
     }
 }
 
 @Composable
-fun Catalog(onBack: () -> Unit = {}) {
+fun Catalog(initialCategory: String = "") {
 
-
+    val context = LocalContext.current
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
     var search by remember { mutableStateOf("") }
-    var selectedCategory by remember { mutableStateOf("") }  // ← novo
+    var selectedCategory by remember { mutableStateOf(initialCategory) } // ← usa o valor inicial
 
     LaunchedEffect(Unit) {
         findLocations { list -> locations = list }
     }
 
-    // filtra por busca E por categoria
     val filteredLocations = locations.filter { locationItem ->
         val matchesSearch = locationItem.name.contains(search, ignoreCase = true)
 
         val matchesCategory = selectedCategory.isEmpty() || locationItem.tags.any { tag ->
-            // Remove o 's' do final para não quebrar em "Parque" / "Parques"
             val cleanTag = tag.trim().removeSuffix("s")
             val cleanSelected = selectedCategory.trim().removeSuffix("s")
 
@@ -91,6 +75,7 @@ fun Catalog(onBack: () -> Unit = {}) {
 
         matchesSearch && matchesCategory
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,12 +88,10 @@ fun Catalog(onBack: () -> Unit = {}) {
                 end = 20.dp
             )
         ) {
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ){
-
-                Box(
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = "Voltar",
                     modifier = Modifier
                         .size(28.dp)
                         .border(
@@ -116,20 +99,9 @@ fun Catalog(onBack: () -> Unit = {}) {
                             color = Blue,
                             shape = RoundedCornerShape(4.dp)
                         )
-                        .clip(RoundedCornerShape(4.dp))
-                        .clickable { onBack() },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = "Voltar",
-                        tint = Blue,
-                        modifier = Modifier.size(16.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(10.dp))
-
+                        .padding(5.dp)
+                )
+                Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = stringResource(R.string.title_catalog),
                     fontFamily = Poppins,
@@ -137,42 +109,25 @@ fun Catalog(onBack: () -> Unit = {}) {
                     fontWeight = FontWeight(600)
                 )
             }
-
             Spacer(modifier = Modifier.height(15.dp))
         }
 
-        HorizontalDivider(
-            thickness = 1.dp
-        )
+        HorizontalDivider(thickness = 1.dp)
 
         Column(
-            modifier = Modifier.padding(
-                horizontal = 20.dp,
-                vertical = 15.dp
-            )
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
         ) {
-
             OutlinedTextField(
                 value = search,
-                onValueChange = {
-                    search = it
-                },
-                placeholder = {
-                    Text(stringResource(R.string.search_bar_placeholder))
-                },
+                onValueChange = { search = it },
+                placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Pesquisar"
-                    )
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Pesquisar")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = White)
-                    .shadow(
-                        elevation = 4.dp,
-                        shape = RoundedCornerShape(12.dp)
-                    ),
+                    .shadow(elevation = 4.dp, shape = RoundedCornerShape(12.dp)),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
@@ -180,13 +135,12 @@ fun Catalog(onBack: () -> Unit = {}) {
                     unfocusedBorderColor = Gray,
                     focusedContainerColor = White,
                     unfocusedContainerColor = White
-            )
+                )
             )
         }
 
-        HorizontalDivider(
-            thickness = 1.dp
-        )
+        HorizontalDivider(thickness = 1.dp)
+
         Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
             CategoryCard(
                 selectedTags = if (selectedCategory.isEmpty()) emptySet() else setOf(selectedCategory),
@@ -197,9 +151,9 @@ fun Catalog(onBack: () -> Unit = {}) {
                 }
             )
         }
+
         HorizontalDivider(
-            modifier = Modifier
-                .padding(top = 20.dp),
+            modifier = Modifier.padding(top = 20.dp),
             thickness = 1.dp
         )
 
@@ -209,41 +163,42 @@ fun Catalog(onBack: () -> Unit = {}) {
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-
             items(filteredLocations) { location ->
-                LocalCard(
-                    location = location,
-                    onClick = { }
-                )
-            }
+                LocalCard(location = location, onClick = {
+                    val intent = Intent(
+                        context,
+                        Places::class.java
+                    )
 
-                    }
+                    intent.putExtra(
+                        "PLACE_ID",
+                        location.id
+                    )
 
+                    context.startActivity(intent)
+                })
             }
         }
-
-
-
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun CatalogPreview() {
     DesbravandoTheme {
-        Catalog(onBack = {})
+        Catalog()
     }
 }
 
- data class Location(
-     val id: String = "",
-     val name: String = "",
-     val city: String = "",
-     val imageUrl: String = "",
-     val tags: List<String> = emptyList()
- )
+data class Location(
+    val id: String = "",
+    val name: String = "",
+    val city: String = "",
+    val imageUrl: String = "",
+    val tags: List<String> = emptyList()
+)
 
-fun findLocations(
-    onResult: (List<Location>) -> Unit
-) {
+fun findLocations(onResult: (List<Location>) -> Unit) {
     FirebaseFirestore
         .getInstance()
         .collection("locations")
@@ -262,6 +217,3 @@ fun findLocations(
             onResult(list)
         }
 }
-
-
-

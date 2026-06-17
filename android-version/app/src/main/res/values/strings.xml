@@ -47,6 +47,9 @@
     <string name="closed">Fechado</string>
     <string name="services">Serviços e Facilidades</string>
     <string name="informations">Informações Adicionais</string>
+    <string name="error_convert_document">Erro ao converter documento</string>
+    <string name="error_firestore">Erro Firestore</string>
+    <string name="text_free">Gratuito</string>
 
     <!--Tela de Catálogo de Lugares-->
     <string name="title_catalog">Catálogo de lugares</string>

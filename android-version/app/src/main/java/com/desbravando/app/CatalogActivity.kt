@@ -47,8 +47,10 @@ import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.BlueSecondary
 import com.desbravando.app.ui.theme.Gray
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 
-class CatalogActivity : ComponentActivity() {
+ class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,6 +71,7 @@ fun Catalog() {
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
     var search by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("") }  // ← novo
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         findLocations { list -> locations = list }
@@ -205,7 +208,19 @@ fun Catalog() {
             items(filteredLocations) { location ->
                 LocalCard(
                     location = location,
-                    onClick = { }
+                    onClick = {
+                        val intent = Intent(
+                            context,
+                            Places::class.java
+                        )
+
+                        intent.putExtra(
+                            "PLACE_ID",
+                            location.id
+                        )
+
+                        context.startActivity(intent)
+                    }
                 )
             }
 

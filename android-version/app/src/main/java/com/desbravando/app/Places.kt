@@ -45,6 +45,12 @@ import androidx.compose.ui.platform.LocalContext
 import com.desbravando.app.ui.components.BottomBarWithNavigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.res.stringResource
+import coil.util.CoilUtils.result
+import android.util.Log
+import androidx.compose.foundation.lazy.LazyRow
+import coil.compose.AsyncImage
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 
 class Places : ComponentActivity() {
 
@@ -53,8 +59,8 @@ class Places : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        // futuramente virá da navegação
-        val placeId = "123"
+        val placeId =
+            intent.getStringExtra("PLACE_ID") ?: ""
 
         setContent {
 
@@ -73,9 +79,22 @@ class Places : ComponentActivity() {
                         .get()
                         .addOnSuccessListener { document ->
 
-                            place = document.toObject(
-                                PlaceInfo::class.java
-                            )
+                            //Busca documento do Firestore, converte para PlaceInfo e salva em place
+                            //Além disso mostra mensagem de erro
+                            try {
+
+                                place = document.toObject(
+                                    PlaceInfo::class.java
+                                )
+
+                            } catch (e: Exception) {
+
+                                Log.e("PLACES", getString(R.string.error_convert_document), e)
+                            }
+                        }
+                        .addOnFailureListener { e ->
+
+                            Log.e("PLACES", getString(R.string.error_firestore), e)
                         }
                 }
 
@@ -105,6 +124,7 @@ fun PlaceDetailsScreen(
 ) {
     
     val context = LocalContext.current
+    val activity = LocalContext.current as? ComponentActivity
 
     Scaffold(
         bottomBar = {
@@ -121,34 +141,55 @@ fun PlaceDetailsScreen(
                 .padding(paddingValues)
                 .background(OffWhite)
         ) {
-
-            item { HeaderSection(place) }
+            item { HeaderSection(
+                    place = place,
+                    onBackClick = {
+                        activity?.finish()
+                    }
+                )
+            }
             item { DescriptionPlace(place) }
-            item {ScheduleSection(place) }
             item { AddressSection(place) }
             item { InfrastructureSection(place) }
             item { ImageSection(place) }
+            item {ScheduleSection(place) }
             item { ServicesSection(place) }
             item { PriceSection(place) }
-            item { InformationSection(place) }
+            //item { InformationSection(place) }
 
         }
     }
 }
 @Composable
 fun HeaderSection(
-    place: PlaceInfo
+    place: PlaceInfo,
+    onBackClick: () -> Unit
 ) {
     Column(
     ){
-        Image(
-            painter = painterResource(id = R.drawable.cb3),
-            contentDescription = "Foto do lugar",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
-            contentScale = ContentScale.Crop
-        )
+        Box(){
+            AsyncImage(
+                model = place.cover,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp),
+                contentScale = ContentScale.Crop
+            )
+            Icon(
+                painter = painterResource(R.drawable.ic_back),
+                contentDescription = stringResource(R.string.title_return),
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(28.dp)
+                    .align(Alignment.TopStart)
+                    .clickable {
+                        onBackClick()
+                    }
+            )
+
+        }
 
         Column(
             modifier = Modifier.padding(start = 20.dp, top = 15.dp, end = 12.dp)
@@ -206,7 +247,7 @@ fun HeaderSection(
                 )
 
                 Text(
-                    text = place.tags,
+                    text = place.tags.joinToString(", "),
                     maxLines = 2,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Medium,
@@ -241,7 +282,7 @@ fun DescriptionPlace(
 
     ) {
         Text(
-            text = place.bio,
+            text = place.description,
             textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 12.sp,
@@ -254,13 +295,15 @@ fun DescriptionPlace(
 fun AddressSection(
     place: PlaceInfo
 ){
+    val address =
+        "${place.street}, ${place.numero}, ${place.neighborhood}, ${place.city} - ${place.uf} (CEP: ${place.cep})"
     SectionCard(
         title = stringResource(R.string.address),
         icon = R.drawable.ic_map_pin
 
     ) {
         Text(
-            text = place.address,
+            text = address,
             textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 12.sp,
@@ -304,6 +347,27 @@ fun ImageSection(
         title = stringResource(R.string.gallery),
         icon = R.drawable.ic_camera
     ){
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            items(place.images) { imageUrl ->
+
+                Card(
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(220.dp)
+                            .height(140.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+        }
 
     }
 
@@ -330,7 +394,7 @@ fun ScheduleSection(
     ){
         dayOrganized.forEach { day ->
 
-            val horario = place.schedules[day]
+            val horario = place.horarios[day]
 
             horario?.let {
 
@@ -434,49 +498,57 @@ fun PriceSection(
         icon = R.drawable.ic_price
 
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        if (place.price.valor.isNullOrBlank()) {
 
             Text(
-                text = "R$",
+                text = stringResource(R.string.text_free),
                 color = Purple,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
             )
 
-            Spacer (modifier = Modifier.width(3.dp))
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            Text(
-                text = place.price.valor,
-                color = Purple,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-            Spacer (modifier = Modifier.width(3.dp))
+                Text(
+                    text = "R$",
+                    color = Purple,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
 
-            Text(
-                text = "por",
-                fontSize = 13.sp,
-                lineHeight = 16.sp
-            )
+                Spacer(modifier = Modifier.width(3.dp))
 
-            Spacer (modifier = Modifier.width(3.dp))
+                Text(
+                    text = place.price.valor,
+                    color = Purple,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.width(3.dp))
 
-            Text(
-                text = place.price.por,
-                fontSize = 13.sp,
-                lineHeight = 16.sp
-            )
+                Text(
+                    text = "por",
+                    fontSize = 13.sp,
+                    lineHeight = 16.sp
+                )
 
+                Spacer(modifier = Modifier.width(3.dp))
 
+                Text(
+                    text = place.price.por,
+                    fontSize = 13.sp,
+                    lineHeight = 16.sp
+                )
+            }
         }
-
     }
 }
 
-@Composable
+/*@Composable
 fun InformationSection(
     place: PlaceInfo
 ) {
@@ -494,7 +566,7 @@ fun InformationSection(
         )
 
     }
-}
+}*/
 
 //Função para definifr o item apresentação na seção de infraestrutura
 @Composable
@@ -643,21 +715,28 @@ data class Schedule(
 
 data class Price(
     val por: String = "",
-    val valor: String = ""
+    val valor: String = "",
+    val tipo: String = ""
 )
 
 data class PlaceInfo(
     val id: String = "",
     val name: String = "",
     val city: String = "",
-    val tags: String = "",
-    val bio: String = "",
-    val address: String = "",
+    val street: String = "",
+    val uf: String = "",
+    val numero: String = "",
+    val neighborhood: String = "",
+    val cep: String = "",
+    val tags: List<String> = emptyList(),
+    val description: String = "",
     val infrastructure: List<String> = emptyList(),
-    val schedules: Map<String, Schedule> = emptyMap(),
-    val informations: String = "",
+    val horarios: Map<String, Schedule> = emptyMap(),
     val price: Price = Price(),
     val services: List<String> = emptyList(),
+    val images: List<String> = emptyList(),
+    val cover: String = "",
+    //val informations: String = "",
 )
 
 @Preview(showBackground = true)
@@ -666,43 +745,8 @@ fun PlacesPreview() {
     DesbravandoTheme {
         PlaceDetailsScreen(
             place = PlaceInfo(
-                id = "1",
-                name = "Convento da Penha",
-                city = "Vila Velha",
-                tags = "GatroBar",
-                bio = "O Coco Bambu é uma renomada rede de restaurantes brasileira especializada em frutos do mar, conhecida por pratos fartos, cardápio variado e ambiente sofisticado, mas acessível. Fundada em 2001, destaca-se pelo Camarão Internacional, adegas climatizadas, áreas para eventos e atendimento de alta qualidade.",
-                address = "Rua Vasco Coutinho, s/n, Prainha, na cidade de Vila Velha, ES",
-                infrastructure = listOf(
-                    "Estacionamento",
-                    "Segurança",
-                    "Toaletes",
-                    "Na Sombra",
-                    "Bicicletas"
-                ),
-                schedules = mapOf(
-                        "Segunda" to Schedule(
-                            fechado = true
-                        ), 
-                    
-                    "Terça" to Schedule(
-                    abertura = "11:00",
-                    fechamento = "22:00"
-                ),
-
-                "Quarta" to Schedule(
-                    abertura = "11:00",
-                    fechamento = "22:00"
-                ),
-                ),
-                informations = "Nenhuma informação adicional.",
-                price = Price(
-                    por = "pessoa",
-                    valor = "35.00"
-                ),
-                services = listOf(
-                    "Guarda-volumes",
-                    "Wifi"
-                ),
+                name = "Preview",
+                city = "Preview"
             )
         )
     }

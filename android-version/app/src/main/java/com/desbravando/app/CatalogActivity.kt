@@ -1,5 +1,6 @@
 package com.desbravando.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,7 @@ import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.*
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.compose.ui.platform.LocalContext
 
 class CatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,7 @@ class CatalogActivity : ComponentActivity() {
 @Composable
 fun Catalog(initialCategory: String = "") {
 
+    val context = LocalContext.current
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
     var search by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(initialCategory) } // ← usa o valor inicial
@@ -161,7 +164,19 @@ fun Catalog(initialCategory: String = "") {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(filteredLocations) { location ->
-                LocalCard(location = location, onClick = { })
+                LocalCard(location = location, onClick = {
+                    val intent = Intent(
+                        context,
+                        Places::class.java
+                    )
+
+                    intent.putExtra(
+                        "PLACE_ID",
+                        location.id
+                    )
+
+                    context.startActivity(intent)
+                })
             }
         }
     }

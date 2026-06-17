@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.draw.clip
 import com.desbravando.app.ui.components.CategoryCard
 import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.*
@@ -43,14 +45,19 @@ class CatalogActivity : ComponentActivity() {
 
         setContent {
             DesbravandoTheme {
-                Catalog(initialCategory = filterCategory)
+
+                Catalog(
+                    onBack = { finish() },
+                    initialCategory = filterCategory)
             }
         }
     }
 }
 
 @Composable
-fun Catalog(initialCategory: String = "") {
+fun Catalog(
+    onBack: () -> Unit = {},
+    initialCategory: String = "") {
 
     val context = LocalContext.current
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
@@ -89,9 +96,7 @@ fun Catalog(initialCategory: String = "") {
             )
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = "Voltar",
+                Box(
                     modifier = Modifier
                         .size(28.dp)
                         .border(
@@ -99,8 +104,17 @@ fun Catalog(initialCategory: String = "") {
                             color = Blue,
                             shape = RoundedCornerShape(4.dp)
                         )
-                        .padding(5.dp)
-                )
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable { onBack() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Voltar",
+                        tint = Blue,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = stringResource(R.string.title_catalog),

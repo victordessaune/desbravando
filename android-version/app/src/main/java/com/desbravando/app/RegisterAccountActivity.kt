@@ -351,6 +351,10 @@ fun Register(
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,
@@ -380,6 +384,10 @@ fun Register(
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(30.dp),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedBorderColor = MediumGray,
                     focusedBorderColor = Blue,

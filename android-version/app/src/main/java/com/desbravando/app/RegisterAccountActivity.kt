@@ -75,6 +75,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -185,7 +186,7 @@ class RegisterAccountActivity : ComponentActivity(){
                 ).show()
             }
     }
-    }
+}
 
 @Composable
 fun Register(
@@ -209,6 +210,7 @@ fun Register(
             var userBio by remember { mutableStateOf("")}
             var userPassword by remember { mutableStateOf("")}
             var userConfirmPassword by remember { mutableStateOf("")}
+            var userPhotoUrl by remember { mutableStateOf("") }
 
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -243,7 +245,9 @@ fun Register(
                     .fillMaxWidth()
 
             ) {
-                ProfileRegisterPicture()
+                ProfileRegisterPicture(
+                    onPhotoUploaded = { url -> userPhotoUrl = url }
+                )
             }
 
             //Campo do Nome do usuário
@@ -422,12 +426,13 @@ fun Register(
                         "nickname" to userNickname,
                         "email" to userEmail,
                         "bio" to userBio,
+                        "fotoUrl" to userPhotoUrl,
                         "role" to "user"
                     )
 
                     onRegisterClick(userData, userPassword)
 
-                          },
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(58.dp)
@@ -439,7 +444,7 @@ fun Register(
                 contentPadding = PaddingValues(),
 
 
-            ) {
+                ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -494,14 +499,29 @@ fun Register(
 }
 
 @Composable
-fun ProfileRegisterPicture(modifier: Modifier = Modifier){
+fun ProfileRegisterPicture(
+    onPhotoUploaded: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+){
     var imageUri by remember { mutableStateOf <Uri?>(null) }
+    var isUploading by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        imageUri = uri
+        if (uri != null) {
+            imageUri = uri
+            isUploading = true
+            uploadImageToCloudinary(context, uri) { url ->
+                isUploading = false
+                if (url != null) {
+                    onPhotoUploaded(url)
+                } else {
+                    Toast.makeText(context, "Erro ao enviar foto", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     Box(contentAlignment = Alignment.BottomEnd){
@@ -523,6 +543,20 @@ fun ProfileRegisterPicture(modifier: Modifier = Modifier){
             )
         }
 
+        if (isUploading) {
+            Box(
+                modifier = Modifier
+                    .size(125.dp)
+                    .clip(CircleShape)
+                    .background(Color.Black.copy(alpha = 0.35f)),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        }
 
         IconButton(
             onClick = { launcher.launch("image/*")},

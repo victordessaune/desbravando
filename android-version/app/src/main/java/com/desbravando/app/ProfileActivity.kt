@@ -3,6 +3,7 @@ package com.desbravando.app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -37,6 +38,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -84,6 +86,7 @@ class ProfileActivity : ComponentActivity() {
     private var userName = mutableStateOf("Carregando...")
     private var userNickname = mutableStateOf("@...")
     private var userBio = mutableStateOf("Carregando...")
+    private var userPhotoUrl = mutableStateOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +110,8 @@ class ProfileActivity : ComponentActivity() {
                         userName = userName.value,
                         userNickname = userNickname.value,
                         userBio = userBio.value,
+                        userPhotoUrl = userPhotoUrl.value,
+                        onPhotoUploaded = { url -> saveProfilePhotoUrl(url) },
                         onBack = { finish() },
                         onLogout = {
                             auth.signOut()
@@ -135,7 +140,21 @@ class ProfileActivity : ComponentActivity() {
                     userNickname.value = if (rawNickname.startsWith("@")) rawNickname else "@$rawNickname"
 
                     userBio.value = doc.getString("bio") ?: "Desbravando o ES"
+                    userPhotoUrl.value = doc.getString("fotoUrl") ?: ""
                 }
+            }
+    }
+
+    private fun saveProfilePhotoUrl(url: String) {
+        val uid = auth.currentUser?.uid ?: return
+        db.collection("users")
+            .document(uid)
+            .update("fotoUrl", url)
+            .addOnSuccessListener {
+                userPhotoUrl.value = url
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao salvar foto", Toast.LENGTH_SHORT).show()
             }
     }
 }
@@ -145,6 +164,8 @@ fun Profile(
     userName: String,
     userNickname: String,
     userBio: String,
+    userPhotoUrl: String = "",
+    onPhotoUploaded: (String) -> Unit = {},
     onBack: () -> Unit = {},
     onLogout: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -212,7 +233,10 @@ fun Profile(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ProfilePicture()
+                ProfilePicture(
+                    photoUrl = userPhotoUrl,
+                    onPhotoUploaded = onPhotoUploaded
+                )
 
                 Column(
                     horizontalAlignment = Alignment.Start,
@@ -463,32 +487,77 @@ fun ItineraryCard(
 }
 
 @Composable
-fun ProfilePicture(modifier: Modifier = Modifier) {
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+fun ProfilePicture(
+    photoUrl: String = "",
+    onPhotoUploaded: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    var localUri by remember { mutableStateOf<Uri?>(null) }
+    var isUploading by remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        imageUri = uri
+        if (uri != null) {
+            localUri = uri
+            isUploading = true
+            uploadImageToCloudinary(context, uri) { url ->
+                isUploading = false
+                if (url != null) {
+                    onPhotoUploaded(url)
+                } else {
+                    Toast.makeText(context, "Erro ao enviar foto", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     Box(contentAlignment = Alignment.BottomEnd) {
-        if (imageUri != null) {
-            AsyncImage(
-                model = imageUri,
-                contentDescription = stringResource(R.string.cd_profile_picture),
+        when {
+            localUri != null -> {
+                AsyncImage(
+                    model = localUri,
+                    contentDescription = stringResource(R.string.cd_profile_picture),
+                    modifier = Modifier
+                        .size(125.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            photoUrl.isNotBlank() -> {
+                AsyncImage(
+                    model = photoUrl,
+                    contentDescription = stringResource(R.string.cd_profile_picture),
+                    modifier = Modifier
+                        .size(125.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            else -> {
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = null,
+                    modifier = Modifier.size(125.dp),
+                    tint = Color.LightGray
+                )
+            }
+        }
+
+        if (isUploading) {
+            Box(
                 modifier = Modifier
                     .size(125.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = null,
-                modifier = Modifier.size(125.dp),
-                tint = Color.LightGray
-            )
+                    .clip(CircleShape)
+                    .background(Color.Black.copy(alpha = 0.35f)),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
 
         IconButton(
@@ -516,6 +585,7 @@ fun ProfilePreview() {
             userName = "Tais",
             userNickname = "@taisxx",
             userBio = "Uma mulher Feliz!",
+            userPhotoUrl = "",
             onBack = {},
             onLogout = {}
         )

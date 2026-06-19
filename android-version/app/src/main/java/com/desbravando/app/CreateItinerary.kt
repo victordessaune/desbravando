@@ -443,6 +443,25 @@ fun AddLocalsStep(
     onNext: () -> Unit,
     onBack: () -> Unit
 ) {
+    var selectedTags by remember { mutableStateOf(setOf<String>()) }
+
+    val filteredLocations = if (selectedTags.isEmpty()) {
+        locations
+    } else {
+        locations.filter { location ->
+            location.tags.any { tag ->
+                selectedTags.any { selected ->
+                    val cleanTag = tag.trim().removeSuffix("s")
+                    val cleanSelected = selected.trim().removeSuffix("s")
+
+                    cleanTag.equals(cleanSelected, ignoreCase = true) ||
+                            tag.contains(selected, ignoreCase = true) ||
+                            selected.contains(tag, ignoreCase = true)
+                }
+            }
+        }
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize().background(color = OffWhite)
@@ -475,7 +494,18 @@ fun AddLocalsStep(
                 modifier = Modifier
                     .padding(top= 20.dp)
                     .fillMaxWidth()) {
-                CategoryCard()
+                CategoryCard(
+                    selectedTags = selectedTags,
+                    onTagSelected = { tag ->
+                        selectedTags = if (tag == "Todos") {
+                            emptySet()
+                        } else if (tag in selectedTags) {
+                            emptySet()
+                        } else {
+                            setOf(tag)
+                        }
+                    }
+                )
             }
 
             Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth()) {
@@ -493,7 +523,7 @@ fun AddLocalsStep(
             modifier = Modifier.weight(1f).fillMaxWidth().padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            items(locations) { location ->
+            items(filteredLocations) { location ->
                 AddLocalCard(
                     location = location,
                     isSelected = location in selectedLocations,

@@ -104,19 +104,19 @@ O Desbravando pode evoluir para:
 
 ---
 
-## Link do protótipo Figma do app
+## 🎨 Link do protótipo Figma do app
 https://www.figma.com/design/Ylv0L5iwYI2c1k2piJ7nvG/Projeto-Integrador?node-id=306-45&t=op4oogCJasEm8qgt-1
 
 ---
 
-## Link da Pesquisa
+## 📄 Link da Pesquisa
 https://docs.google.com/document/d/1_C9pCfZ_bt1x8oZw8CGtlxSOhun0DsvDpqlAa7g7dWk/edit?usp=sharing
 
 ---
 
-## Link da apresentação de Slides Mobile 2
+## 📊 Link da apresentação de Slides Mobile 2
 https://canva.link/91fnrf7uew92v3i
 
 ---
 
-> “Explorar o mundo ao seu redor pode ser o começo de grandes experiências.”
+> ### “Explorar o mundo ao seu redor pode ser o começo de grandes experiências.”

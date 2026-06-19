@@ -192,7 +192,7 @@ fun Favorites(
                     )
                 }
                 Text(
-                    text = "Organizar Roteiro",
+                    text = "",
                     fontSize = 14.sp,
                     color = Blue,
                     fontWeight = FontWeight.SemiBold,

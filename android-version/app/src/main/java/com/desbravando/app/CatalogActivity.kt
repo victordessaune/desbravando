@@ -29,6 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.draw.clip
 import com.desbravando.app.ui.components.CategoryCard
@@ -36,6 +41,7 @@ import com.desbravando.app.ui.components.LocalCard
 import com.desbravando.app.ui.theme.*
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import com.desbravando.app.ui.components.BottomBarWithNavigation
 
 class CatalogActivity : ComponentActivity() {
@@ -81,6 +87,8 @@ fun Catalog(
     var locations by remember { mutableStateOf<List<Location>>(emptyList()) }
     var search by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(initialCategory) } // ← usa o valor inicial
+    var selectedState by remember { mutableStateOf("Todos") }
+
 
     LaunchedEffect(Unit) {
         findLocations { list -> locations = list }
@@ -98,7 +106,42 @@ fun Catalog(
                     selectedCategory.contains(tag, ignoreCase = true)
         }
 
-        matchesSearch && matchesCategory
+        val estadosParaUf = mapOf(
+            "Acre" to "AC",
+            "Alagoas" to "AL",
+            "Amapá" to "AP",
+            "Amazonas" to "AM",
+            "Bahia" to "BA",
+            "Ceará" to "CE",
+            "Distrito Federal" to "DF",
+            "Espírito Santo" to "ES",
+            "Goiás" to "GO",
+            "Maranhão" to "MA",
+            "Mato Grosso" to "MT",
+            "Mato Grosso do Sul" to "MS",
+            "Minas Gerais" to "MG",
+            "Pará" to "PA",
+            "Paraíba" to "PB",
+            "Paraná" to "PR",
+            "Pernambuco" to "PE",
+            "Piauí" to "PI",
+            "Rio de Janeiro" to "RJ",
+            "Rio Grande do Norte" to "RN",
+            "Rio Grande do Sul" to "RS",
+            "Rondônia" to "RO",
+            "Roraima" to "RR",
+            "Santa Catarina" to "SC",
+            "São Paulo" to "SP",
+            "Sergipe" to "SE",
+            "Tocantins" to "TO"
+        )
+
+        val matchesState =
+            selectedState == "Todos" ||
+                    locationItem.uf == estadosParaUf[selectedState]
+
+
+        matchesSearch && matchesCategory && matchesState
     }
 
     Column(
@@ -128,7 +171,7 @@ fun Catalog(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = "Voltar",
+                        contentDescription = stringResource(R.string.cd_ic_back),
                         tint = Blue,
                         modifier = Modifier.size(16.dp)
                     )
@@ -171,7 +214,9 @@ fun Catalog(
             )
         }
 
-        HorizontalDivider(thickness = 1.dp)
+        HorizontalDivider(
+            modifier = Modifier.padding(bottom = 5.dp),
+            thickness = 1.dp)
 
         Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
             CategoryCard(
@@ -185,8 +230,13 @@ fun Catalog(
         }
 
         HorizontalDivider(
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(top = 5.dp, bottom = 16.dp),
             thickness = 1.dp
+        )
+
+        StateSelector(
+            estadoSelecionado = selectedState,
+            onEstadoChange = {selectedState = it}
         )
 
         LazyColumn(
@@ -226,6 +276,7 @@ data class Location(
     val id: String = "",
     val name: String = "",
     val city: String = "",
+    val uf: String = "",
     val imageUrl: String = "",
     val tags: List<String> = emptyList()
 )
@@ -243,9 +294,118 @@ fun findLocations(onResult: (List<Location>) -> Unit) {
                     name     = data["name"] as? String ?: "",
                     city     = "${data["city"] as? String ?: ""}, ${data["uf"] as? String ?: ""}",
                     imageUrl = data["cover"] as? String ?: "",
+                    uf = data["uf"] as? String ?: "",
                     tags     = (data["tags"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
                 )
             }
             onResult(list)
         }
+}
+
+val estados = listOf(
+    "Todos", "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
+    "Ceará", "Distrito Federal", "Espírito Santo", "Goiás",
+    "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais",
+    "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí",
+    "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul",
+    "Rondônia", "Roraima", "Santa Catarina", "São Paulo",
+    "Sergipe", "Tocantins"
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StateSelector(
+    estadoSelecionado: String,
+    onEstadoChange: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .padding(start = 20.dp, end = 20.dp)
+            .fillMaxWidth()
+            .height(40.dp)
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(20.dp), spotColor = Purple)
+            .background(White, RoundedCornerShape(20.dp)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.55f)
+                .padding(start = 10.dp)
+        ) {
+            Row {
+                Icon(
+                    painter = painterResource(id = R.drawable.location_dot_solid_full),
+                    contentDescription = stringResource(R.string.cd_map_pin),
+                    tint = Blue,
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                )
+                Text(
+                    text = stringResource(R.string.text_selected_state),
+                    fontFamily = Poppins,
+                    fontSize = 14.sp,
+                    color = Gray,
+                    fontWeight = FontWeight(500)
+                )
+            }
+        }
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 12.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+                    .padding(start = 15.dp)
+                    .background(LightGray, RoundedCornerShape(15.dp)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = estadoSelecionado,
+                    fontFamily = Poppins,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = DarkBlue,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Icon(
+                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = Blue,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                estados.forEach { estado ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = estado,
+                                fontFamily = Poppins,
+                                fontSize = 13.sp,
+                                color = if (estado == estadoSelecionado) Blue else DarkBlue
+                            )
+                        },
+                        onClick = {
+                            onEstadoChange(estado)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
 }

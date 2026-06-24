@@ -16,6 +16,7 @@
     <string name="cd_logo">Logo</string>
     <string name="cd_climate">climate</string>
     <string name="cd_map_pin">map_pin</string>
+    <string name="cd_ic_back">Voltar</string>
 
 
     <!--Tela MainActivity (Login) -->
@@ -54,6 +55,7 @@
     <!--Tela de Catálogo de Lugares-->
     <string name="title_catalog">Catálogo de lugares</string>
     <string name="search_bar_placeholder">Buscar lugares</string>
+    <string name="text_selected_state">Estado selecionado:</string>
 
     <!--Tela de Criar Roteiro-->
     <string name="title_new_itinerary">Novo Roteiro</string>

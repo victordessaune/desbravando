@@ -289,8 +289,6 @@ fun Home(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        StateSelector()
-
         Spacer(modifier = Modifier.height(20.dp))
 
         BigLocationCardList(locations = carouselImages)
@@ -379,110 +377,6 @@ fun WeatherWidget(
                 color = Gray,
                 fontWeight = FontWeight(500)
             )
-        }
-    }
-}
-
-val estados = listOf(
-    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
-    "Ceará", "Distrito Federal", "Espírito Santo", "Goiás",
-    "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais",
-    "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí",
-    "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul",
-    "Rondônia", "Roraima", "Santa Catarina", "São Paulo",
-    "Sergipe", "Tocantins"
-)
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun StateSelector() {
-    var expanded by remember { mutableStateOf(false) }
-    var estadoSelecionado by remember { mutableStateOf("Espírito Santo") }
-
-    Row(
-        modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp)
-            .fillMaxWidth()
-            .height(40.dp)
-            .shadow(elevation = 8.dp, shape = RoundedCornerShape(20.dp), spotColor = Purple)
-            .background(White, RoundedCornerShape(20.dp)),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.55f)
-                .padding(start = 10.dp)
-        ) {
-            Row {
-                Icon(
-                    painter = painterResource(id = R.drawable.location_dot_solid_full),
-                    contentDescription = "map pin",
-                    tint = Blue
-                )
-                Text(
-                    text = "Estado selecionado:",
-                    fontFamily = Poppins,
-                    fontSize = 14.sp,
-                    color = Gray,
-                    fontWeight = FontWeight(500)
-                )
-            }
-        }
-
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(end = 12.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .menuAnchor()
-                    .fillMaxWidth()
-                    .padding(start = 15.dp)
-                    .background(LightGray, RoundedCornerShape(15.dp)),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = estadoSelecionado,
-                    fontFamily = Poppins,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = DarkBlue,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Icon(
-                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                    contentDescription = null,
-                    tint = Blue,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                estados.forEach { estado ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = estado,
-                                fontFamily = Poppins,
-                                fontSize = 13.sp,
-                                color = if (estado == estadoSelecionado) Blue else DarkBlue
-                            )
-                        },
-                        onClick = {
-                            estadoSelecionado = estado
-                            expanded = false
-                        }
-                    )
-                }
-            }
         }
     }
 }

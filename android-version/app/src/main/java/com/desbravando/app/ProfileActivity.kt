@@ -174,7 +174,7 @@ fun Profile(
     var itineraries by remember { mutableStateOf<List<SavedItinerary>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        ItinerariesRepository.getItineraries { itineraries = it }
+        ItinerariesRepository.getUserItineraries { itineraries = it }
     }
     var favorites by remember { mutableStateOf<List<FavoriteLocation>>(emptyList()) }
 

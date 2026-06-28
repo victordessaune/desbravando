@@ -16,6 +16,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -226,6 +228,11 @@ fun Home(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    var itineraries by remember { mutableStateOf<List<SavedItinerary>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        ItinerariesRepository.getPublicItineraries { itineraries = it }
+    }
 
     Column(
         modifier = modifier
@@ -338,6 +345,51 @@ fun Home(
                 )
             }
         }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp, top = 25.dp, bottom = 30.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .padding(end = 5.dp)
+                        .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = "Roteiros da Comunidade",
+                        fontSize = 14.sp,
+                        color = Purple,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                    )
+                    Text(
+                        text = stringResource(R.string.text_see_all),
+                        fontSize = 13.sp,
+                        color = Gray,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.clickable {
+                            context.startActivity(Intent(context, FavoritesActivity::class.java))
+                        }
+                    )
+                }
+
+               LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(itineraries) { itinerary ->
+                        com.desbravando.app.ui.components.PublicItineraryCard(
+                            itinerary = itinerary,
+                            onClick = {
+                            }
+                        )
+                    }
+                }
+            }
+
     }
 }
 

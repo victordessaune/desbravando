@@ -686,11 +686,10 @@ fun ViewItineraryStep(
                         "title" to itineraryTitle,
                         "imageUrl" to displayCoverUrl,
                         "locations" to selectedLocations.map { it.id },
-                        "createdAt" to System.currentTimeMillis()
+                        "createdAt" to System.currentTimeMillis(),
+                        "userId" to uid
                     )
-                    db.collection("users")
-                        .document(uid)
-                        .collection("itineraries")
+                    db.collection("itineraries")
                         .add(roteiro)
                         .addOnSuccessListener {
                             Toast.makeText(context, "Roteiro salvo!", Toast.LENGTH_SHORT).show()

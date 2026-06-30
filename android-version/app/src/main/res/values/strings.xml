@@ -11,6 +11,7 @@
     <string name="home_climate_not_determinated">--°C</string>
     <string name="home_selected_state">Estado selecionado:</string>
     <string name="home_in_highlighted_place">Em destaque</string>
+    <string name="title_home_itinerary_section">Roteiros da Comunidade</string>
 
 
     <string name="cd_logo">Logo</string>
@@ -27,7 +28,7 @@
     <string name="text_login">Login</string>
     <string name="text_email">Email</string>
     <string name="text_placeholder_email">você@gmail.com</string>
-    <string name="text_placeholder_password">••••••••</string>
+    <string name="text_placeholder_password">••••••</string>
     <string name="text_password">Senha</string>
     <string name="text_forgot_password">Esqueceu a senha?</string>
     <string name="text_create_account">Criar Conta</string>

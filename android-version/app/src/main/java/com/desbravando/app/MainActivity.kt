@@ -235,7 +235,7 @@ fun Login(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 30.dp)
+                        .padding(top = 20.dp)
 
                 ) {
                     Text(
@@ -297,7 +297,11 @@ fun Login(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    placeholder = { stringResource(R.string.text_placeholder_password) },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.text_placeholder_password),
+                            color = Gray)
+                                  },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password

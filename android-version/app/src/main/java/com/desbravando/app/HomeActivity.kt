@@ -241,7 +241,7 @@ fun Home(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 30.dp, start = 10.dp)
+            modifier = Modifier.padding(top = 40.dp, start = 15.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.purple_logo_desbravando),
@@ -260,7 +260,7 @@ fun Home(
 
         Row(
             modifier = Modifier
-                .padding(start = 20.dp, top = 15.dp, end = 20.dp)
+                .padding(start = 25.dp, top = 15.dp, end = 20.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -358,7 +358,7 @@ fun Home(
                         .fillMaxWidth(),
                 ) {
                     Text(
-                        text = "Roteiros da Comunidade",
+                        text = stringResource(R.string.title_home_itinerary_section),
                         fontSize = 14.sp,
                         color = Purple,
                         fontFamily = Poppins,
@@ -369,10 +369,7 @@ fun Home(
                         fontSize = 13.sp,
                         color = Gray,
                         fontFamily = Poppins,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable {
-                            context.startActivity(Intent(context, FavoritesActivity::class.java))
-                        }
+                        fontWeight = FontWeight.Medium
                     )
                 }
 

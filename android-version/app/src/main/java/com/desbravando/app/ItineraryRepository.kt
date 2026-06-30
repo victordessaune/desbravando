@@ -55,7 +55,6 @@ object ItinerariesRepository {
                         id = doc.id,
                         title = doc.getString("title") ?: "",
                         imageUrl = doc.getString("imageUrl") ?: "",
-                        // Se for uma lista de IDs, pegamos o tamanho dela
                         locationsCount = (doc.get("locations") as? List<*>)?.size ?: 0
                     )
                 }
@@ -74,7 +73,7 @@ object ItinerariesRepository {
         }
 
         Firebase.firestore.collection("itineraries")
-            .whereNotEqualTo("userId", uid) // 🔥 Filtra para NÃO trazer os do usuário logado
+            .whereNotEqualTo("userId", uid)
             .get()
             .addOnSuccessListener { result ->
                 val list = result.documents.mapNotNull { doc ->
